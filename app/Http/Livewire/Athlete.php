@@ -14,7 +14,7 @@ class Athlete extends Component
 
     public function mount()
     {
-        $this->athletes = Athletes::where('active',1)->get();
+        $this->athletes = Athletes::where('active',1)->orderBy('sex','asc')->orderBy('name','asc')->get();
         $this->times = Times::orderBy('record','desc')->get();
     }
     public function render()

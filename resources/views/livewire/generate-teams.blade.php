@@ -62,32 +62,43 @@
         </div>
         <ul>
             @isset($equipes)
-                @foreach ($equipes as $equipe)
-                {{ $equipe}}
                     @php
-                        $tempo_total = 0;
+                        $team = 0;
                     @endphp
-                    {{-- {{ count($equipe['atletas']) }}
-                    @for ($i = 0; $i < count($equipe['atletas']); $i++)
-                        <p>
-                            @php
-                                $time = $equipe['tempos_modalidades'][$i]
-                                    ->where('modality_id', $equipe['modalidades'][$i]->id)
-                                    ->where('athlete_id', $equipe['atletas'][$i])
-                                    ->first();
-                            @endphp
-                            @if ($time)
-                                {{ $time->athletes->nick }}
-                                - {{ $time->modality->title }}
-                                @php
-                                    $tb = explode(':', date('H:i:s', strtotime($time->record)));
-                                @endphp
-                                {{ $tb[0] }}:{{ $tb[1] }},{{ $tb[2] }}
-                            @endif
+                @foreach ($equipes as $equipe)
 
-                        </p>
-                    @endfor
-                    {{ $tempo_total }} --}}
+                @php
+                $team += 1;
+            @endphp
+            <p>Equipe {{ $team }}</p>
+                @foreach ($equipe as $key => $atleta)
+                @php
+                $tempo_total = 0;
+                $mod = $key + 1;
+            @endphp
+
+                <p>
+                    @php
+                            $time = $times
+                            ->where('modality_id', $mod)
+                            ->where('athlete_id', $atleta)
+                            ->first();
+                            // $tempo_total += date('H:i:s', strtotime($time->record));
+                    @endphp
+
+                    @if ($time)
+                        {{ $time->athletes->nick }}
+                        - {{ $time->modality->title }}
+                        @php
+                            $tb = explode(':', date('H:i:s', strtotime($time->record)));
+                        @endphp
+                        {{ $tb[0] }}:{{ $tb[1] }},{{ $tb[2] }}
+                    @endif
+
+                </p>
+                @endforeach
+
+                    <br/><br/>
                 @endforeach
 
             @endisset
