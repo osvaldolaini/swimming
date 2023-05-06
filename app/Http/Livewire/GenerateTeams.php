@@ -10,7 +10,7 @@ use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class GenerateTeam extends Component
+class GenerateTeams extends Component
 {
     public $modality = 'livre';
     public $category;
@@ -38,7 +38,7 @@ class GenerateTeam extends Component
     function generateTeams()
     {
         $this->equipes = array();
-        $atletas = DB::table('athletes')
+        $atletas = DB::table('athletes')->select('id')
             ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
             ->where('sex', $this->type_team)
             ->pluck('id');
@@ -46,18 +46,8 @@ class GenerateTeam extends Component
 
         $this->equipes= $this->teams($atletas);
         $this->equipes = $this->getTeam($this->equipes);
+        // dd($this->equipes);
 
-        dd($this->equipes);
-    }
-
-
-    function somarTempo($t1, $t2)
-    {
-        $timestamp1 = strtotime($t1);
-        $timestamp2 = strtotime($t2);
-        $segundos = $timestamp1 + $timestamp2 - strtotime('00:00:00');
-        $resultado = date('H:i:s', $segundos);
-        return $resultado;
     }
 
     public function teams($atletas){
@@ -77,10 +67,10 @@ class GenerateTeam extends Component
     }
     function getTeam($teams)
     {
-
         $allTeams = [];
         $arrayTeam = [];
         $title = 0;
+        $time_total = 0;
                 foreach ($teams as $team ){
                     $title += 1;
                     $athletes       = [];
@@ -89,65 +79,48 @@ class GenerateTeam extends Component
                     $mod=0;
                     foreach ($team as $key => $athlete) {
                         $mod +=1;
-                        $time = Times::where('modality_id', $mod)
+                        $time = Times::select('record','athlete_id','modality_id')
+                            ->where('modality_id', $mod)
                             ->where('athlete_id', $athlete)
                             ->with(['athletes','modality'])
                             ->first();
-                        // $t = number_format(date('H:i:s.u', strtotime($time->record)), 2, '.', '');
-                        $athletes[]     = $time->athletes->nick;
-                        $modality[]     = $time->modality->title;
-                        $time_athlete[] = $this->timeToMilliseconds($time->record);
+
+                        if($time)
+                        {
+                            $time_total    += $this->timeToMilliseconds($time->record);
+                            $athletes[]     = ($time->athlete_id ? $time->athletes->nick : 'Excluido');
+                            $modality[]     = $time->modality->title;
+                            $time_athlete[] = $time;
+                            // $time_athlete[] = date('i', strtotime($time->record)).':'.number_format(date('s.u', strtotime($time->record)), 2, '.', '');
+                        }
+                    }
+                    if (count($athletes) == 4) {
+                        $arrayTeam = [
+                            'time_total'    => $time_total,
+                            // 'title'         => 'Equipe '.$title,
+                            'team'          => $time_athlete,
+                            // 'modality'      => $modality,
+                            // 'time_athlete'  => $time_athlete
+                        ];
+                        $allTeams[]=$arrayTeam;
+                    }
+                    $time_total = 0;
+
+
+                    if($title == 4){
+                        break;
                     }
 
-                    $arrayTeam = [
-                        'title'         => 'Equipe '.$title,
-                        'team'          => $athletes,
-                        'modality'      => $modality,
-                        'time_athlete'  => $time_athlete
-                    ];
-                    $allTeams[]=$arrayTeam;
-                    break;
                 }
 
-
-        return $allTeams;
-            // @endphp
-            // <p>Equipe {{ $team }}</p>
-            //     @foreach ($equipe as $key => $atleta)
-            //     @php
-            //     $tempo_total = 0;
-            //     $mod = $key + 1;
-            // @endphp
-
-                // <p>
-                //     @php
-                //             $time = $times
-                //             ->where('modality_id', $mod)
-                //             ->where('athlete_id', $atleta)
-                //             ->first();
-                //             // $tempo_total += date('H:i:s', strtotime($time->record));
-                //     @endphp
-
-                //     @if ($time)
-                //         {{ $time->athletes->nick }}
-                //         - {{ $time->modality->title }}
-                //         @php
-                //             $tb = explode(':', date('H:i:s', strtotime($time->record)));
-                //         @endphp
-                //         {{ $tb[0] }}:{{ $tb[1] }},{{ $tb[2] }}
-                //     @endif
-
-                // </p>
-                // @endforeach
-
-                //     <br/><br/>
-                // @endforeach
-
+        // return sort($allTeams,'title');
+        return $this->array_msort($allTeams, array('time_total'=>SORT_ASC));
+        // return $allTeams;
 
     }
     public function render()
     {
-        return view('livewire.generate-teamm');
+        return view('livewire.generate-teams');
     }
     function timeToMilliseconds($time) {
         $dateTime = new DateTime($time);
@@ -159,5 +132,31 @@ class GenerateTeam extends Component
         $seconds = floatval($seconds . '.' . $dateTime->format('u'));
 
         return $seconds * 1000;
+    }
+    function array_msort($array, $cols)
+    {
+        $n=0;
+        $colarr = array();
+        foreach ($cols as $col => $order) {
+            $colarr[$col] = array();
+            foreach ($array as $k => $row) { $colarr[$col]['_'.$k] = strtolower($row[$col]); }
+        }
+        $eval = 'array_multisort(';
+        foreach ($cols as $col => $order) {
+            $eval .= '$colarr[\''.$col.'\'],'.$order.',';
+        }
+        $eval = substr($eval,0,-1).');';
+        eval($eval);
+        $ret = array();
+        foreach ($colarr as $col => $arr) {
+            foreach ($arr as $k => $v) {
+                $k = substr($k,1);
+                if (!isset($ret[$n])) $ret[$n] = $array[$k];
+                $ret[$n][$col] = $array[$k][$col];
+                $n+=1;
+            }
+        }
+        return $ret;
+
     }
 }

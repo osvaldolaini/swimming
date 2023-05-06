@@ -1,8 +1,10 @@
 <div>
+    <x-action-loading></x-action-loading>
     <section class="p-6 dark:bg-gray-800 dark:text-gray-50">
         <form wire:submit.prevent="generateTeams()"
             class="container flex flex-col mx-auto space-y-12
         ng-untouched ng-pristine ng-valid">
+
             <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
                 <div class="space-y-2 col-span-full lg:col-span-1">
                     <p class="font-medium">Montes a(s) equipe(s)</p>
@@ -47,7 +49,7 @@
                     </div>
                     <div class="col-span-full sm:col-span-3">
 
-                        <button type="submit"
+                        <button type="submit" wire:loading.remove
                             class="px-8 py-3 font-semibold text-gray-50 rounded-full bg-blue-300 dark:bg-blue-800">
                             Gerar
                         </button>
@@ -56,53 +58,45 @@
             </fieldset>
         </form>
     </section>
-    <section wire:model="equipes">
-        <div wire:loading wire:target="equipes">
-            Processing Payment...
-        </div>
-        <ul>
+    <section wire:model="equipes" >
+        <div class="grid grid-cols-3 gap-4">
             @isset($equipes)
-                    @php
-                        $team = 0;
-                    @endphp
+            @php
+                $title = 0;
+            @endphp
                 @foreach ($equipes as $equipe)
-
                 @php
-                $team += 1;
-            @endphp
-            <p>Equipe {{ $team }}</p>
-                @foreach ($equipe as $key => $atleta)
-                @php
-                $tempo_total = 0;
-                $mod = $key + 1;
-            @endphp
-
-                <p>
+                    $title += 1;
+                @endphp
+                <div class="py-2">
                     @php
-                            $time = $times
-                            ->where('modality_id', $mod)
-                            ->where('athlete_id', $atleta)
-                            ->first();
-                            // $tempo_total += date('H:i:s', strtotime($time->record));
+                        $t = $equipe['time_total']/1000;
                     @endphp
+                    <div class="w-full text-center">
+                        Equipe {{ $title }} -  {{ date("H:i:s.u", $t) }}
+                        <x-action-counter time={{$t}} title="Equipe {{ $title }}"></x-action-counter>
+                    </div>
+                    <ul>
+                        @foreach ($equipe['team'] as $athlete)
+                            <li>
+                                @switch($athlete->modality->id)
+                                    @case(1) @php $color = 'badge-error'; @endphp @break
+                                    @case(2) @php $color = 'badge-info'; @endphp @break
+                                    @case(3) @php $color = 'badge-success'; @endphp @break
+                                    @case(4) @php $color = 'badge-warning'; @endphp @break
 
-                    @if ($time)
-                        {{ $time->athletes->nick }}
-                        - {{ $time->modality->title }}
-                        @php
-                            $tb = explode(':', date('H:i:s', strtotime($time->record)));
-                        @endphp
-                        {{ $tb[0] }}:{{ $tb[1] }},{{ $tb[2] }}
-                    @endif
-
-                </p>
+                                @endswitch
+                                <div class="badge {{ $color }} mb-2 w-full">
+                                    <strong>{{ $athlete->modality->title }} </strong>
+                                      &nbsp;:{{ $athlete->athletes->name }} - Tempo: {{ $athlete->record }}
+                                    </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
                 @endforeach
-
-                    <br/><br/>
-                @endforeach
-
             @endisset
 
-        </ul>
+        </div>
     </section>
 </div>
