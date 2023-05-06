@@ -19,6 +19,7 @@ class Athlete extends Component
     }
     public function render()
     {
+        // dd($this->times);
         return view('livewire.athlete');
     }
 }

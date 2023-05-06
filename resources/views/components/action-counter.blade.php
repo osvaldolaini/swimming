@@ -1,23 +1,15 @@
-@props(['time','title'])
+@props(['time', 'title'])
 
 <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
-    {{ $title }}
-    <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-      <span class="countdown font-mono text-5xl">
-        <span style="--value:{{ date("i", $time) }};"></span>
-      </span>
-      min
+    <div
+        class="flex items-center px-2 py-1 {{ $title > 3 ? 'bg-red-500' : 'bg-green-500' }}
+        rounded-box text-neutral-content">
+        <span class="py-2">Equipe {{ $title }}</span>
+
     </div>
-    <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-      <span class="countdown font-mono text-5xl">
-        <span style="--value:{{ date("s", $time) }};"></span>
-      </span>
-      sec
-    </div>
-    <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <span class="countdown font-mono text-5xl">
-          <span style="--value:{{ date("u", $time) }};"></span>
+    <div class="flex flex-col px-2 py-1 bg-neutral rounded-box text-neutral-content">
+        <span class="font-mono text-5xl">
+            <span>{{ $time }}</span>
         </span>
-        sec
     </div>
 </div>

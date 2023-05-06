@@ -22,10 +22,7 @@
                         <div class="badge badge-info mb-2">
                             Borbo
                             @isset($borbo)
-                                @php
-                                    $tb = explode(':',date("H:i:s", strtotime($borbo->record)));
-                                @endphp
-                                {{$tb[0]}}:{{$tb[1]}},{{$tb[2]}}
+                                {{converTime($borbo->record)}}
                             @endisset
                         </div>
                     </div>
@@ -33,10 +30,7 @@
                         <div class="badge badge-success mb-2">
                             Costa
                             @isset($costa)
-                                @php
-                                    $tc = explode(':',date("H:i:s", strtotime($costa->record)));
-                                @endphp
-                                {{$tc[0]}}:{{$tc[1]}},{{$tc[2]}}
+                            {{converTime($costa->record)}}
                             @endisset
                         </div>
                     </div>
@@ -44,10 +38,7 @@
                         <div class="badge badge-warning mb-2">
                             Peito
                             @isset($peito)
-                                @php
-                                    $tp = explode(':',date("H:i:s", strtotime($peito->record)));
-                                @endphp
-                                {{$tp[0]}}:{{$tp[1]}},{{$tp[2]}}
+                            {{converTime($peito->record)}}
                             @endisset
                         </div>
                     </div>
@@ -55,10 +46,7 @@
                         <div class="badge badge-error mb-2">
                             Craw
                             @isset($livre)
-                                @php
-                                    $tl = explode(':',date("H:i:s", strtotime($livre->record)));
-                                @endphp
-                                {{$tl[0]}}:{{$tl[1]}},{{$tl[2]}}
+                            {{converTime($livre->record)}}
                             @endisset
                         </div>
                     </div>

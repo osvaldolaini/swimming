@@ -67,14 +67,11 @@
                 @foreach ($equipes as $equipe)
                 @php
                     $title += 1;
+                    $t =converTime($equipe['time_total']);
                 @endphp
                 <div class="py-2">
-                    @php
-                        $t = $equipe['time_total']/1000;
-                    @endphp
                     <div class="w-full text-center">
-                        Equipe {{ $title }} -  {{ date("H:i:s.u", $t) }}
-                        <x-action-counter time={{$t}} title="Equipe {{ $title }}"></x-action-counter>
+                        <x-action-counter time={{$t}} title="{{ $title }}"></x-action-counter>
                     </div>
                     <ul>
                         @foreach ($equipe['team'] as $athlete)
@@ -88,7 +85,7 @@
                                 @endswitch
                                 <div class="badge {{ $color }} mb-2 w-full">
                                     <strong>{{ $athlete->modality->title }} </strong>
-                                      &nbsp;:{{ $athlete->athletes->name }} - Tempo: {{ $athlete->record }}
+                                      &nbsp;:{{ $athlete->athletes->name }} - Tempo: {{ converTime($athlete->record) }}
                                     </div>
                             </li>
                         @endforeach

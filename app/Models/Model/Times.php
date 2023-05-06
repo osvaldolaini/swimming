@@ -13,9 +13,9 @@ class Times extends Model
         'athlete_id','category_id','record','modality_id','day','id'
     ];
 
-    protected $casts = [
-        'record' => 'datetime:i:s',
-    ];
+    // protected $casts = [
+    //     'record' => 'datetime:i:s.u',
+    // ];
 
     public function athletes()
     {

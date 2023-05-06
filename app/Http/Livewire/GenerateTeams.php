@@ -87,7 +87,7 @@ class GenerateTeams extends Component
 
                         if($time)
                         {
-                            $time_total    += $this->timeToMilliseconds($time->record);
+                            $time_total    += $time->record;
                             $athletes[]     = ($time->athlete_id ? $time->athletes->nick : 'Excluido');
                             $modality[]     = $time->modality->title;
                             $time_athlete[] = $time;
