@@ -130,7 +130,7 @@
                                     @endswitch
                                     <div class="badge {{ $color }} mb-2 w-full">
                                         <strong>{{ $athlete->modality->title }} </strong>
-                                          &nbsp;:{{ $athlete->athletes->name }} - Tempo: {{ converTime($athlete->record) }}
+                                          &nbsp;:{{ $athlete->athletes->name }} ({{ converTime($athlete->record) }})
                                         </div>
                                 </li>
                             @endforeach
@@ -144,82 +144,3 @@
         </div>
     </section>
 </div>
- {{-- <div>
-    @php
-    $teams = array(
-                array(
-                    'ids' => array(2, 8, 4, 10),
-                    'time_total' => 582.01,
-                    'team' => array(),
-                ),
-                array(
-                    'ids' => array(15, 16, 11, 2),
-                    'time_total' => 581.03,
-                    'team' => array(),
-                ),
-                array(
-                    'ids' => array(9, 4, 6, 7),
-                    'time_total' => 582.20,
-                    'team' => array(),
-                ),
-                array(
-                    'ids' => array(5, 8, 2, 7),
-                    'time_total' => 582.34,
-                    'team' => array(),
-                ),
-                array(
-                    'ids' => array(1, 6, 9, 10),
-                    'time_total' => 581.33,
-                    'team' => array(),
-                )
-            );
-
-            $result = array();
-            $arrays_i = array();
-            $arrays_j = array();
-            // $arrays_i[] = '$teams[0]';
-            // $result[] = $teams[0];
-            for ($i = 0; $i < count($teams); $i++) {
-
-                // iterar sobre as arrays "filhas"
-                // $arrays_i[] = $teams[$i];
-                $diff_i = in_array($teams[$i], $arrays_i); //EXCLUIDO
-                // print_r($arrays_i);
-                // $diff_i = array_search($teams[$i], $arrays_i);
-                // dd($diff_i);
-                if (!$diff_i) { // se não foi exluido
-                    $result[] = $teams[$i];
-
-                    $arrays_i[] = $teams[$i];
-                    // $arrays_i[] = $teams[$i];
-                    foreach ($teams[$i]['ids'] as $ids) {
-                        echo '<pre>'.$ids;
-                        // $x = $i+1;
-                        for ($j = 0; $j < count($teams); $j++) {
-                            $diff_j = in_array($teams[$j], $result); //EXCLUIDO
-                            // echo '---->'.$diff_j;
-                            // $diff_j = array_search(intval($teams[$j]), $arrays_j);
-                                if (!$diff_j){
-                                    // echo '<pre>';
-                                    //     print_r($teams[$j]['ids']);
-                                    $diff_k = in_array($teams[$j], $arrays_i); //EXCLUIDO
-                                    if (!$diff_k){
-                                    $diff = in_array($ids, $teams[$j]['ids']);
-                                    if ($diff) {
-                                        // echo $diff. '------';
-                                        $arrays_i[] = $teams[$j];
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
-
-            }
-            echo '<pre>';
-        print_r($result);
-
-    @endphp
-</div> --}}

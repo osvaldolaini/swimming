@@ -15,7 +15,7 @@ class GenerateTeams extends Component
     public $category;
     public $birth_year;
     public $type_team = 'masculino';
-    public $distance = '25';
+    public $distance = '50';
     public $pool = '25';
     public $type_time = 'ambos';
     public $order = 'day';
@@ -195,7 +195,7 @@ class GenerateTeams extends Component
                             ->where('type_time',$this->type_time)
                             ->where('modality_id', $mod)
                             ->where('athlete_id', $athlete)
-                            ->orderBy($this->order,'desc')
+                            ->orderBy($this->order,'asc')
                             ->first();
                         }else{
                             $time = Times::select('record','athlete_id','modality_id')
@@ -204,7 +204,7 @@ class GenerateTeams extends Component
                             ->where('distance',$this->distance)
                             ->where('modality_id', $mod)
                             ->where('athlete_id', $athlete)
-                            ->orderBy($this->order,'desc')
+                            ->orderBy($this->order,'asc')
                             ->first();
                         }
                         if($time)
