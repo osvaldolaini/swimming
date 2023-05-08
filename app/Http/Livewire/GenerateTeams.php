@@ -187,6 +187,11 @@ class GenerateTeams extends Component
                         }else{
                             $mod = $this->modality;
                         }
+                        if($this->order == 'record'){
+                            $o = 'asc';
+                        }else{
+                            $o = 'desc';
+                        }
                         if ($this->type_time != 'ambos') {
                             $time = Times::select('record','athlete_id','modality_id')
                             ->with(['athletes','modality'])
@@ -195,7 +200,7 @@ class GenerateTeams extends Component
                             ->where('type_time',$this->type_time)
                             ->where('modality_id', $mod)
                             ->where('athlete_id', $athlete)
-                            ->orderBy($this->order,'asc')
+                            ->orderBy($this->order,$o)
                             ->first();
                         }else{
                             $time = Times::select('record','athlete_id','modality_id')
@@ -204,7 +209,7 @@ class GenerateTeams extends Component
                             ->where('distance',$this->distance)
                             ->where('modality_id', $mod)
                             ->where('athlete_id', $athlete)
-                            ->orderBy($this->order,'asc')
+                            ->orderBy($this->order,$o)
                             ->first();
                         }
                         if($time)
