@@ -50,6 +50,7 @@ class GenerateTeams extends Component
 
         $this->equipes = array();
         $atletas = $this->getAthletes();
+        // dd($atletas );
         if($atletas->count() < 4){
             $this->message = 'Quantidade de atletas é insuficiente para montar uma equipe!';
             return;
@@ -64,9 +65,9 @@ class GenerateTeams extends Component
             //Função que pega a equipe por modalidade
             $this->equipes = $this->modalityTeams($atletas);
         }
-
+        // dd($this->equipes);
         $this->equipes = $this->getTeams($this->equipes);
-dd($this->equipes);
+
         if($this->select_team == 'best'){
             $this->equipes = $this->bestTeams($this->equipes);
         }
@@ -160,7 +161,7 @@ dd($this->equipes);
             $res2 = combinacoesDe($n, $xs1);
             return array_merge($res1, $res2);
         }
-        return combinacoesDe($this->num_teams, $array2);
+        return combinacoesDe(4, $array2);
     }
 
     //pega todas as combinações possíveis
