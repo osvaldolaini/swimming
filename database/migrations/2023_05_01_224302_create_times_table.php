@@ -17,7 +17,9 @@ return new class extends Migration
             $table->foreignId('athlete_id')->constrained();
             $table->foreignId('modality_id')->constrained();
             $table->date('day')->nullable();
+            $table->integer('pool')->nullable();
             $table->integer('distance')->nullable();
+            $table->string('type_time',100)->nullable();
             $table->time('record', $precision = 0);
             $table->timestamps();
         });

@@ -10,8 +10,12 @@ if (! function_exists('converTime')) {
             $hours = floor($seconds / 3600);
             $mins = floor(($seconds - ($hours * 3600)) / 60);
             $secs = floor($seconds % 60);
+            if(isset($time[1])){
+                $sign = sprintf('%02d:%02d', $hours, $mins, $secs).','.$time[1];
+            }else{
+                $sign = sprintf('%02d:%02d', $hours, $mins, $secs).',00';
+            }
 
-            $sign = sprintf('%02d:%02d', $hours, $mins, $secs).','.$time[1];
         }else{
             $sign = '00:00,'.$time[1];
         }

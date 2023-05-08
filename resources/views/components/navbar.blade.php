@@ -40,7 +40,7 @@
                         Atletas
                     </p>
                 </a>
-                <a href="{{ route('modality') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
+                {{-- <a href="{{ route('modality') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
@@ -71,7 +71,7 @@
                     leading-tight">
                         Modalidades
                     </p>
-                </a>
+                </a> --}}
                 <a href="{{ route('category') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
