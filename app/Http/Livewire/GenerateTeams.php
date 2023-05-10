@@ -11,16 +11,21 @@ use Livewire\Component;
 
 class GenerateTeams extends Component
 {
+    public $modalAthletes = false;
     public $modality = 'livre';
     public $category;
+    public $allAthletes;
+    public $filterA = array();
+    public $filterName = array();
     public $birth_year;
     public $type_team = 'masculino';
     public $distance = '50';
     public $pool = '25';
     public $type_time = 'ambos';
-    public $order = 'day';
+    public $order = 'record';
     public $select_team = 'best';
     public $equipes;
+    public $exceptions = array();
     public $num_teams = 4;
     public $modalidades;
     public $message = null;
@@ -30,14 +35,53 @@ class GenerateTeams extends Component
     public function mount()
     {
         $this->modalidades = Modalities::where('active', 1)->get();
-        $this->category = Categories::where('active', 1)->get();
-        $this->birth_year = Categories::where('active', 1)->first()->birth_year;
+        $this->category = Categories::where('active', 1)->orderBy('birth_year','desc')->get();
+        $this->birth_year = Categories::where('active', 1)->orderBy('birth_year','desc')->first()->birth_year;
         $this->times = Times::all();
-
+        // $this->allAthletes = Athletes::where('active', 1)
+        // ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+        // ->where('sex', $this->type_team)
+        // ->get();
     }
     public function render()
     {
         return view('livewire.generate-teams');
+    }
+    //Remover atletas
+    public function filterAthletes($a_id)
+    {
+        if (in_array($a_id,$this->filterA)) {
+            $a = Athletes::find($a_id)->name;
+            $index = array_search($a_id, $this->filterA);
+            $index2 = array_search($a, $this->filterName);
+            if ($index !== false) {
+                unset($this->filterA[$index]);
+                unset($this->filterName[$index2]);
+            }
+        }else{
+            $this->filterName[] = Athletes::find($a_id)->name;
+            $this->filterA[] = $a_id;
+        }
+
+        $this->updated($this->filterA);
+        $this->updated($this->filterName);
+        // dd($this->filterA);
+    }
+    //Remover atletas
+    public function getfilterAthletes()
+    {
+         //Ambos os sexos
+         if ($this->type_team == 'mista') {
+            $this->allAthletes = Athletes::where('active', 1)
+            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+            ->get();
+        }else{
+            $this->allAthletes = Athletes::where('active', 1)
+            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+            ->where('sex', $this->type_team)
+            ->get();
+        }
+        $this->equipes = [];
     }
     //zerar equipes
     public function cleanSearch()
@@ -47,10 +91,13 @@ class GenerateTeams extends Component
     //Função que monta as equipes
     public function generateTeams()
     {
-
         $this->equipes = array();
         $atletas = $this->getAthletes();
-        // dd($atletas );
+        // Atletas removidos
+        if ($this->filterA) {
+            $atletas = $atletas->diff($this->filterA);
+            $atletas = $atletas->values();
+        }
         if($atletas->count() < 4){
             $this->message = 'Quantidade de atletas é insuficiente para montar uma equipe!';
             return;
@@ -89,6 +136,7 @@ class GenerateTeams extends Component
             ->pluck('id');
         }
         $athletes = collect();
+
         foreach ($atletas as $key) {
             //seleciona se o atleta ja nadou algo
             if ($this->type_time == 'ambos') {
