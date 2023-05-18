@@ -38,10 +38,6 @@ class GenerateTeams extends Component
         $this->category = Categories::where('active', 1)->orderBy('birth_year','desc')->get();
         $this->birth_year = Categories::where('active', 1)->orderBy('birth_year','desc')->first()->birth_year;
         $this->times = Times::all();
-        // $this->allAthletes = Athletes::where('active', 1)
-        // ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-        // ->where('sex', $this->type_team)
-        // ->get();
     }
     public function render()
     {
@@ -67,7 +63,6 @@ class GenerateTeams extends Component
         $this->updated($this->filterName);
         // dd($this->filterA);
     }
-    //Remover atletas
     public function getfilterAthletes()
     {
          //Ambos os sexos
@@ -328,37 +323,9 @@ class GenerateTeams extends Component
 
     }
 
+    //Pega os melhores times
     function bestTeams($teams)
     {
-
-        // $teams = array(
-        //     array(
-        //         'ids' => array(2, 8, 4, 10),
-        //         'time_total' => 582.01,
-        //         'team' => array(),
-        //     ),
-        //     array(
-        //         'ids' => array(15, 16, 11, 22),
-        //         'time_total' => 581.03,
-        //         'team' => array(),
-        //     ),
-        //     array(
-        //         'ids' => array(9, 4, 6, 7),
-        //         'time_total' => 582.20,
-        //         'team' => array(),
-        //     ),
-        //     array(
-        //         'ids' => array(5, 7, 20, 11),
-        //         'time_total' => 582.34,
-        //         'team' => array(),
-        //     ),
-        //     array(
-        //         'ids' => array(101, 60, 233, 100),
-        //         'time_total' => 581.33,
-        //         'team' => array(),
-        //     )
-        // );
-
         $result = array();
         $arrays_i = array();
         for ($i = 0; $i < count($teams); $i++) {
@@ -385,9 +352,7 @@ class GenerateTeams extends Component
                     }
                 }
             }
-            // break;
         }
-
         // dd($result);
         return $result;
     }

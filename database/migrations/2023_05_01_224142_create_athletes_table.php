@@ -18,7 +18,12 @@ return new class extends Migration
             $table->string('name',100)->nullable();
             $table->string('nick',30)->nullable();
             $table->date('birth')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('code')->nullable();
+            $table->integer('register')-nullable();
             $table->timestamps();
+            $table->string('updated_by',50)->nullable();
+            $table->string('created_by',50)->nullable();
         });
     }
 

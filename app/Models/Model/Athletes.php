@@ -5,6 +5,7 @@ namespace App\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Str;
 class Athletes extends Model
 {
     use HasFactory;
@@ -14,8 +15,22 @@ class Athletes extends Model
      *
      * @var array
      */
-    protected $visible = ['id','active','sex','name'];
 
+    protected $fillable = [
+        'id','active','sex','name','birth','nick','updated_by','created_by','code','slug','register'
+    ];
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name']=mb_strtoupper($value);
+        $this->attributes['slug']=Str::slug($value);
+    }
+
+    protected $casts = [
+        'birth' => 'datetime:Y-m-d',
+    ];
+
+    protected $visible = ['id','active','sex','name'];
 
     public function times()
     {

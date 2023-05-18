@@ -21,7 +21,10 @@ return new class extends Migration
             $table->integer('distance')->nullable();
             $table->string('type_time',100)->nullable();
             $table->time('record', $precision = 0);
+            $table->string('code')->nullable();
             $table->timestamps();
+            $table->string('updated_by',50)->nullable();
+            $table->string('created_by',50)->nullable();
         });
     }
 

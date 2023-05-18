@@ -10,12 +10,14 @@ class Times extends Model
     use HasFactory;
 
     protected $fillable = [
-        'athlete_id','category_id','record','modality_id','day','id'
+        'athlete_id','category_id','record','modality_id','day','id',
+        'pool','distance','type_time',
+        'updated_by','created_by','code'
     ];
 
-    // protected $casts = [
-    //     'record' => 'datetime:i:s.u',
-    // ];
+    protected $casts = [
+        'day' => 'datetime:Y-m-d',
+    ];
 
     public function athletes()
     {

@@ -16,7 +16,10 @@ return new class extends Migration
             $table->boolean('active')->nullable();
             $table->string('name',100)->nullable();
             $table->year('birth_year');
+            $table->string('code')->nullable();
             $table->timestamps();
+            $table->string('updated_by',50)->nullable();
+            $table->string('created_by',50)->nullable();
         });
     }
 

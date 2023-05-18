@@ -31,16 +31,16 @@
             <div class="drawer drawer-mobile">
                 <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content">
-                  <!-- Page content here -->
-                  <div class="card m-4 p-5 bg-gray-200 shadow-xl">
-                    {{ $slot }}
-                </div>
+                    <!-- Page content here -->
+                    <div class="card m-4 p-5 bg-gray-200 shadow-xl">
+                        {{ $slot }}
+                    </div>
                 </div>
                 <div class="drawer-side">
-                  <label for="my-drawer-3" class="drawer-overlay"></label>
-                  <x-navbar></x-navbar>
+                    <label for="my-drawer-3" class="drawer-overlay"></label>
+                    <x-navbar></x-navbar>
                 </div>
-              </div>
+            </div>
         </main>
     </div>
 
