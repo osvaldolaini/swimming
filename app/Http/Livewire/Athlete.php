@@ -42,7 +42,13 @@ class Athlete extends Component
 
     public function mount()
     {
-        $this->athletes = Athletes::where('active',1)->orderBy('sex','asc')->orderBy('name','asc')->get();
+        if (isset($_GET['category'])) {
+            $this->athletes = Athletes::where('active', 1)
+            ->where('birth', 'LIKE', '%' . $_GET['category']. '%')
+            ->orderBy('sex','asc')->orderBy('name','asc')
+            ->get();
+        }
+
         $this->times = Times::orderBy('record','asc')->get();
     }
     public function render()
@@ -101,7 +107,13 @@ class Athlete extends Component
         if (isset($id)) {
             $data = Athletes::where('id',$id)->first();
             // dd($data);
+            if ($data->register) {
+                $image = imageProfile($data->register.'/'.$data->slug);
+            }else{
+                $image = url('storage/logo-gnu.svg');
+            }
             $this->detail = [
+                'Foto'              => $image,
                 'Exercício'         => $data->title,
                 'Status'            => ($data->active == 1 ? 'Ativo':'Inativo'),
                 'Criada'            => convertDate($data->created_at),

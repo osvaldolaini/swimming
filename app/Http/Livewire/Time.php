@@ -20,7 +20,7 @@ class Time extends Component
     public Times $times;
     public $search;
     public $sortField = 'day';
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
     public $showJetModal = false;
     public $showModalView = false;
     public $showModalCreate = false;
@@ -37,6 +37,9 @@ class Time extends Component
     public $athlete_id;
     public $modality_id;
     public $category_id;
+    public $type_time = 'tomada';
+    public $distance = 50;
+    public $pool = 25;
     public $record;
     public $code;
     public $day;
@@ -44,12 +47,23 @@ class Time extends Component
     public $heads;
     public $model_id;
     public $modalities;
+    public $categories;
     public $athletes;
 
     public function mount()
     {
-        $this->athletes = Athletes::where('active',1)->get();
+        // $this->athletes = Athletes::where('active',1)->get();
         $this->modalities = Modalities::where('active',1)->get();
+        $this->categories = Categories::where('active',1)->get();
+
+    }
+
+    public function getAthletes()
+    {
+        $birth_year = Categories::find($this->category_id)->birth_year;
+        $this->athletes = Athletes::where('active', 1)
+        ->where('birth', 'LIKE', '%' . $birth_year . '%')
+        ->get();
     }
 
     public function render()
@@ -92,17 +106,20 @@ class Time extends Component
         ];
         $this->validate();
 
-        $birth = Athletes::find($this->athlete_id)->birth;
-        $d = explode('-', $birth);
-        $this->category_id = Categories::select('name')->where('birth_year', $d[0])->first()->id;
-
+        $this->day = implode(
+            "-",
+            array_reverse(explode("/", $this->day))
+        );
         Times::create([
             'athlete_id'    => $this->athlete_id,
             'modality_id'   => $this->modality_id,
             'category_id'   => $this->category_id,
-            'record'        => $this->record,
+            'distance'      => $this->distance,
+            'type_time'     => $this->type_time,
+            'pool'          => $this->pool,
+            'record'        => invertTime($this->record),
             'day'           => $this->day,
-            'active'        => $this->active,
+            'active'        => 1,
             'code'          => Str::uuid(),
             'created_by'    => Auth::user()->name,
         ]);
@@ -114,7 +131,11 @@ class Time extends Component
             'athlete_id',
             'day',
             'modality_id',
-            'record'
+            'record',
+            'distance',
+            'pool',
+            'category_id',
+            'type_time'
         );
     }
     //READ
@@ -126,8 +147,8 @@ class Time extends Component
             $data = Times::where('id', $id)->first();
             // dd($data);
             $this->detail = [
-                'Categoria'         => ucwords(mb_strtolower($data->name)),
-                'Status'            => ($data->active == 1 ? 'Ativo' : 'Inativo'),
+                'Piscina'           => $data->pool,
+                'Distancia'         => $data->distance,
                 'Criada'            => convertDate($data->created_at),
                 'Criada por'        => $data->created_by,
                 'Atualizada'        => convertDate($data->updated_at),
@@ -143,10 +164,22 @@ class Time extends Component
         $this->model_id     = $times->id;
         $this->athlete_id   = $times->athlete_id;
         $this->modality_id  = $times->modality_id;
+        $this->pool         = $times->pool;
+        $this->distance     = $times->distance;
+        $this->type_time    = $times->type_time;
+        $this->category_id  = $times->category_id;
         $this->record       = converTime($times->record);
-        $this->day          = $times->day;
+        $this->day          = convertOnlyDate($times->day);
         $this->active       = $times->active;
         $this->showModalEdit = true;
+
+        if($this->category_id){
+            $birth_year = Categories::find($this->category_id)->birth_year;
+            $this->athletes = Athletes::where('active', 1)
+            ->where('birth', 'LIKE', '%' . $birth_year . '%')
+            ->get();
+        }
+
     }
     public function update()
     {
@@ -157,10 +190,10 @@ class Time extends Component
             'modality_id' => 'required',
         ];
         $this->validate();
-
-        $birth = Athletes::find($this->athlete_id)->birth;
-        $d = explode('-', $birth);
-        $this->category_id = Categories::select('name')->where('birth_year', $d[0])->first()->id;
+        $this->day = implode(
+            "-",
+            array_reverse(explode("/", $this->day))
+        );
 
         Times::updateOrCreate([
             'id' => $this->model_id,
@@ -168,9 +201,12 @@ class Time extends Component
             'athlete_id'    => $this->athlete_id,
             'modality_id'   => $this->modality_id,
             'category_id'   => $this->category_id,
-            'record'        => $this->record,
+            'distance'      => $this->distance,
+            'type_time'     => $this->type_time,
+            'pool'          => $this->pool,
+            'record'        => invertTime($this->record),
             'day'           => $this->day,
-            'active'        => $this->active,
+            // 'active'        => $this->active,
             'updated_by' => Auth::user()->name,
         ]);
 
@@ -182,7 +218,11 @@ class Time extends Component
             'athlete_id',
             'day',
             'modality_id',
-            'record'
+            'record',
+            'distance',
+            'pool',
+            'category_id',
+            'type_time'
         );
     }
     //DELETE
@@ -198,8 +238,7 @@ class Time extends Component
     public function delete($id)
     {
         $data = Times::where('id', $id)->first();
-        $data->active = '0';
-        $data->save();
+        $data->destroy();
 
         session()->flash('success', 'Registro excluido com sucesso.');
 

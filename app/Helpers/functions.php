@@ -58,6 +58,28 @@ if (! function_exists('converTime')) {
         return $sign;
     }
 }
+if (! function_exists('invertTime')) {
+    function invertTime(string $string)
+    {
+        $time = explode(':',$string);
+
+        if($time[0] > 0){
+            $mins = intval($time[0]); //Converte para inteiro
+
+            $s = explode(',',$time[1]);
+            $secs = floor($mins * 60);
+            $secs = floor($secs + $s[0]);
+
+            $sign = $secs.'.'.$s[1];
+
+        }else{
+            $s = explode(',',$time[1]);
+            $sign = $sign = $s[0].'.'.$s[1];
+        }
+
+        return $sign;
+    }
+}
 if (!function_exists('convertDate')) {
     function convertDate($date)
     {
@@ -85,7 +107,7 @@ if (!function_exists('getCategory')) {
     function getCategory($date)
     {
         $d = explode('-',$date);
-            return Categories::select('name')->where('birth_year',$d[0])->first()->name ;
+            return Categories::select('name','id')->where('birth_year',$d[0])->first();
 
     }
 }

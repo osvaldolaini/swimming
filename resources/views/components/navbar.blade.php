@@ -1,14 +1,15 @@
-<div class="flex flex-col bg-blue-200">
+<div class="flex flex-col bg-blue-400 text-white">
     <!-- Navigation Rail -->
     <div class="relative">
-        <div class="w-54 bg-blue-200 dark:bg-surfacedark-100 flex items-center flex-col gap-8 py-5">
+        <div class="w-54 bg-blue-400 text-white dark:bg-surfacedark-100 flex items-center flex-col gap-8 py-5">
             <div class="flex flex-col items-center gap-3">
-                <a href="{{ route('athlete') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
+                <a href="{{ route('teams') }}" class="group min-h-[56px] flex w-32
+                flex-col items-center justify-center px-0 gap-1 py-1">
                     <div
                         class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                         dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
                         dark:group-hover:bg-opacity-80 flex items-center justify-center
-                        rounded-2xl text-gray-600">
+                        rounded-2xl text-white">
                         <svg class="w-8 h-8 " fill="currentColor" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 554.653 554.653" xml:space="preserve">
@@ -36,16 +37,17 @@
                             </g>
                         </svg>
                     </div>
-                    <p class="text-xs text-neutral-900 dark:text-neutral-100 tracking-[.0416em] leading-tight">
+                    <p class="text-sm dark:text-neutral-100 tracking-[.0416em] leading-tight">
                         Atletas
                     </p>
                 </a>
+                <div class="divider my-0"></div>
                 {{-- <a href="{{ route('modality') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
                     dark:group-hover:bg-opacity-80 flex items-center justify-center
-                    rounded-2xl text-gray-600">
+                    rounded-2xl text-white">
                     <svg class="w-8 h-8 " fill="currentColor" version="1.1"  id="_x32_" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                             xml:space="preserve">
@@ -67,7 +69,7 @@
                             </g>
                         </svg>
                     </div>
-                    <p class="text-xs text-neutral-900 dark:text-neutral-100 tracking-[.0416em]
+                    <p class="text-sm dark:text-neutral-100 tracking-[.0416em]
                     leading-tight">
                         Modalidades
                     </p>
@@ -77,7 +79,7 @@
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
                     dark:group-hover:bg-opacity-80 flex items-center justify-center
-                    rounded-2xl text-gray-600">
+                    rounded-2xl text-white">
                     <svg class="w-8 h-8 " fill="currentColor" version="1.1"  id="_x32_" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                             xml:space="preserve">
@@ -99,35 +101,36 @@
                             </g>
                         </svg>
                     </div>
-                    <p class="text-xs text-neutral-900 dark:text-neutral-100 tracking-[.0416em]
+                    <p class="text-sm dark:text-neutral-100 tracking-[.0416em]
                     leading-tight">
                         Categorias
                     </p>
                 </a>
+                <div class="divider my-0"></div>
                 <a href="{{ route('times') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
                     dark:group-hover:bg-opacity-80 flex items-center justify-center
-                    rounded-2xl text-gray-600">
+                    rounded-2xl text-white">
                     <svg class="w-8 h-8 "  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="Calendar / Timer">
                         <path id="Vector" stroke="currentColor"  d="M12 13V9M21 6L19 4M10 2H14M12 21C7.58172 21 4 17.4183 4 13C4 8.58172 7.58172 5 12 5C16.4183 5 20 8.58172 20 13C20 17.4183 16.4183 21 12 21Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </g>
                         </svg>
                     </div>
-                    <p class="text-xs text-neutral-900 dark:text-neutral-100 tracking-[.0416em]
+                    <p class="text-sm dark:text-neutral-100 tracking-[.0416em]
                     leading-tight">
                     Tempos
                     </p>
                 </a>
-
+                <div class="divider my-0"></div>
                 <a href="{{ route('generateTeam') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
                     dark:group-hover:bg-opacity-80 flex items-center justify-center
-                    rounded-2xl text-gray-600">
+                    rounded-2xl text-white">
                         <svg class="w-8 h-8 " fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 155.739 155.739"
                                 xml:space="preserve">
                             <g>
@@ -156,10 +159,11 @@
                             </g>
                         </svg>
                     </div>
-                    <p class="text-xs text-neutral-900 dark:text-neutral-100 tracking-[.0416em] leading-tight">
+                    <p class="text-sm dark:text-neutral-100 tracking-[.0416em] leading-tight">
                         Gerar equipes
                     </p>
                 </a>
+                <div class="divider my-0"></div>
             </div>
 
         </div>

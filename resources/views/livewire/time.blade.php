@@ -40,7 +40,13 @@
                                         Tempo
                                     </th>
                                     <th class="py-3.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
-                                        Status
+                                        Piscina
+                                    </th>
+                                    <th class="py-3.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
+                                        Distância
+                                    </th>
+                                    <th class="py-3.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
+                                        Tipo
                                     </th>
                                     <th class="w-1/4 py-3.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
                                         Opções
@@ -53,18 +59,27 @@
                                 @foreach ($data as $cat)
                                 <tr >
                                     <td class="py-1.5 px-4 text-sm font-normal text-left text-gray-500 dark:text-gray-400">
-                                        {{ $cat->day  }}
+                                        {{ convertOnlyDate($cat->day)  }}
                                     </td>
                                     <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
-                                        {{ $cat->athlete_id }}
+                                        {{ ucwords(mb_strtolower($cat->athletes->nick)) }}
                                     </td>
                                     <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
-                                        {{ $cat->modality_id }}
+                                        {{ $cat->modality->title}}
                                     </td>
                                     <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
-                                        {{ $cat->record }}
+                                        {{ converTime($cat->record) }}
                                     </td>
                                     <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
+                                        {{ $cat->pool }}
+                                    </td>
+                                    <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
+                                        {{ $cat->distance }}
+                                    </td>
+                                    <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
+                                        {{ ucwords(mb_strtolower($cat->type_time)) }}
+                                    </td>
+                                    {{-- <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
                                         <div>
                                             <livewire:toggle-button
                                             :model="$cat"
@@ -72,7 +87,7 @@
                                             key="{{ $cat->id }}"
                                             width="sm" />
 
-                                    </td>
+                                    </td> --}}
                                     <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
                                         <div class="w-full">
                                             <div class="flex justify-center font-medium duration-200 ">
@@ -178,16 +193,30 @@
                 <form action="#" wire:submit.prevent="store()" wire.loading.attr='disable'>
                     <div class="grid gap-4 mb-1 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                         <div class="col-span-2">
-                            <label for="athlete_id" class="block text-sm font-medium text-gray-900 dark:text-white">*Atleta</label>
-                            <select wire:model="athlete_id"  name="athlete_id" id="athlete_id" placeholder="Atleta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                            <label for="category_id" class="block text-sm font-medium text-gray-900 dark:text-white">*Categoria</label>
+                            <select wire:model="category_id" wire:change="getAthletes()" name="category_id" id="category_id"
+                            placeholder="Categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
                                 <option value="">Selecione uma opção</option>
-                                @foreach ($athletes as $item)
+                                @foreach ($categories as $item)
                                     <option value="{{ $item->id }}" >{{ $item->name }}</option>
                                 @endforeach
                             </select>
                             @error('athlete_id') <span class="error">{{ $message }}</span> @enderror
                         </div>
-                        <div class="col-span-2">
+                        @isset($athletes)
+                            <div class="col-span-2">
+                                <label for="athlete_id" class="block text-sm font-medium text-gray-900 dark:text-white">*Atleta</label>
+                                <select wire:model="athlete_id"  name="athlete_id" id="athlete_id" placeholder="Atleta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                                    <option value="">Selecione uma opção</option>
+                                    @foreach ($athletes as $item)
+                                        <option value="{{ $item->id }}" >{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('athlete_id') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                        @endisset
+
+                        <div class="col-span-1">
                             <label for="modality_id" class="block text-sm font-medium text-gray-900 dark:text-white">*Modalidade</label>
                             <select wire:model="modality_id"  name="modality_id" id="modality_id" placeholder="Modalidade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
                                 <option value="">Selecione uma opção</option>
@@ -196,6 +225,20 @@
                                 @endforeach
                             </select>
                             @error('modality_id') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="sm:col-span-1" x-data x-init="Inputmask({
+                            'mask': '99:99,99'
+                        }).mask($refs.record)">
+                            <label for="record"
+                                class="block text-sm font-medium text-gray-900 dark:text-white">Tempo</label>
+                            <input type="text" x-ref="record" wire:model="record" placeholder="Tempo"
+                                required=""
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                                rounded-lg focus:ring-primary-600 focus:border-primary-600
+                                block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('record')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-span-1">
                             <label for="pool" class="block text-sm font-medium text-gray-900 dark:text-white">*Piscina</label>
@@ -215,19 +258,28 @@
                             </select>
                             @error('distance') <span class="error">{{ $message }}</span> @enderror
                         </div>
-                        <div class="sm:col-span-2" x-data x-init="Inputmask({
-                            'mask': '99:99,99'
-                        }).mask($refs.record)">
-                            <label for="record"
+                        <div class="sm:col-span-1" x-data x-init="Inputmask({
+                            'mask': '99/99/9999'
+                        }).mask($refs.day)">
+                            <label for="day"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">Data</label>
-                            <input type="text" x-ref="record" wire:model="record" placeholder="Data"
+                            <input type="text" x-ref="day" wire:model="day" placeholder="Data"
                                 required=""
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                                 rounded-lg focus:ring-primary-600 focus:border-primary-600
                                 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            @error('record')
+                            @error('day')
                                 <span class="error">{{ $message }}</span>
                             @enderror
+                        </div>
+                        <div class="col-span-1">
+                            <label for="type_time" class="block text-sm font-medium text-gray-900 dark:text-white">*Tipo</label>
+                            <select wire:model="type_time"  name="type_time" id="type_time" placeholder="Tipo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                                    <option value="tomada">Tomada</option>
+                                    <option value="prova">Prova</option>
+                                    <option value="parcial">Parcial</option>
+                            </select>
+                            @error('type_time') <span class="error">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="flex items-end space-x-4">
@@ -256,23 +308,93 @@
                 <form wire:submit.prevent="update">
                     <div class="grid gap-4 mb-1 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                         <div class="col-span-2">
-                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">*Título</label>
-                            <input type="text" wire:model="name" name="name" id="name"  placeholder="Título" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            @error('name') <span class="error">{{ $message }}</span> @enderror
+                            <label for="category_id" class="block text-sm font-medium text-gray-900 dark:text-white">*Categoria</label>
+                            <select wire:model="category_id" wire:change="getAthletes()" name="category_id" id="category_id"
+                            placeholder="Categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                                <option value="">Selecione uma opção</option>
+                                @foreach ($categories as $item)
+                                    <option value="{{ $item->id }}" >{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('athlete_id') <span class="error">{{ $message }}</span> @enderror
                         </div>
-                        <div class="sm:col-span-2" x-data x-init="Inputmask({
-                            'mask': '9999'
-                        }).mask($refs.birth_year)">
-                            <label for="birth_year"
-                                class="block text-sm font-medium text-gray-900 dark:text-white">Data</label>
-                            <input type="text" x-ref="birth_year" wire:model="birth_year" placeholder="Data"
+                        @isset($athletes)
+                            <div class="col-span-2">
+                                <label for="athlete_id" class="block text-sm font-medium text-gray-900 dark:text-white">*Atleta</label>
+                                <select wire:model="athlete_id"  name="athlete_id" id="athlete_id" placeholder="Atleta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                                    <option value="">Selecione uma opção</option>
+                                    @foreach ($athletes as $item)
+                                        <option value="{{ $item->id }}" >{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('athlete_id') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                        @endisset
+
+                        <div class="col-span-1">
+                            <label for="modality_id" class="block text-sm font-medium text-gray-900 dark:text-white">*Modalidade</label>
+                            <select wire:model="modality_id"  name="modality_id" id="modality_id" placeholder="Modalidade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                                <option value="">Selecione uma opção</option>
+                                @foreach ($modalities as $item)
+                                    <option value="{{ $item->id }}" >{{ $item->title }}</option>
+                                @endforeach
+                            </select>
+                            @error('modality_id') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="sm:col-span-1" x-data x-init="Inputmask({
+                            'mask': '99:99,99'
+                        }).mask($refs.record)">
+                            <label for="record"
+                                class="block text-sm font-medium text-gray-900 dark:text-white">Tempo</label>
+                            <input type="text" x-ref="record" wire:model="record" placeholder="Tempo"
                                 required=""
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                                 rounded-lg focus:ring-primary-600 focus:border-primary-600
                                 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            @error('birth_year')
+                            @error('record')
                                 <span class="error">{{ $message }}</span>
                             @enderror
+                        </div>
+                        <div class="col-span-1">
+                            <label for="pool" class="block text-sm font-medium text-gray-900 dark:text-white">*Piscina</label>
+                            <select wire:model="pool"  name="pool" id="pool" placeholder="Piscina" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                            </select>
+                            @error('pool') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-1">
+                            <label for="distance" class="block text-sm font-medium text-gray-900 dark:text-white">*Distância</label>
+                            <select wire:model="distance"  name="distance" id="distance" placeholder="Distância" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="200">200</option>
+                            </select>
+                            @error('distance') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="sm:col-span-1" x-data x-init="Inputmask({
+                            'mask': '99/99/9999'
+                        }).mask($refs.day)">
+                            <label for="day"
+                                class="block text-sm font-medium text-gray-900 dark:text-white">Data</label>
+                            <input type="text" x-ref="day" wire:model="day" placeholder="Data"
+                                required=""
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                                rounded-lg focus:ring-primary-600 focus:border-primary-600
+                                block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('day')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-span-1">
+                            <label for="type_time" class="block text-sm font-medium text-gray-900 dark:text-white">*Tipo</label>
+                            <select wire:model="type_time"  name="type_time" id="type_time" placeholder="Tipo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
+                                    <option value="tomada">Tomada</option>
+                                    <option value="prova">Prova</option>
+                                    <option value="parcial">Parcial</option>
+                            </select>
+                            @error('type_time') <span class="error">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="flex items-end space-x-4">

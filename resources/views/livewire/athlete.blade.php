@@ -23,13 +23,13 @@
     <div class="grid sm:grid-cols-2 grid-cols-1 gap-4 " wire:model="athletes">
         @foreach ($athletes as $item)
         @php
-            $livre = $this->times->where('athlete_id',$item->id)->where('modality_id',1)->first();
-            $borbo = $this->times->where('athlete_id',$item->id)->where('modality_id',2)->first();
-            $costa = $this->times->where('athlete_id',$item->id)->where('modality_id',3)->first();
-            $peito = $this->times->where('athlete_id',$item->id)->where('modality_id',4)->first();
+            $livre = $this->times->where('distance',50)->where('athlete_id',$item->id)->where('modality_id',1)->first();
+            $borbo = $this->times->where('distance',50)->where('athlete_id',$item->id)->where('modality_id',2)->first();
+            $costa = $this->times->where('distance',50)->where('athlete_id',$item->id)->where('modality_id',3)->first();
+            $peito = $this->times->where('distance',50)->where('athlete_id',$item->id)->where('modality_id',4)->first();
         @endphp
         <div class="card card-side shadow-xl h-100 {{ ($item->sex == 'feminino' ? 'bg-red-100' : 'bg-blue-100' ) }}">
-            <figure class="w-48">
+            {{-- <figure class="w-48">
                 @if ($item->register)
                     <img class="photo" src="{{ imageProfile($item->register.'/'.$item->slug)}}"
                     alt="Movie" />
@@ -37,44 +37,41 @@
                     <img class="photo" src="{{url('storage/logo-gnu.svg')}}"
                     alt="Movie" />
                 @endif
-            </figure>
-            <div class="card-body">
-                <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }} ( {{ getCategory($item->birth) }} )</h2>
+            </figure> --}}
+
+            <div class="w-64 hidden sm:block">
+                @livewire('radar-stats', ['athlete' => $item], key($item->id))
+            </div>
+            <div class="card-body px-2">
+                <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }} ( {{ getCategory($item->birth)->name }} )</h2>
                 <p>{{ $item->name }}</p>
               <h2 class="card-title">Tempos 50m</h2>
-              <div class="grid grid-cols-4 gap-4">
-                <div>
-                    <div class="badge badge-info mb-2 w-full text-xs ">
-                        Borbo
+              <div class="grid grid-cols-4 gap-1">
+                    <div class="px-0 badge badge-info mb-2 w-full text-xs justify-center inline-block text-center ">
                         @isset($borbo)
                             {{converTime($borbo->record)}}
                         @endisset
+                        <span class="block ">Borbo</span>
                     </div>
-                </div>
-                <div>
-                    <div class="badge badge-success mb-2 w-full text-xs">
-                        Costa
+                    <div class="px-0 badge badge-success mb-2 w-full text-xs justify-center inline-block text-center">
+
                         @isset($costa)
                         {{converTime($costa->record)}}
                         @endisset
+                        <span class="block ">Costa</span>
                     </div>
-                </div>
-                <div>
-                    <div class="badge badge-warning mb-2 w-full text-xs">
-                        Peito
+                    <div class="px-0 badge badge-warning mb-2 w-full text-xs justify-center inline-block text-center">
                         @isset($peito)
                         {{converTime($peito->record)}}
                         @endisset
+                        <span class="block ">Peito</span>
                     </div>
-                </div>
-                <div>
-                    <div class="badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
+                    <div class="px-0 badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
                             @isset($livre)
                                 {{converTime($livre->record)}}
                             @endisset
                             <span class="block ">Craw</span>
                     </div>
-                </div>
               </div>
               <div class="card-actions justify-end">
                 <x-table-buttons-modals id="{{ $item->id }}"></x-table-buttons-modals>
@@ -108,12 +105,19 @@
                 @if($detail)
                     @foreach ($detail as $item => $value)
                         @if ($value)
-                        <div class="flex flex-col pb-1">
-                            <dt class="text-gray-500 md:text-lg dark:text-gray-400">{{ $item }}:</dt>
-                            <dd class="text-lg font-semibold">
-                                {{ $value }}
-                            </dd>
-                        </div>
+                            @if ($item == 'Foto')
+                                <figure class="w-48">
+                                    <img class="photo" src="{{$value}}"
+                                        alt="Movie" />
+                                </figure>
+                            @else
+                                <div class="flex flex-col pb-1">
+                                    <dt class="text-gray-500 md:text-lg dark:text-gray-400">{{ $item }}:</dt>
+                                    <dd class="text-lg font-semibold">
+                                        {{ $value }}
+                                    </dd>
+                                </div>
+                            @endif
 
                         @endif
                     @endforeach

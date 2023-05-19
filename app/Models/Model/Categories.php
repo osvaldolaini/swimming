@@ -15,8 +15,11 @@ class Categories extends Model
     // protected $casts = [
     //     'birth_year' => 'datetime:Y',
     // ];
-    public function athletes()
+    public function athletes($birth)
     {
-        return $this->hasMany(Athletes::class);
+        return Athletes::where('active', 1)
+        ->where('birth', 'LIKE', '%' . $birth. '%')
+        ->orderBy('sex','asc')->orderBy('name','asc')
+        ->get();
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Livewire\Category;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\GenerateTeams;
 use App\Http\Livewire\Modality;
+use App\Http\Livewire\Teams;
 use App\Http\Livewire\Time;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/atletas', Athlete::class)->name('athlete');
+    Route::get('/atletas-por-categoria', Teams::class)->name('teams');
     Route::get('/modalidades', Modality::class)->name('modality');
     Route::get('/categorias', Category::class)->name('category');
     Route::get('/tempos', Time::class)->name('times');
