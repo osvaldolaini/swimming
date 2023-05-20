@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
+
 class Time extends Component
 {
     use WithPagination;
@@ -66,6 +67,7 @@ class Time extends Component
         ->get();
     }
 
+
     public function render()
     {
         // Gate::authorize('admin');
@@ -82,8 +84,7 @@ class Time extends Component
             ['label' => 'Data', 'filter' => true, 'orderable' => true, 'field' => 'day', 'direction' => 'asc'],
         ];
 
-        return view(
-            'livewire.time',
+        return view('livewire.time',
             [
                 'data'      => $data,
             ]

@@ -99,12 +99,15 @@ class RadarStats extends Component
 
     public function getAll()
     {
-            $a = $this->getMedia(1) / 4;
-            $b = $this->getMedia(2) / 4;
-            $c = $this->getMedia(3) / 4;
-            $d = $this->getMedia(4) / 4;
 
-            $e = $a + $b + $c + $d;
+        $e = 0;
+            for ($i=1; $i < 5; $i++) {
+                if($this->getMedia(1) > 0 ){
+                    $x = $this->getMedia($i) / 4;
+                }
+                $e+=$x;
+            }
+
             return $e;
     }
 }
