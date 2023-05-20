@@ -3,6 +3,9 @@
     <div class="bg-white shadow-md dark:bg-gray-800 sm:rounded-lg mb-3">
         @livewire('sheets-export')
     </div>
+    <div class="bg-white shadow-md dark:bg-gray-800 sm:rounded-lg mb-3">
+        @livewire('sheets-import')
+    </div>
     <div class="bg-white shadow-md dark:bg-gray-800 pt-3 sm:rounded-lg">
         <div class="flex flex-col items-center justify-between px-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
         <x-table-filters :heads="$heads"></x-table-filters>
