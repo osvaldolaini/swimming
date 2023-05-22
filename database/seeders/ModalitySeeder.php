@@ -18,7 +18,7 @@ class ModalitySeeder extends Seeder
                 [
                     'id' => 1,
                     'active' => '1',
-                    'title' => 'Craw',
+                    'title' => 'Crawl',
                 ],
 
                 [

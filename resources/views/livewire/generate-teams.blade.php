@@ -65,7 +65,7 @@
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             <option value="livre">Livre</option>
                             <option value="medley">Medley</option>
-                            <option value="1">Craw</option>
+                            <option value="1">Crawl</option>
                             <option value="2">Borboleta</option>
                             <option value="3">Costas</option>
                             <option value="4">Peito</option>

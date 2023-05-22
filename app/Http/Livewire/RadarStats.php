@@ -22,7 +22,7 @@ class RadarStats extends Component
 
         $this->labels = [
             'Medley',
-            'Craw',
+            'Crawl',
             'Borbo',
             'costa',
             'Peito',
@@ -99,8 +99,8 @@ class RadarStats extends Component
 
     public function getAll()
     {
-
         $e = 0;
+        $x = 0;
             for ($i=1; $i < 5; $i++) {
                 if($this->getMedia(1) > 0 ){
                     $x = $this->getMedia($i) / 4;
@@ -108,6 +108,6 @@ class RadarStats extends Component
                 $e+=$x;
             }
 
-            return $e;
+        return $e;
     }
 }

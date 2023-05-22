@@ -56,7 +56,6 @@ class Time extends Component
         // $this->athletes = Athletes::where('active',1)->get();
         $this->modalities = Modalities::where('active',1)->get();
         $this->categories = Categories::where('active',1)->get();
-
     }
 
     public function getAthletes()
@@ -66,7 +65,6 @@ class Time extends Component
         ->where('birth', 'LIKE', '%' . $birth_year . '%')
         ->get();
     }
-
 
     public function render()
     {
@@ -90,7 +88,6 @@ class Time extends Component
             ]
         );
     }
-
 
     //CREATE
     public function showModalCreate()
@@ -146,8 +143,13 @@ class Time extends Component
 
         if (isset($id)) {
             $data = Times::where('id', $id)->first();
-            // dd($data);
+            if ($data->athletes->register) {
+                $image = imageProfile($data->athletes->register.'/'.$data->athletes->slug);
+            }else{
+                $image = url('storage/logo-gnu.svg');
+            }
             $this->detail = [
+                'Foto'              => $image,
                 'Piscina'           => $data->pool,
                 'Distancia'         => $data->distance,
                 'Criada'            => convertDate($data->created_at),
@@ -239,7 +241,7 @@ class Time extends Component
     public function delete($id)
     {
         $data = Times::where('id', $id)->first();
-        $data->destroy();
+        $data->delete();
 
         session()->flash('success', 'Registro excluido com sucesso.');
 
@@ -252,8 +254,6 @@ class Time extends Component
             'record'
         );
     }
-
-
 
     //EXTRAS
     //Ordena os colunas nas tabelas

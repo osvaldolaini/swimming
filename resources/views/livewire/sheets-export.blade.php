@@ -4,9 +4,8 @@
             <h1 class="text-5xl font-bold py-0 my-0">Selecione os filtros e click no botão verde.</h1>
         </div>
       </div>
-    <div class="p-2 flex flex-col items-stretch justify-end  w-full
+    <div class="p-2 flex flex-col items-stretch justify-end w-full
     space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
-
         <section class="px-6 py-2 dark:bg-gray-800 dark:text-gray-50">
             <div class="container flex flex-col mx-auto space-y-12
             ng-untouched ng-pristine ng-valid">
@@ -25,7 +24,7 @@
                         <Select wire:model="modality"
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             <option value="medley">Todas</option>
-                            <option value="1">Craw</option>
+                            <option value="1">Crawl</option>
                             <option value="2">Borboleta</option>
                             <option value="3">Costa</option>
                             <option value="4">Peito</option>
@@ -33,9 +32,9 @@
                     </div>
                     <div class="col-span-full sm:col-span-2">
                         <label for="lastname" class="text-sm">Categoria</label>
-                        <Select wire:model="birth_year"
+                        <Select wire:model="birth_year" required
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
-                            <option value="todas">Todas</option>
+                            <option value="">Selecione</option>
                             @foreach ($category as $item)
                                 <option value="{{ $item->birth_year }}">{{ $item->name }}</option>
                             @endforeach

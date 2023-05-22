@@ -70,7 +70,7 @@
                             @isset($livre)
                                 {{converTime($livre->record)}}
                             @endisset
-                            <span class="block ">Craw</span>
+                            <span class="block ">Crawl</span>
                     </div>
               </div>
               <div class="card-actions justify-end">

@@ -34,14 +34,18 @@ class SheetsExport extends Component
     public function downloadExcel()
     {
         // return Excel::download(new PlanilhaExport(), 'planilha_modelo_tempos.xlsx');
-        $name = 'planilha_'.$this->type_time.'_'.$this->type_team.'_'.$this->birth_year.'_'.$this->modality.'_'.$this->pool.'_'.$this->distance;
+        $name = 'planilha_'.$this->type_time.'_'.$this->type_team.'_'.$this->birth_year.'_'.$this->modality.'_'.$this->pool.'_'.$this->distance.'_excel';
 
         if($this->birth_year != 'todas'){
             $this->allAthletes = Athletes::where('active', 1)
             ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+            ->orderBy('name','desc')
+            ->orderBy('sex','desc')
             ->get();
         }else{
             $this->allAthletes = Athletes::where('active', 1)
+            ->orderBy('name','desc')
+            ->orderBy('sex','desc')
             // ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
             ->get();
         }
@@ -55,7 +59,7 @@ class SheetsExport extends Component
             $title = 'medley';
         }else{
             switch ($this->modality) {
-                case 1:  $title ='Craw'; break;
+                case 1:  $title ='Crawl'; break;
                 case 2:  $title ='Borbo'; break;
                 case 3:  $title ='Costa'; break;
                 case 4:  $title ='Peito'; break;
