@@ -41,14 +41,14 @@ class PlanilhaImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $category = Categories::where('active',1)->where('birth_year',$this->birth_year)->first();
-        // dd($row);
+
         if($row['id_atleta'] != "*" OR $row['id_atleta'] != ""){
+
             $this->day = $this->convertDay($row['dia_ddmmaaaa']);
             // dd($this->day);
             if (is_array($this->modality_id)) {
                 for ($i=0; $i < 4; $i++) {
 
-                    // dd($this->record);
                     if($this->record > 0){
                         switch ($this->modality_id[$i]) {
                             case 1:
@@ -80,8 +80,6 @@ class PlanilhaImport implements ToModel, WithHeadingRow
                     }
                 }
             }else{
-
-                if($this->record > 0){
                     switch ($this->modality_id) {
                         case 1:
                             $this->record = round($this->records($row['crawl_000000']), 2);
@@ -96,6 +94,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
                             $this->record = round($this->records($row['peito_000000']), 2);
                         break;
                     }
+                if($this->record > 0){
                     Times::create([
                         'athlete_id'    => $row['id_atleta'],
                         'modality_id'   => intval($this->modality_id),
@@ -119,9 +118,6 @@ class PlanilhaImport implements ToModel, WithHeadingRow
     public function records($record)
     {
         if (is_numeric($record) && is_int((int) $record)) {
-            // dd($record);
-            return invertTime($record);
-        } else {
             $valorFracionado = $record;
             $segundosEmUmDia = 24 * 60 * 60;
 
@@ -132,9 +128,28 @@ class PlanilhaImport implements ToModel, WithHeadingRow
 
             $decimosSegundo = floor(($tempoEmSegundos - floor($tempoEmSegundos)) * 1000);
 
-            return invertTime(sprintf('%02d:%02d,%02d',  $minutos, $segundos, $decimosSegundo));
-        }
+            return invertTime(sprintf('%02d:%02d,%02d',
+              $minutos,
+               $segundos,
+                $decimosSegundo)
+            );
 
+        } else {
+            // dd($record);
+            $time = explode(':',$record);
+            if(isset($time[1])){
+                $secs = explode(',',$time[1]);
+                // dd($secs);
+                return invertTime(
+                    sprintf(
+                            '%02d:%02d,%02d',
+                            intval($time[0]),
+                            intval($secs[0]),
+                            intval($secs[1])
+                            )
+                );
+            }
+        }
     }
     public function convertDay($day)
     {
