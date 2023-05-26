@@ -2,7 +2,7 @@
 <div class="w-full">
     <div class="flex justify-between font-medium duration-200 ">
         <div class="tooltip tooltip-bottom p-0" data-tip="Evolução">
-            <a href="#"
+            <a href="{{ route('allStats') }}?atleta={{ $id }}"
             class="flex py-2 px-3 hover:text-white dark:hover:bg-gray-500 hover:hover:bg-gray-500 whitespace-nowrap">
             <svg class="h-6 w-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                     <path d="M12 19L12 11" stroke="currentColor" stroke-width="4" stroke-linecap="round" />

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\AllStats;
 use App\Http\Livewire\Athlete;
 use App\Http\Livewire\Category;
 use App\Http\Livewire\Dashboard;
@@ -36,6 +37,7 @@ Route::middleware([
     Route::get('/categorias', Category::class)->name('category');
     Route::get('/tempos', Time::class)->name('times');
     Route::get('/gerar-equipe', GenerateTeams::class)->name('generateTeam');
+    Route::get('/evolução-do-atleta', AllStats::class)->name('allStats');
     // Route::get('/dashboard', function () {
     //     return view('dashboard');
     // })->name('dashboard');

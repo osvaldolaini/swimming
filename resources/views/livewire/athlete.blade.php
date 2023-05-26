@@ -1,4 +1,9 @@
 <div>
+    <div class="hero bg-gray-100 rounded-t-lg mb-5">
+        <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
+            <h1 class="text-4xl font-black py-0 my-0">ATLETAS {{ mb_strtoupper($cat) }}</h1>
+        </div>
+    </div>
     <style>
         .photo {
             width: 100%;
@@ -9,27 +14,44 @@
             text-indent: 10000px;
         }
     </style>
-    <div class="grid sm:grid-cols-3 grid-cols-1 gap-4 mb-3" >
+    <div class="grid sm:grid-cols-3 grid-cols-1 gap-4 mb-3">
         <button class="btn gap-2" wire:click="showModalCreate()">
-            <svg class="h-8 w-8 " fill="currentColor" viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path clip-rule="evenodd" fill-rule="evenodd"
-                        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                </svg>
+            <svg class="h-8 w-8 " fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+            </svg>
             Inserir atleta
-          </button>
-          <x-message-session ></x-message-session>
+        </button>
+        <x-message-session></x-message-session>
     </div>
     <div class="grid sm:grid-cols-2 grid-cols-1 gap-4 " wire:model="athletes">
         @foreach ($athletes as $item)
-        @php
-            $livre = $this->times->where('distance',50)->where('athlete_id',$item->id)->where('modality_id',1)->first();
-            $borbo = $this->times->where('distance',50)->where('athlete_id',$item->id)->where('modality_id',2)->first();
-            $costa = $this->times->where('distance',50)->where('athlete_id',$item->id)->where('modality_id',3)->first();
-            $peito = $this->times->where('distance',50)->where('athlete_id',$item->id)->where('modality_id',4)->first();
-        @endphp
-        <div class="card card-side shadow-xl h-100 {{ ($item->sex == 'feminino' ? 'bg-red-100' : 'bg-blue-100' ) }}">
-            {{-- <figure class="w-48">
+            @php
+                $livre = $this->times
+                    ->where('distance', 50)
+                    ->where('athlete_id', $item->id)
+                    ->where('modality_id', 1)
+                    ->first();
+                $borbo = $this->times
+                    ->where('distance', 50)
+                    ->where('athlete_id', $item->id)
+                    ->where('modality_id', 2)
+                    ->first();
+                $costa = $this->times
+                    ->where('distance', 50)
+                    ->where('athlete_id', $item->id)
+                    ->where('modality_id', 3)
+                    ->first();
+                $peito = $this->times
+                    ->where('distance', 50)
+                    ->where('athlete_id', $item->id)
+                    ->where('modality_id', 4)
+                    ->first();
+            @endphp
+            <div
+                class="card card-side shadow-xl h-100 {{ $item->sex == 'feminino' ? 'bg-red-100' : 'bg-blue-100' }}">
+                {{-- <figure class="w-48">
                 @if ($item->register)
                     <img class="photo" src="{{ imageProfile($item->register.'/'.$item->slug)}}"
                     alt="Movie" />
@@ -39,46 +61,48 @@
                 @endif
             </figure> --}}
 
-            <div class="w-64 hidden sm:block">
-                @livewire('radar-stats', ['athlete' => $item], key($item->id))
-            </div>
-            <div class="card-body px-2">
-                <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }} ( {{ getCategory($item->birth)->name }} )</h2>
-                <p>{{ $item->name }}</p>
-              <h2 class="card-title">Tempos 50m</h2>
-              <div class="grid grid-cols-4 gap-1">
-                    <div class="px-0 badge badge-info mb-2 w-full text-xs justify-center inline-block text-center ">
-                        @isset($borbo)
-                            {{converTime($borbo->record)}}
-                        @endisset
-                        <span class="block ">Borbo</span>
-                    </div>
-                    <div class="px-0 badge badge-success mb-2 w-full text-xs justify-center inline-block text-center">
+                <div class="w-64 hidden sm:block">
+                    @livewire('radar-stats', ['athlete' => $item], key($item->id))
+                </div>
+                <div class="card-body px-2">
+                    <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }} (
+                        {{ getCategory($item->birth)->name }} )</h2>
+                    <p>{{ $item->name }}</p>
+                    <h2 class="card-title">Tempos 50m</h2>
+                    <div class="grid grid-cols-4 gap-1">
+                        <div class="px-0 badge badge-info mb-2 w-full text-xs justify-center inline-block text-center ">
+                            @isset($borbo)
+                                {{ converTime($borbo->record) }}
+                            @endisset
+                            <span class="block ">Borbo</span>
+                        </div>
+                        <div
+                            class="px-0 badge badge-success mb-2 w-full text-xs justify-center inline-block text-center">
 
-                        @isset($costa)
-                        {{converTime($costa->record)}}
-                        @endisset
-                        <span class="block ">Costa</span>
-                    </div>
-                    <div class="px-0 badge badge-warning mb-2 w-full text-xs justify-center inline-block text-center">
-                        @isset($peito)
-                        {{converTime($peito->record)}}
-                        @endisset
-                        <span class="block ">Peito</span>
-                    </div>
-                    <div class="px-0 badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
+                            @isset($costa)
+                                {{ converTime($costa->record) }}
+                            @endisset
+                            <span class="block ">Costa</span>
+                        </div>
+                        <div
+                            class="px-0 badge badge-warning mb-2 w-full text-xs justify-center inline-block text-center">
+                            @isset($peito)
+                                {{ converTime($peito->record) }}
+                            @endisset
+                            <span class="block ">Peito</span>
+                        </div>
+                        <div class="px-0 badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
                             @isset($livre)
-                                {{converTime($livre->record)}}
+                                {{ converTime($livre->record) }}
                             @endisset
                             <span class="block ">Crawl</span>
+                        </div>
                     </div>
-              </div>
-              <div class="card-actions justify-end">
-                <x-table-buttons-modals id="{{ $item->id }}"></x-table-buttons-modals>
-              </div>
+                    <div class="card-actions justify-end">
+                        <x-table-buttons-modals id="{{ $item->id }}"></x-table-buttons-modals>
+                    </div>
+                </div>
             </div>
-        </div>
-
         @endforeach
     </div>
     {{-- MODAL DELETE --}}
@@ -102,13 +126,12 @@
         <x-slot name="title">Detalhes</x-slot>
         <x-slot name="content">
             <dl class="max-w text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                @if($detail)
+                @if ($detail)
                     @foreach ($detail as $item => $value)
                         @if ($value)
                             @if ($item == 'Foto')
                                 <figure class="w-48">
-                                    <img class="photo" src="{{$value}}"
-                                        alt="Movie" />
+                                    <img class="photo" src="{{ $value }}" alt="Movie" />
                                 </figure>
                             @else
                                 <div class="flex flex-col pb-1">
@@ -118,7 +141,6 @@
                                     </dd>
                                 </div>
                             @endif
-
                         @endif
                     @endforeach
                 @endif
@@ -137,27 +159,40 @@
             <form action="#" wire:submit.prevent="store()" wire.loading.attr='disable'>
                 <div class="grid gap-4 mb-1 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                     <div class="sm:col-span-2">
-                        <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">Nome completo</label>
-                        <input type="text" wire:model="name" name="name" id="name"  placeholder="Nome completo" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('name') <span class="error">{{ $message }}</span> @enderror
+                        <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">Nome
+                            completo</label>
+                        <input type="text" wire:model="name" name="name" id="name"
+                            placeholder="Nome completo" required=""
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @error('name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:w-full col-span-2 ">
-                        <label for="nick" class="block text-sm font-medium text-gray-900 dark:text-white">Apelido</label>
-                        <input type="text" wire:model="nick" name="nick" id="nick"  placeholder="Apelido" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('nick') <span class="error">{{ $message }}</span> @enderror
+                        <label for="nick"
+                            class="block text-sm font-medium text-gray-900 dark:text-white">Apelido</label>
+                        <input type="text" wire:model="nick" name="nick" id="nick" placeholder="Apelido"
+                            required=""
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @error('nick')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:w-full col-span-2 ">
-                        <label for="register" class="block text-sm font-medium text-gray-900 dark:text-white">Nº de registro</label>
-                        <input type="text" wire:model="register"  placeholder="Registro" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('register') <span class="error">{{ $message }}</span> @enderror
+                        <label for="register" class="block text-sm font-medium text-gray-900 dark:text-white">Nº de
+                            registro</label>
+                        <input type="text" wire:model="register" placeholder="Registro"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @error('register')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:col-span-2" x-data x-init="Inputmask({
                         'mask': '99/99/9999'
                     }).mask($refs.birth)">
                         <label for="birth"
                             class="block text-sm font-medium text-gray-900 dark:text-white">Data</label>
-                        <input type="text" x-ref="birth" wire:model="birth" placeholder="Data"
-                            required=""
+                        <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                             rounded-lg focus:ring-primary-600 focus:border-primary-600
                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -167,18 +202,21 @@
                     </div>
                     <div class="sm:w-full col-span-2 ">
                         <label for="sex"
-                        class="block text-sm font-medium text-gray-900 dark:text-white">Sexo</label>
-                        <select wire:model="sex"  name="sex" id="sex" placeholder="Sexo"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
-                                <option value="">Selecione uma opção</option>
-                                <option value="masculino">Masculino</option>
-                                <option value="feminino">Feminino</option>
+                            class="block text-sm font-medium text-gray-900 dark:text-white">Sexo</label>
+                        <select wire:model="sex" name="sex" id="sex" placeholder="Sexo"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option value="">Selecione uma opção</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
                         </select>
-                        @error('sex') <span class="error">{{ $message }}</span> @enderror
+                        @error('sex')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="flex items-end space-x-4">
-                    <button type="submit" class="text-white
+                    <button type="submit"
+                        class="text-white
                     bg-blue-700 hover:bg-blue-800
                     focus:ring-4 focus:outline-none focus:ring-blue-300
                     font-medium rounded-lg text-sm px-5 py-2.5
@@ -203,27 +241,40 @@
             <form wire:submit.prevent="update">
                 <div class="grid gap-4 mb-1 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                     <div class="sm:col-span-2">
-                        <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">Nome completo</label>
-                        <input type="text" wire:model="name" name="name" id="name"  placeholder="Nome completo" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('name') <span class="error">{{ $message }}</span> @enderror
+                        <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">Nome
+                            completo</label>
+                        <input type="text" wire:model="name" name="name" id="name"
+                            placeholder="Nome completo" required=""
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @error('name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:w-full col-span-2 ">
-                        <label for="nick" class="block text-sm font-medium text-gray-900 dark:text-white">Apelido</label>
-                        <input type="text" wire:model="nick" name="nick" id="nick"  placeholder="Apelido" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('nick') <span class="error">{{ $message }}</span> @enderror
+                        <label for="nick"
+                            class="block text-sm font-medium text-gray-900 dark:text-white">Apelido</label>
+                        <input type="text" wire:model="nick" name="nick" id="nick" placeholder="Apelido"
+                            required=""
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @error('nick')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:w-full col-span-2 ">
-                        <label for="register" class="block text-sm font-medium text-gray-900 dark:text-white">Nº de registro</label>
-                        <input type="text" wire:model="register" placeholder="Registro" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('register') <span class="error">{{ $message }}</span> @enderror
+                        <label for="register" class="block text-sm font-medium text-gray-900 dark:text-white">Nº de
+                            registro</label>
+                        <input type="text" wire:model="register" placeholder="Registro"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @error('register')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:col-span-2" x-data x-init="Inputmask({
                         'mask': '99/99/9999'
                     }).mask($refs.birth)">
                         <label for="birth"
                             class="block text-sm font-medium text-gray-900 dark:text-white">Data</label>
-                        <input type="text" x-ref="birth" wire:model="birth" placeholder="Data"
-                            required=""
+                        <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                             rounded-lg focus:ring-primary-600 focus:border-primary-600
                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -233,18 +284,21 @@
                     </div>
                     <div class="sm:w-full col-span-2 ">
                         <label for="sex"
-                        class="block text-sm font-medium text-gray-900 dark:text-white">Sexo</label>
-                        <select wire:model="sex"  name="sex" id="sex" placeholder="Sexo"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
-                                <option value="">Selecione uma opção</option>
-                                <option value="masculino">Masculino</option>
-                                <option value="feminino">Feminino</option>
+                            class="block text-sm font-medium text-gray-900 dark:text-white">Sexo</label>
+                        <select wire:model="sex" name="sex" id="sex" placeholder="Sexo"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option value="">Selecione uma opção</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
                         </select>
-                        @error('sex') <span class="error">{{ $message }}</span> @enderror
+                        @error('sex')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="flex items-end space-x-4">
-                    <button type="submit" class="text-white
+                    <button type="submit"
+                        class="text-white
                     bg-blue-700 hover:bg-blue-800
                     focus:ring-4 focus:outline-none focus:ring-blue-300
                     font-medium rounded-lg text-sm px-5 py-2.5
@@ -258,7 +312,7 @@
         <x-slot name="footer">
             <x-primary-button wire:click="$toggle('showModalEdit')" class="mx-2">
                 Fechar
-            </x-secondary-button>
+                </x-secondary-button>
         </x-slot>
     </x-dialog-modal>
 </div>

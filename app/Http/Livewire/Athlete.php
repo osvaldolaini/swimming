@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Model\Athletes;
+use App\Models\Model\Categories;
 use App\Models\Model\Times;
 use Livewire\Component;
 
@@ -17,6 +18,7 @@ class Athlete extends Component
     // public Athletes $athletes;
     public $athletes;
     public $category;
+    public $cat;
     public $times;
     public $imageUrl;
 
@@ -47,6 +49,7 @@ class Athlete extends Component
             ->where('birth', 'LIKE', '%' . $_GET['category']. '%')
             ->orderBy('sex','asc')->orderBy('name','asc')
             ->get();
+            $this->cat = Categories::where('birth_year',$_GET['category'])->first()->name;
         }
 
         $this->times = Times::orderBy('record','asc')->get();
