@@ -107,7 +107,7 @@ if (!function_exists('getCategory')) {
     function getCategory($date)
     {
         $d = explode('-',$date);
-            return Categories::select('name','id')->where('birth_year',$d[0])->first();
+            return Categories::select('name','id','birth_year')->where('birth_year',$d[0])->first();
 
     }
 }

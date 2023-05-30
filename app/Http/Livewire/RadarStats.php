@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Model\Athletes;
 use App\Models\Model\Times;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class RadarStats extends Component
 {
@@ -18,8 +19,9 @@ class RadarStats extends Component
     {
         $this->athletes = $athlete;
         $this->name = $athlete->name;
-        $this->category = getCategory($athlete->birth);
 
+        $this->category = getCategory($athlete->birth);
+// dd($this->category);
         $this->labels = [
             'Medley',
             'Crawl',
@@ -36,7 +38,6 @@ class RadarStats extends Component
             $this->getMedia(3),
             $this->getMedia(4),
         ];
-
     }
     public function render()
     {
@@ -65,6 +66,7 @@ class RadarStats extends Component
 
             if ($time) {
                 if($time->record < $most){
+
                     $most = $time->record;
                 }
                 $at +=1;
