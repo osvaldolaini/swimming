@@ -1,3 +1,3 @@
 <div>
-    To attain knowledge, add things every day; To attain wisdom, subtract things every day.
+    Software para acompanhamento de atletas e montagem de equipes de revezamento.
 </div>
