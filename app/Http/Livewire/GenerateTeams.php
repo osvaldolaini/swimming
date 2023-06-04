@@ -267,6 +267,7 @@ class GenerateTeams extends Component
                             // $time_athlete[] = date('i', strtotime($time->record)).':'.number_format(date('s.u', strtotime($time->record)), 2, '.', '');
                         }
                     }
+
                     if (count($athletes) == 4) {
                         if ($this->type_team == 'mista') {
                             //Remove se existir mais de 2 meninos na equipe
@@ -292,8 +293,9 @@ class GenerateTeams extends Component
                     //     break;
                     // }
                 }
-                return $this->array_msort($allTeams, array('time_total'=>SORT_ASC));
-        // return $allTeams;
+                // dd(array_filter($allTeams));
+                return $this->array_msort(array_filter($allTeams), array('time_total'=>SORT_ASC));
+        // dd($allTeams);
     }
     //Função que ordena pelo melhor tempo
     function array_msort($array, $cols)
