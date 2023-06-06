@@ -227,14 +227,14 @@
     <div class="modal" id="my-modal-2">
         <div class="modal-box">
             <h3 class="font-bold text-lg">Remover atletas</h3>
-            <div class="grid grid-cols-2 gap-4 " wire:model="allAthletes">
+            <div class="grid grid-cols-2 gap-4" wire:model="allAthletes">
                 @isset($allAthletes)
                     @foreach ($allAthletes as $item)
                         <div class="form-control ">
-                            <label class="cursor-pointer label ">
+                            <label class="cursor-pointer label">
+                                <span class="label-text">{{ $item->nick }}</span>
                                 <input type="checkbox" wire:click='filterAthletes({{ $item->id }})'
-                                    checked="checked" class="checkbox checkbox-info mr-0 pr-0" />
-                                <span class="label-text ">{{ $item->nick }}</span>
+                                    checked="checked" class="checkbox checkbox-info" />
                             </label>
                         </div>
                     @endforeach

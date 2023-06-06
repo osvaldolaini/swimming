@@ -40,6 +40,8 @@ class PlanilhaImport implements ToModel, WithHeadingRow
         }
     public function model(array $row)
     {
+
+        // dd($row);
         $category = Categories::where('active',1)->where('birth_year',$this->birth_year)->first();
 
         if($row['id_atleta'] != "*" OR $row['id_atleta'] != ""){
@@ -112,7 +114,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
             }
         }
 
-        // dd($data);
+            // dd($data);
     }
     //Converter o tempo vindo da planilha
     public function records($record)

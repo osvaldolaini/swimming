@@ -65,8 +65,9 @@
                     @livewire('radar-stats', ['athlete' => $item], key($item->id))
                 </div>
                 <div class="card-body px-2">
-                    <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }} (
-                        {{ getCategory($item->birth)->name }} )</h2>
+                    <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }}
+                        {{-- (
+                        {{ getCategory($item->birth)->name }} ) --}}</h2>
                     <p>{{ $item->name }}</p>
                     <h2 class="card-title">Tempos 50m</h2>
                     <div class="grid grid-cols-4 gap-1">
