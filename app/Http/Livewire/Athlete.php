@@ -113,7 +113,7 @@ class Athlete extends Component
             if ($data->register) {
                 $image = imageProfile($data->register.'/'.$data->slug);
             }else{
-                $image = url('storage/logo-gnu.svg');
+                $image = url('storage/site/logo-gnu.svg');
             }
             $this->detail = [
                 'Foto'              => $image,

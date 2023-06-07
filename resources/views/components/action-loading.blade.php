@@ -411,10 +411,10 @@
             <div style="color: #64d6e2" class="la-timer la-3x">
                 <div></div>
             </div>
-            <div style="color: #64d6e2" class="la-square-jelly-box la-3x">
+            {{-- <div style="color: #64d6e2" class="la-square-jelly-box la-3x">
                 <div></div>
                 <div></div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
