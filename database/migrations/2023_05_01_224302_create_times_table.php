@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('pool')->nullable();
             $table->integer('distance')->nullable();
             $table->string('type_time',100)->nullable();
-            $table->decimal(10,2)->nullable();
+            $table->decimal('record',10,2)->nullable();
             $table->string('code')->nullable();
             $table->timestamps();
             $table->string('updated_by',50)->nullable();
