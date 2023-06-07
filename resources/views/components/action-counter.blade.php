@@ -8,7 +8,7 @@
 
     </div>
     <div class="flex flex-col px-2 py-1 bg-neutral rounded-box text-neutral-content">
-        <span class="font-mono text-5xl">
+        <span class="font-mono text-4xl sm:text-5xl">
             <span>{{$time}}</span>
         </span>
     </div>

@@ -172,7 +172,7 @@
         </div>
     </section>
     <section wire:model="equipes">
-        <div class="grid grid-cols-3 card card-side gap-4 rounded-md">
+        <div class="grid grid-cols-1 sm:grid-cols-3 card card-side gap-4 rounded-md">
             @isset($equipes)
                 @php
                     $title = 0;
@@ -182,8 +182,8 @@
                         $title += 1;
                         $t = converTime($equipe['time_total']);
                     @endphp
-                    <div class="card card-side bg-neutral rounded-box text-neutral-content px-0">
-                        <div class="py-2 card-body mx-auto px-2">
+                    <div class="card card-side bg-neutral rounded-box text-neutral-content px-1 sm:px-0">
+                        <div class="py-2 card-body mx-auto px-3 sm:px-2">
                             <div class="w-full text-center">
                                 <x-action-counter time="{{ $t }}" title="{{ $title }}">
                                 </x-action-counter>
