@@ -292,8 +292,8 @@ class GenerateTeams extends Component
                     //     break;
                     // }
                 }
-                // return $this->array_msort($allTeams, array('time_total'=>SORT_ASC));
-        return $allTeams;
+                return $this->array_msort(array_filter($allTeams), array('time_total'=>SORT_ASC));
+        // return $allTeams;
     }
     //Função que ordena pelo melhor tempo
     function array_msort($array, $cols)
