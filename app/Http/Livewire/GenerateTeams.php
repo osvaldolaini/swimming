@@ -125,7 +125,7 @@ class GenerateTeams extends Component
 
         // dd($this->equipes);
         $this->equipes = $this->getTeams($this->equipes);
-
+        // dd($this->equipes);
         if($this->select_team == 'best'){
             $this->equipes = $this->bestTeams($this->equipes);
         }
@@ -171,8 +171,6 @@ class GenerateTeams extends Component
 
         return $athletes;
     }
-
-
 
     //Pega a equipe medley
     public function medleyTeams($atletas){

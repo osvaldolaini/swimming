@@ -1,8 +1,8 @@
 <div>
     @isset($message)
 
-        <div class="w-full text-white bg-blue-500">
-            <div class="container flex items-center justify-between px-6 py-1 mx-auto">
+        <div class="w-full text-white bg-blue-500 rounded-md">
+            <div class="container flex items-center justify-between px-6 py-2 mx-auto">
                 <div class="flex">
                     <svg viewBox="0 0 40 40" class="w-6 h-6 fill-current">
                         <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z">
@@ -11,7 +11,7 @@
 
                     <p class="mx-3"> {{ $message }}</p>
                 </div>
-{{--
+                {{--
                 <button class="p-1 transition-colors duration-300 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -20,19 +20,22 @@
             </div>
         </div>
     @endisset
-    <x-action-loading></x-action-loading>
-    <section class="px-6 py-2 dark:bg-gray-800 dark:text-gray-50">
-        <div class="container flex flex-col mx-auto space-y-12
-        ng-untouched ng-pristine ng-valid">
-            <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
+
+    <section class="px-6 py-1 dark:bg-gray-800 dark:text-gray-50">
+        <div class="container flex flex-col mx-auto space-y-8
+        ng-untouched ng-pristine ng-valid relative">
+        <x-action-loading></x-action-loading>
+            <fieldset class="grid grid-cols-4 gap-6 px-6 py-2 rounded-md shadow-sm dark:bg-gray-900">
                 <div class="space-y-2 col-span-full lg:col-span-1">
                     <p class="font-medium">Monte a(s) equipe(s)</p>
                     <p class="text-xs">Informe os dados necessários para formar a(s) equipe(s).</p>
                     <form wire:submit.prevent="generateTeams()">
                         <div class="col-span-full sm:col-span-3 mt-0">
                             <button type="submit" wire:loading.remove
-                                class="flex justify-between px-8 py-2 font-semibold text-gray-50
-                                rounded-full bg-blue-300 dark:bg-blue-800">
+                                class="animate-pulse flex justify-between px-8 py-2 font-semibold text-gray-50
+                                rounded-full bg-blue-600 dark:bg-blue-800
+                                transform hover:scale-x-110 hover:scale-y-105 transition
+                                duration-300 ease-out">
 
                                 <span class="px-2 ">Gerar equipe(s) </span>
                                 {{-- <svg fill="currentColor" class="w-6 h-6" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -243,15 +246,15 @@
 
     <div class="modal" id="my-modal-2">
         <div class="modal-box">
-            <h3 class="font-bold text-lg">Remover atletas</h3>
+            <h3 class="font-bold text-lg pb-2">Remover atletas</h3>
             <div class="grid grid-cols-2 gap-4" wire:model="allAthletes">
                 @isset($allAthletes)
                     @foreach ($allAthletes as $item)
-                        <div class="form-control ">
-                            <label class="cursor-pointer label">
-                                <span class="label-text">{{ $item->nick }}</span>
+                        <div class="form-control">
+                            <label class="cursor-pointer">
                                 <input type="checkbox" wire:click='filterAthletes({{ $item->id }})'
                                     checked="checked" class="checkbox checkbox-info" />
+                                <span class="pl-1 label-text">{{ $item->nick }}</span>
                             </label>
                         </div>
                     @endforeach
