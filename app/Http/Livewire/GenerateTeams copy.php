@@ -29,7 +29,6 @@ class GenerateTeams extends Component
     public $num_teams = 4;
     public $modalidades;
     public $message = null;
-    public $qtd_athletes = 12;
 
     public $times;
 
@@ -87,13 +86,6 @@ class GenerateTeams extends Component
     //Função que monta as equipes
     public function generateTeams()
     {
-        //Ambos os sexos
-        if ($this->type_team == 'mista') {
-            $this->qtd_athletes = 6;
-        }else{
-            $this->qtd_athletes = 12;
-        }
-
         $this->equipes = array();
         $atletas = $this->getAthletes();
         // Atletas removidos
@@ -102,27 +94,19 @@ class GenerateTeams extends Component
             $atletas = $atletas->values();
         }
         if($atletas->count() < 4){
-            $this->message = 'Quantidade de atletas é insuficiente para montar uma equipe ou não existem atletas com tempos cadastrados!';
+            $this->message = 'Quantidade de atletas é insuficiente para montar uma equipe!';
             return;
         }else{
             $this->message = null;
         }
-
+        // dd($atletas);
         //Função que pega a equipe medley
         if ($this->modality == 'medley') {
-            if($this->select_team == 'best') {
-                $atletas =  $this->qtdTeams($atletas);
-            }
-            $this->equipes = $this->medleyTeams($atletas);
+            $this->equipes= $this->medleyTeams($atletas);
         }else{
-            if($this->select_team == 'best') {
-                $atletas =  $this->qtdTeams($atletas);
-            }
-            // dd($atletas);
             //Função que pega a equipe por modalidade
             $this->equipes = $this->modalityTeams($atletas);
         }
-
         // dd($this->equipes);
         $this->equipes = $this->getTeams($this->equipes);
 
@@ -134,8 +118,8 @@ class GenerateTeams extends Component
     }
     public function getAthletes()
     {
-        //Ambos os sexos
-        if ($this->type_team == 'mista') {
+         //Ambos os sexos
+         if ($this->type_team == 'mista') {
             $atletas = DB::table('athletes')->select('id')
             ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
             ->pluck('id');
@@ -170,57 +154,8 @@ class GenerateTeams extends Component
             }
         }
 
-        return $athletes;
+        return $athletes ;
     }
-
-     //Pega a equipe por modalidade
-     public function qtdTeams($atletas)
-     {
-        //Ambos os sexos
-        if ($this->type_team == 'mista') {
-            $atletasM = DB::table('athletes')->select('id')
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-            ->where('sex', 'masculino')
-            ->pluck('id');
-            $atletasF = DB::table('athletes')->select('id')
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-            ->where('sex', 'feminino')
-            ->pluck('id');
-
-            $bestsF = $this->qtdTeam($atletasF);
-            $bestsM = $this->qtdTeam($atletasM);
-            $bests = $bestsF->merge($bestsM);
-        }else{
-            $bests = $this->qtdTeam($atletas);
-        }
-        return $bests;
-        // dd($bests);
-     }
-     public function qtdTeam($atletas)
-     {
-            $bests = collect();
-            $aTimes = array();
-            foreach ($atletas as $key) {
-                $time = Times::select('record','athlete_id')
-                ->where('pool',$this->pool)
-                ->where('distance',$this->distance)
-                ->where('athlete_id', $key)
-                ->orderBy('record','asc')
-                ->first();
-                $aTimes[$time->athlete_id]=$time->record;
-            }
-            // return array_slice($aTimes, 0, 8, true);
-            asort($aTimes);
-            if (count($atletas) < $this->qtd_athletes) {
-                $this->qtd_athletes = count($atletas);
-            }
-            // dd(array_slice($aTimes, 0, 8, true));
-            foreach (array_slice($aTimes, 0, $this->qtd_athletes, true) as $key => $value) {
-                $bests->push($key);
-            }
-            // dd( $this->qtd_athletes);
-            return $bests;
-     }
 
     //Pega a equipe medley
     public function medleyTeams($atletas){
