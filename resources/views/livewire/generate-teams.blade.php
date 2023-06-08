@@ -24,7 +24,7 @@
         <div class="container flex flex-col mx-auto space-y-4 sm:space-y-8
         ng-untouched ng-pristine ng-valid relative">
         <x-action-loading></x-action-loading>
-            <fieldset class="grid grid-cols-4 sm:gap-4 sm:gap-6 px-6 py-2 rounded-md shadow-sm dark:bg-gray-900">
+            <fieldset class="grid grid-cols-4 sm:gap-4 sm:gap-6 px-6 pt-2 pb-10 sm:py-2 px-6 rounded-md shadow-sm dark:bg-gray-900">
                 <div class="space-y-2 col-span-full lg:col-span-1">
                     <p class="font-medium">Monte a(s) equipe(s)</p>
                     <p class="text-xs">Informe os dados necessários para formar a(s) equipe(s).</p>
@@ -34,7 +34,7 @@
                                 class="animate-pulse flex justify-between px-8 py-2 font-semibold text-gray-50
                                 rounded-full bg-blue-600 dark:bg-blue-800
                                 transform hover:scale-x-110 hover:scale-y-105 transition
-                                duration-300 ease-out">
+                                duration-300 ease-out w-full">
 
                                 <span class="px-2 ">Gerar equipe(s) </span>
                                 {{-- <svg fill="currentColor" class="w-6 h-6" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
