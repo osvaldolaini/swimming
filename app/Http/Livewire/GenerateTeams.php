@@ -111,14 +111,14 @@ class GenerateTeams extends Component
         //Função que pega a equipe medley
         if ($this->modality == 'medley') {
             if($this->select_team == 'best') {
-                $atletas =  $this->qtdTeams($atletas);
+                $atletas =  $this->qtdModality($atletas);
             }
+
             $this->equipes = $this->medleyTeams($atletas);
         }else{
             if($this->select_team == 'best') {
-                $atletas =  $this->qtdTeams($atletas);
+                $atletas =  $this->qtdModality($atletas);
             }
-            // dd($atletas);
             //Função que pega a equipe por modalidade
             $this->equipes = $this->modalityTeams($atletas);
         }
@@ -130,7 +130,6 @@ class GenerateTeams extends Component
             $this->equipes = $this->bestTeams($this->equipes);
         }
         // dd($this->equipes);
-
     }
     public function getAthletes()
     {
@@ -174,7 +173,7 @@ class GenerateTeams extends Component
     }
 
      //Pega a equipe por modalidade
-     public function qtdTeams($atletas)
+     public function qtdModality($atletas)
      {
         //Ambos os sexos
         if ($this->type_team == 'mista') {

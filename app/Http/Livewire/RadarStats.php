@@ -48,7 +48,7 @@ class RadarStats extends Component
     {
         $allAthletes = Athletes::where('active',1)
         ->where('birth', 'LIKE', '%' . $this->category->birth_year. '%')
-        // ->where('sex',$this->athletes->sex)
+         ->where('sex',$this->athletes->sex)
         ->get();
 
         $most = 1000.00;
