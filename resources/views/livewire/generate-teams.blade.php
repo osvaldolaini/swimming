@@ -31,10 +31,10 @@
                     <form wire:submit.prevent="generateTeams()">
                         <div class="col-span-full sm:col-span-3 mt-0">
                             <button type="submit" wire:loading.remove
-                                class="animate-pulse flex justify-between px-8 py-2 font-semibold text-gray-50
+                                class="animate-pulse flex justify-center px-8 py-2 font-semibold text-gray-50
                                 rounded-full bg-blue-600 dark:bg-blue-800
                                 transform hover:scale-x-110 hover:scale-y-105 transition
-                                duration-300 ease-out w-full">
+                                duration-300 ease-out w-full mx-auto text-center itens-center ">
 
                                 <span class="px-2 ">Gerar equipe(s) </span>
                                 {{-- <svg fill="currentColor" class="w-6 h-6" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
