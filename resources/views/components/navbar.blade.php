@@ -42,7 +42,7 @@
                         Atletas
                     </p>
                 </a>
-                <div class="divider my-0 hidden sm:flex"></div>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
                 {{-- <a href="{{ route('modality') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
@@ -108,7 +108,7 @@
                         Categorias
                     </p>
                 </a>
-                <div class="divider my-0 hidden sm:flex"></div>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
                 <a href="{{ route('times') }}" class="group min-h-[56px] flex w-32
                 flex-col items-center justify-center px-0 gap-1 py-1
                 {{ Request::is('tempos*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
@@ -128,7 +128,7 @@
                     Tempos
                     </p>
                 </a>
-                <div class="divider my-0 hidden sm:flex"></div>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
                 <a href="{{ route('generateTeam') }}" class=" group min-h-[56px] flex w-32
                 flex-col items-center justify-center px-0 gap-1 py-1
                 {{ Request::is('gerar-equipe*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
@@ -169,7 +169,7 @@
                         Gerar equipes
                     </p>
                 </a>
-                <div class="divider my-0 hidden sm:flex"></div>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
             </div>
 
         </div>
