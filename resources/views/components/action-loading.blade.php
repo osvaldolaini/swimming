@@ -407,7 +407,8 @@
 }
 </style>
     <div wire:loading >
-        <div class="flex justify-center items-center bg-gray-700 absolute z-40 w-full h-full opacity-75">
+        <div class="flex justify-center items-center bg-gray-700 absolute z-40 w-full
+        h-full opacity-75">
             <div style="color: #64d6e2" class="la-timer la-3x">
                 <div></div>
             </div>
