@@ -12,7 +12,7 @@ use Livewire\Component;
 class GenerateTeams extends Component
 {
     public $modalAthletes = false;
-    public $modality = 'livre';
+    public $modality = '1';
     public $category;
     public $allAthletes;
     public $filterA = array();
@@ -204,10 +204,14 @@ class GenerateTeams extends Component
                 ->where('pool',$this->pool)
                 ->where('distance',$this->distance)
                 ->where('athlete_id', $key)
+                ->where('modality_id', $this->modality)
                 ->orderBy('record','asc')
                 ->first();
-                $aTimes[$time->athlete_id]=$time->record;
+                if ($time) {
+                    $aTimes[$time->athlete_id]=$time->record;
+                }
             }
+            array_filter($aTimes);
             // return array_slice($aTimes, 0, 8, true);
             asort($aTimes);
             if (count($atletas) < $this->qtd_athletes) {
