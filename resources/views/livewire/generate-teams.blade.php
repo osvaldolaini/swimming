@@ -1,5 +1,6 @@
 <div>
-    @isset($message)
+    <section class="px-6 py-1 dark:bg-gray-800 dark:text-gray-50">
+        @isset($message)
 
         <div class="w-full text-white bg-blue-500 rounded-md">
             <div class="container flex items-center justify-between px-6 py-2 mx-auto">
@@ -20,12 +21,10 @@
             </div>
         </div>
     @endisset
-
-    <section class="px-6 py-1 dark:bg-gray-800 dark:text-gray-50">
-        <div class="container flex flex-col mx-auto space-y-8
+        <div class="container flex flex-col mx-auto space-y-4 sm:space-y-8
         ng-untouched ng-pristine ng-valid relative">
         <x-action-loading></x-action-loading>
-            <fieldset class="grid grid-cols-4 gap-6 px-6 py-2 rounded-md shadow-sm dark:bg-gray-900">
+            <fieldset class="grid grid-cols-4 sm:gap-4 sm:gap-6 px-6 py-2 rounded-md shadow-sm dark:bg-gray-900">
                 <div class="space-y-2 col-span-full lg:col-span-1">
                     <p class="font-medium">Monte a(s) equipe(s)</p>
                     <p class="text-xs">Informe os dados necessários para formar a(s) equipe(s).</p>
@@ -70,7 +69,7 @@
                         </ul>
                     @endif
                 </div>
-                <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+                <div class="grid grid-cols-1 sm:grid-cols-6 gap-2 sm:gap-4 col-span-full lg:col-span-3">
                     <div class="col-span-full sm:col-span-3">
                         <label for="firstname" class="text-sm">Equipe</label>
                         <Select wire:model="type_team" wire:change='cleanSearch()'
@@ -148,12 +147,9 @@
                     </div>
                     <div class="col-span-full sm:col-span-3">
                         {{-- <label for="lastname" class="text-sm">Atletas</label> --}}
-                        <div class="relative">
-                            <a href="#my-modal-2" class="btn btn-error" wire:click='getfilterAthletes()'
-                                class="flex items-center h-8 pl-3 pr-2 bg-white py-5 border border-gray-500
-                            rounded-md focus:outline-none
-                            w-full focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700
-                            dark:text-gray-900 justify-between text-gray-800">
+
+                            <a href="#my-modal-2" wire:click='getfilterAthletes()'
+                                class="btn btn-error w-full">
                                 <span class="leading-none">
                                     Remover atletas
                                 </span>
@@ -184,7 +180,7 @@
                                     </g>
                                 </svg>
                             </a>
-                        </div>
+
 
                     </div>
                 </div>

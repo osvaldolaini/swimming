@@ -34,7 +34,7 @@
                 <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content">
                     <!-- Page content here -->
-                    <div class="card m-4 p-5 bg-gray-200 shadow-xl">
+                    <div class="card m-3 sm:m-4 py-1 sm:p-5 bg-gray-200 shadow-xl">
                         {{ $slot }}
                     </div>
                 </div>

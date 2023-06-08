@@ -2,7 +2,7 @@
     <!-- Navigation Rail -->
     <div class="relative">
         <div class="w-54 bg-blue-400 text-white dark:bg-surfacedark-100 flex items-center flex-col gap-8 py-5">
-            <div class="flex flex-col items-center gap-3">
+            <div class="flex flex-col items-center gap-5 sm:gap-3">
                 <a href="{{ route('teams') }}" class="group min-h-[56px] flex w-32
                 flex-col items-center justify-center px-0 gap-1 py-1">
                     <div
@@ -41,7 +41,7 @@
                         Atletas
                     </p>
                 </a>
-                <div class="divider my-0"></div>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
                 {{-- <a href="{{ route('modality') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
@@ -106,7 +106,7 @@
                         Categorias
                     </p>
                 </a>
-                <div class="divider my-0"></div>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
                 <a href="{{ route('times') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
@@ -124,7 +124,7 @@
                     Tempos
                     </p>
                 </a>
-                <div class="divider my-0"></div>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
                 <a href="{{ route('generateTeam') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center px-0 gap-1">
                     <div
                     class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
@@ -163,7 +163,7 @@
                         Gerar equipes
                     </p>
                 </a>
-                <div class="divider my-0"></div>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
             </div>
 
         </div>
