@@ -111,9 +111,9 @@ class GenerateTeams extends Component
         //Função que pega a equipe medley
         if ($this->modality == 'medley') {
             if($this->select_team == 'best') {
-                $atletas =  $this->qtdModality($atletas);
+                $atletas =  $this->qtdMedley($atletas);
             }
-
+            // dd($atletas);
             $this->equipes = $this->medleyTeams($atletas);
         }else{
             if($this->select_team == 'best') {
@@ -172,58 +172,7 @@ class GenerateTeams extends Component
         return $athletes;
     }
 
-     //Pega a equipe por modalidade
-     public function qtdModality($atletas)
-     {
-        //Ambos os sexos
-        if ($this->type_team == 'mista') {
-            $atletasM = DB::table('athletes')->select('id')
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-            ->where('sex', 'masculino')
-            ->pluck('id');
-            $atletasF = DB::table('athletes')->select('id')
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-            ->where('sex', 'feminino')
-            ->pluck('id');
 
-            $bestsF = $this->qtdTeam($atletasF);
-            $bestsM = $this->qtdTeam($atletasM);
-            $bests = $bestsF->merge($bestsM);
-        }else{
-            $bests = $this->qtdTeam($atletas);
-        }
-        return $bests;
-        // dd($bests);
-     }
-     public function qtdTeam($atletas)
-     {
-            $bests = collect();
-            $aTimes = array();
-            foreach ($atletas as $key) {
-                $time = Times::select('record','athlete_id')
-                ->where('pool',$this->pool)
-                ->where('distance',$this->distance)
-                ->where('athlete_id', $key)
-                ->where('modality_id', $this->modality)
-                ->orderBy('record','asc')
-                ->first();
-                if ($time) {
-                    $aTimes[$time->athlete_id]=$time->record;
-                }
-            }
-            array_filter($aTimes);
-            // return array_slice($aTimes, 0, 8, true);
-            asort($aTimes);
-            if (count($atletas) < $this->qtd_athletes) {
-                $this->qtd_athletes = count($atletas);
-            }
-            // dd(array_slice($aTimes, 0, 8, true));
-            foreach (array_slice($aTimes, 0, $this->qtd_athletes, true) as $key => $value) {
-                $bests->push($key);
-            }
-            // dd( $this->qtd_athletes);
-            return $bests;
-     }
 
     //Pega a equipe medley
     public function medleyTeams($atletas){
@@ -423,5 +372,98 @@ class GenerateTeams extends Component
         }
         // dd($result);
         return $result;
+    }
+    //Pega quantidade para montar as 3 melhores equipes
+    public function qtdModality($atletas)
+    {
+       //Ambos os sexos
+       if ($this->type_team == 'mista') {
+           $atletasM = DB::table('athletes')->select('id')
+           ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+           ->where('sex', 'masculino')
+           ->pluck('id');
+           $atletasF = DB::table('athletes')->select('id')
+           ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+           ->where('sex', 'feminino')
+           ->pluck('id');
+
+           $bestsF = $this->qtdTeam($atletasF,$this->modality);
+           $bestsM = $this->qtdTeam($atletasM,$this->modality);
+           $bests = $bestsF->merge($bestsM);
+       }else{
+           $bests = $this->qtdTeam($atletas,$this->modality);
+       }
+       return $bests;
+       // dd($bests);
+    }
+
+    //Pega quantidade para montar as 3 melhores equipes
+    public function qtdMedley($atletas)
+    {
+       //Ambos os sexos
+       if ($this->type_team == 'mista') {
+           $atletasM = DB::table('athletes')->select('id')
+           ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+           ->where('sex', 'masculino')
+           ->pluck('id');
+           $atletasF = DB::table('athletes')->select('id')
+           ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+           ->where('sex', 'feminino')
+           ->pluck('id');
+
+            $this->qtd_athletes = 4;
+
+            $bestsLF = $this->qtdTeam($atletasF,1);
+            $bestsBF = $this->qtdTeam($atletasF,2);
+            $bestsCF = $this->qtdTeam($atletasF,3);
+            $bestsPF = $this->qtdTeam($atletasF,4);
+
+            $bestsLM = $this->qtdTeam($atletasM,1);
+            $bestsBM = $this->qtdTeam($atletasM,2);
+            $bestsCM = $this->qtdTeam($atletasM,3);
+            $bestsPM = $this->qtdTeam($atletasM,4);
+
+            $bestsF = $bestsLF->merge($bestsBF)->merge($bestsCF)->merge($bestsPF);
+            $bestsM = $bestsLM->merge($bestsBM)->merge($bestsCM)->merge($bestsPM);
+
+            $bests = $bestsF->merge($bestsM);
+       }else{
+            $bestsL = $this->qtdTeam($atletas,1);
+            $bestsB = $this->qtdTeam($atletas,2);
+            $bestsC = $this->qtdTeam($atletas,3);
+            $bestsP = $this->qtdTeam($atletas,4);
+            $bests = $bestsL->merge($bestsB,$bestsC,$bestsP);
+       }
+    //    dd($bests->unique());
+       return $bests->unique();
+    }
+    public function qtdTeam($atletas,$modality)
+    {
+           $bests = collect();
+           $aTimes = array();
+           foreach ($atletas as $key) {
+               $time = Times::select('record','athlete_id')
+               ->where('pool',$this->pool)
+               ->where('distance',$this->distance)
+               ->where('athlete_id', $key)
+               ->where('modality_id', $modality)
+               ->orderBy('record','asc')
+               ->first();
+               if ($time) {
+                   $aTimes[$time->athlete_id]=$time->record;
+               }
+           }
+           array_filter($aTimes);
+           // return array_slice($aTimes, 0, 8, true);
+           asort($aTimes);
+           if (count($atletas) < $this->qtd_athletes) {
+               $this->qtd_athletes = count($atletas);
+           }
+           // dd(array_slice($aTimes, 0, 8, true));
+           foreach (array_slice($aTimes, 0, $this->qtd_athletes, true) as $key => $value) {
+               $bests->push($key);
+           }
+           // dd( $this->qtd_athletes);
+           return $bests;
     }
 }
