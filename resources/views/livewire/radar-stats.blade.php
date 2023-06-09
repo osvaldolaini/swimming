@@ -1,4 +1,4 @@
-<div class="m-0" >
+<div class="m-0">
 
     <div class="rounded-md shadow-md bg-white max-w-xs"
         x-data='{labels: @json(array_values($labels)),total: @json(array_values($data))}' x-init="new Chart($refs.myChart, {

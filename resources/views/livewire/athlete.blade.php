@@ -1,8 +1,11 @@
-<div>
-    <div class="hero bg-gray-100 rounded-t-lg mb-5">
+<div class="relative" >
+    <x-action-loading></x-action-loading>
+    <div class="hero bg-gray-100 rounded-t-lg mb-5 ">
         <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
             <h1 class="text-4xl font-black py-0 my-0">ATLETAS {{ mb_strtoupper($cat) }}</h1>
         </div>
+
+
     </div>
 
     <style>
@@ -26,85 +29,87 @@
         </button>
         <x-message-session></x-message-session>
     </div>
-    <div class="grid sm:grid-cols-2 grid-cols-1 gap-4 "  wire:model="athletes" >
-        @foreach ($athletes as $item)
-            @php
-                $livre = $item->timess
-                    ->where('distance', 50)
-                    ->where('modality_id', 1)
-                    ->first();
-                $borbo = $item->timess
-                    ->where('distance', 50)
-                    ->where('athlete_id', $item->id)
-                    ->where('modality_id', 2)
-                    ->first();
-                $costa = $item->timess
-                    ->where('distance', 50)
-                    ->where('athlete_id', $item->id)
-                    ->where('modality_id', 3)
-                    ->first();
-                $peito = $item->timess
-                    ->where('distance', 50)
-                    ->where('athlete_id', $item->id)
-                    ->where('modality_id', 4)
-                    ->first();
-            @endphp
-            <div
-                class="card card-side shadow-xl h-100 {{ $item->sex == 'feminino' ? 'bg-red-100' : 'bg-blue-100' }}">
-                {{-- <figure class="w-48">
-                @if ($item->register)
-                    <img class="photo" src="{{ imageProfile($item->register.'/'.$item->slug)}}"
-                    alt="Movie" />
-                @else
-                    <img class="photo" src="{{url('storage/logo-gnu.svg')}}"
-                    alt="Movie" />
-                @endif
-            </figure> --}}
+    <div class="grid sm:grid-cols-2 grid-cols-1 gap-4"  wire:init="loadPosts" wire:model="athletes">
 
-                <div class="w-64 hidden sm:block" >
-                    @livewire('radar-stats', ['athlete' => $item], key($item->id))
-                </div>
-                <div class="card-body px-2">
-                    <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }}
-                        {{-- (
-                        {{ getCategory($item->birth)->name }} ) --}}</h2>
-                    <p>{{ $item->name }}</p>
-                    <h2 class="card-title">Tempos 50m</h2>
-                    <div class="grid grid-cols-4 gap-1">
-                        <div class="px-0 badge badge-info mb-2 w-full text-xs justify-center inline-block text-center ">
-                            @isset($borbo)
-                                {{ converTime($borbo->record) }}
-                            @endisset
-                            <span class="block ">Borbo</span>
-                        </div>
-                        <div
-                            class="px-0 badge badge-success mb-2 w-full text-xs justify-center inline-block text-center">
+            @foreach ($athletes as $item)
+                @php
+                    $livre = $item->timess
+                        ->where('distance', 50)
+                        ->where('modality_id', 1)
+                        ->first();
+                    $borbo = $item->timess
+                        ->where('distance', 50)
+                        ->where('athlete_id', $item->id)
+                        ->where('modality_id', 2)
+                        ->first();
+                    $costa = $item->timess
+                        ->where('distance', 50)
+                        ->where('athlete_id', $item->id)
+                        ->where('modality_id', 3)
+                        ->first();
+                    $peito = $item->timess
+                        ->where('distance', 50)
+                        ->where('athlete_id', $item->id)
+                        ->where('modality_id', 4)
+                        ->first();
+                @endphp
+                <div
+                    class="card card-side shadow-xl h-100 {{ $item->sex == 'feminino' ? 'bg-red-100' : 'bg-blue-100' }}">
+                    {{-- <figure class="w-48">
+                    @if ($item->register)
+                        <img class="photo" src="{{ imageProfile($item->register.'/'.$item->slug)}}"
+                        alt="Movie" />
+                    @else
+                        <img class="photo" src="{{url('storage/logo-gnu.svg')}}"
+                        alt="Movie" />
+                    @endif
+                </figure> --}}
 
-                            @isset($costa)
-                                {{ converTime($costa->record) }}
-                            @endisset
-                            <span class="block ">Costa</span>
+                    <div class="w-64 hidden sm:block" >
+                        @livewire('radar-stats', ['athlete' => $item], key($item->id))
+                    </div>
+                    <div class="card-body px-2">
+                        <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }}
+                            {{-- (
+                            {{ getCategory($item->birth)->name }} ) --}}</h2>
+                        <p>{{ $item->name }}</p>
+                        <h2 class="card-title">Tempos 50m</h2>
+                        <div class="grid grid-cols-4 gap-1">
+                            <div class="px-0 badge badge-info mb-2 w-full text-xs justify-center inline-block text-center ">
+                                @isset($borbo)
+                                    {{ converTime($borbo->record) }}
+                                @endisset
+                                <span class="block ">Borbo</span>
+                            </div>
+                            <div
+                                class="px-0 badge badge-success mb-2 w-full text-xs justify-center inline-block text-center">
+
+                                @isset($costa)
+                                    {{ converTime($costa->record) }}
+                                @endisset
+                                <span class="block ">Costa</span>
+                            </div>
+                            <div
+                                class="px-0 badge badge-warning mb-2 w-full text-xs justify-center inline-block text-center">
+                                @isset($peito)
+                                    {{ converTime($peito->record) }}
+                                @endisset
+                                <span class="block ">Peito</span>
+                            </div>
+                            <div class="px-0 badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
+                                @isset($livre)
+                                    {{ converTime($livre->record) }}
+                                @endisset
+                                <span class="block ">Crawl</span>
+                            </div>
                         </div>
-                        <div
-                            class="px-0 badge badge-warning mb-2 w-full text-xs justify-center inline-block text-center">
-                            @isset($peito)
-                                {{ converTime($peito->record) }}
-                            @endisset
-                            <span class="block ">Peito</span>
-                        </div>
-                        <div class="px-0 badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
-                            @isset($livre)
-                                {{ converTime($livre->record) }}
-                            @endisset
-                            <span class="block ">Crawl</span>
+                        <div class="card-actions justify-end">
+                            <x-table-buttons-modals id="{{ $item->id }}"></x-table-buttons-modals>
                         </div>
                     </div>
-                    <div class="card-actions justify-end">
-                        <x-table-buttons-modals id="{{ $item->id }}"></x-table-buttons-modals>
-                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+
     </div>
     {{-- MODAL DELETE --}}
     <x-confirmation-modal wire:model="showJetModal">
@@ -316,4 +321,6 @@
                 </x-secondary-button>
         </x-slot>
     </x-dialog-modal>
+
 </div>
+

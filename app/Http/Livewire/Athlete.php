@@ -16,8 +16,9 @@ use Illuminate\Support\Str;
 class Athlete extends Component
 {
     // public Athletes $athletes;
-    public $athletes;
+    public $athletes = [];
     public $category;
+    public $getCategory;
     public $cat;
     public $times;
     public $imageUrl;
@@ -44,20 +45,23 @@ class Athlete extends Component
 
     public function mount()
     {
-        if (isset($_GET['category'])) {
+        $this->getCategory = $_GET['category'];
+    }
+
+    public function loadPosts()
+    {
+
+        if (isset($this->getCategory)) {
             $this->athletes = Athletes::select('id','nick','name','birth','sex')->where('active', 1)
             ->with('timess')
-            ->where('birth', 'LIKE', '%' . $_GET['category']. '%')
+            ->where('birth', 'LIKE', '%' . $this->getCategory. '%')
             ->orderBy('name','asc')
             ->get();
-            $this->cat = Categories::where('birth_year',$_GET['category'])->first()->name;
+            $this->cat = Categories::where('birth_year',$this->getCategory)->first()->name;
         }
-
-        // $this->times = Times::orderBy('record','asc')->get();
     }
     public function render()
     {
-        // dd($this->times);
         return view('livewire.athlete');
     }
 

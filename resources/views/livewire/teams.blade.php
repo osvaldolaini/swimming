@@ -4,6 +4,7 @@
             <h1 class="text-4xl font-black py-0 my-0">EQUIPES</h1>
         </div>
     </div>
+
     <div class="grid sm:grid-cols-3 grid-cols-1 gap-4 " wire:model="teams">
         @foreach ($teams as $item)
             <div wire:click="goAthletes({{ $item->birth_year }})" class="cursor-pointer card card-side
