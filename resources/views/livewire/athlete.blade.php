@@ -4,6 +4,7 @@
             <h1 class="text-4xl font-black py-0 my-0">ATLETAS {{ mb_strtoupper($cat) }}</h1>
         </div>
     </div>
+
     <style>
         .photo {
             width: 100%;
@@ -25,25 +26,24 @@
         </button>
         <x-message-session></x-message-session>
     </div>
-    <div class="grid sm:grid-cols-2 grid-cols-1 gap-4 " wire:model="athletes">
+    <div class="grid sm:grid-cols-2 grid-cols-1 gap-4 "  wire:model="athletes" >
         @foreach ($athletes as $item)
             @php
-                $livre = $this->times
+                $livre = $item->timess
                     ->where('distance', 50)
-                    ->where('athlete_id', $item->id)
                     ->where('modality_id', 1)
                     ->first();
-                $borbo = $this->times
+                $borbo = $item->timess
                     ->where('distance', 50)
                     ->where('athlete_id', $item->id)
                     ->where('modality_id', 2)
                     ->first();
-                $costa = $this->times
+                $costa = $item->timess
                     ->where('distance', 50)
                     ->where('athlete_id', $item->id)
                     ->where('modality_id', 3)
                     ->first();
-                $peito = $this->times
+                $peito = $item->timess
                     ->where('distance', 50)
                     ->where('athlete_id', $item->id)
                     ->where('modality_id', 4)
@@ -61,7 +61,7 @@
                 @endif
             </figure> --}}
 
-                <div class="w-64 hidden sm:block">
+                <div class="w-64 hidden sm:block" >
                     @livewire('radar-stats', ['athlete' => $item], key($item->id))
                 </div>
                 <div class="card-body px-2">

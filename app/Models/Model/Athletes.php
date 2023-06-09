@@ -37,5 +37,9 @@ class Athletes extends Model
     {
         return $this->hasMany(Times::class);
     }
+    public function timess()
+    {
+        return $this->hasMany(Times::class,'athlete_id','id');
+    }
 
 }

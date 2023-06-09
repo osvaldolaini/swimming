@@ -45,14 +45,15 @@ class Athlete extends Component
     public function mount()
     {
         if (isset($_GET['category'])) {
-            $this->athletes = Athletes::where('active', 1)
+            $this->athletes = Athletes::select('id','nick','name','birth','sex')->where('active', 1)
+            ->with('timess')
             ->where('birth', 'LIKE', '%' . $_GET['category']. '%')
-            ->orderBy('sex','asc')->orderBy('name','asc')
+            ->orderBy('name','asc')
             ->get();
             $this->cat = Categories::where('birth_year',$_GET['category'])->first()->name;
         }
 
-        $this->times = Times::orderBy('record','asc')->get();
+        // $this->times = Times::orderBy('record','asc')->get();
     }
     public function render()
     {
