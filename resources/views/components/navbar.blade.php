@@ -3,7 +3,8 @@
     <div class="relative">
         <div class="w-54 bg-blue-400 text-white dark:bg-surfacedark-100 flex items-center flex-col gap-8 py-5">
             <div class="flex flex-col items-center gap-5 sm:gap-3">
-                <a href="{{ route('teams') }}" class=" group min-h-[56px] flex w-32
+                <a href="{{ route('teams') }}"
+                    class=" group min-h-[56px] flex w-32
                 flex-col items-center justify-center px-0 gap-1 py-1
                 {{ Request::is('atletas*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
                     <div
@@ -75,17 +76,18 @@
                         Modalidades
                     </p>
                 </a> --}}
-                <a href="{{ route('category') }}" class="group min-h-[56px] flex w-32 flex-col items-center justify-center
-                px-0 gap-1
-                {{ Request::is('categorias*') ? 'text-blue-900 font-semibold' : 'text-white  ' }} text-sm">
+                <a href="{{ route('category') }}"
+                    class="group min-h-[56px] flex w-32 flex-col items-center justify-center
+                    px-0 gap-1
+                    {{ Request::is('categorias*') ? 'text-blue-900 font-semibold' : 'text-white  ' }} text-sm">
                     <div
-                    class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
+                        class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
                     dark:group-hover:bg-opacity-80 flex items-center justify-center
                     rounded-2xl ">
-                    <svg class="w-8 h-8 " fill="currentColor" version="1.1"  id="_x32_" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
-                            xml:space="preserve">
+                        <svg class="w-8 h-8 " fill="currentColor" version="1.1" id="_x32_"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 512 512" xml:space="preserve">
 
                             <g>
                                 <path fill="currentColor"
@@ -109,43 +111,51 @@
                     </p>
                 </a>
                 <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
-                <a href="{{ route('times') }}" class="group min-h-[56px] flex w-32
-                flex-col items-center justify-center px-0 gap-1 py-1
-                {{ Request::is('tempos*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
+                <a href="{{ route('times') }}"
+                    class="group min-h-[56px] flex w-32
+                    flex-col items-center justify-center px-0 gap-1 py-1
+                    {{ Request::is('tempos*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
                     <div
-                    class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
+                        class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
                     dark:group-hover:bg-opacity-80 flex items-center justify-center
                     rounded-2xl ">
-                    <svg class="w-8 h-8 "  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="Calendar / Timer">
-                        <path id="Vector" stroke="currentColor"  d="M12 13V9M21 6L19 4M10 2H14M12 21C7.58172 21 4 17.4183 4 13C4 8.58172 7.58172 5 12 5C16.4183 5 20 8.58172 20 13C20 17.4183 16.4183 21 12 21Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </g>
+                        <svg class="w-8 h-8 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Calendar / Timer">
+                                <path id="Vector" stroke="currentColor"
+                                    d="M12 13V9M21 6L19 4M10 2H14M12 21C7.58172 21 4 17.4183 4 13C4 8.58172 7.58172 5 12 5C16.4183 5 20 8.58172 20 13C20 17.4183 16.4183 21 12 21Z"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
                         </svg>
                     </div>
                     <p class="dark:text-neutral-100 tracking-[.0416em]
                     leading-tight">
-                    Tempos
+                        Tempos
                     </p>
                 </a>
                 <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
-                <a href="{{ route('generateTeam') }}" class=" group min-h-[56px] flex w-32
-                flex-col items-center justify-center px-0 gap-1 py-1
-                {{ Request::is('gerar-equipe*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
+                <a href="{{ route('generateTeam') }}"
+                    class=" group min-h-[56px] flex w-32
+                    flex-col items-center justify-center px-0 gap-1 py-1
+                    {{ Request::is('gerar-equipe*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
                     <div
-                    class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
+                        class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
                     dark:group-hover:bg-opacity-80 flex items-center justify-center
                     rounded-2xl ">
-                        <svg class="w-8 h-8 " fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 155.739 155.739"
-                                xml:space="preserve">
+                        <svg class="w-8 h-8 " fill="currentColor" version="1.1" id="Capa_1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 155.739 155.739" xml:space="preserve">
                             <g>
                                 <g>
-                                    <path d="M93.192,25.738c8.326,0,15.073,6.752,15.073,15.081c0,8.325-6.747,15.078-15.073,15.078
-                                        c-8.33,0-15.079-6.753-15.079-15.078C78.113,32.49,84.862,25.738,93.192,25.738z"/>
-                                    <path d="M101.102,73.074c5.354,0,9.692,4.339,9.692,9.691c0,5.356-4.338,9.697-9.692,9.697c-5.356,0-9.693-4.341-9.693-9.697
-                                        C91.409,77.413,95.746,73.074,101.102,73.074z"/>
-                                    <path d="M52.781,155.739h86.949c0,0-25.232-20.279-24.701-42.513c0.317-12.388,24.701-28.158,24.58-62.58
+                                    <path
+                                        d="M93.192,25.738c8.326,0,15.073,6.752,15.073,15.081c0,8.325-6.747,15.078-15.073,15.078
+                                        c-8.33,0-15.079-6.753-15.079-15.078C78.113,32.49,84.862,25.738,93.192,25.738z" />
+                                    <path
+                                        d="M101.102,73.074c5.354,0,9.692,4.339,9.692,9.691c0,5.356-4.338,9.697-9.692,9.697c-5.356,0-9.693-4.341-9.693-9.697
+                                        C91.409,77.413,95.746,73.074,101.102,73.074z" />
+                                    <path
+                                        d="M52.781,155.739h86.949c0,0-25.232-20.279-24.701-42.513c0.317-12.388,24.701-28.158,24.58-62.58
                                         c-0.076-17.311-16.865-46.088-45.371-49.675C65.724-2.62,44.386,3.656,35.062,21.235c-9.335,17.57-10.042,32.999-9.325,35.861
                                         c0.726,2.876,3.769,8.255,3.769,8.255S15.16,87.405,16.049,90.988c0.908,3.596,10.748,5.527,10.748,5.527s0.892,2.497-0.906,7.335
                                         c-1.795,4.846,3.338,10.468,4.88,12.43c1.519,1.954-2.158,8.062-0.908,11.476c1.253,3.398,7.176,7.523,13.986,6.632
@@ -160,7 +170,7 @@
                                         l4.454,7.122l-4.547,2.829c1.097,2.837,1.576,5.811,1.479,8.741l5.202,1.207l-1.888,8.181l-5.215-1.207
                                         c-1.182,2.679-2.917,5.146-5.149,7.212l2.842,4.54l-7.124,4.448l-2.831-4.539c-2.846,1.1-5.817,1.587-8.748,1.475l-1.206,5.204
                                         l-8.178-1.888l1.195-5.204c-2.676-1.186-5.135-2.925-7.194-5.155l-4.55,2.841l-4.45-7.122l4.55-2.834
-                                        c-1.1-2.843-1.581-5.806-1.48-8.736l-5.211-1.204L67.762,30.636z"/>
+                                        c-1.1-2.843-1.581-5.806-1.48-8.736l-5.211-1.204L67.762,30.636z" />
                                 </g>
                             </g>
                         </svg>
@@ -170,6 +180,57 @@
                     </p>
                 </a>
                 <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
+
+                <div class="divider my-5 sm:my-0 flex sm:hidden">
+                    <!-- Authentication -->
+                    <a href="{{ route('profile.show') }}"
+                        class=" group min-h-[56px] flex w-32
+                        flex-col items-center justify-center px-0 gap-1 py-1
+                        {{ Request::is('profile*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
+                        <div
+                            class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
+                            dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
+                            dark:group-hover:bg-opacity-80 flex items-center justify-center
+                            rounded-2xl ">
+                            <svg class="w-8 h-8 " viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="User / User_Circle">
+                                    <path id="Vector"
+                                        d="M17.2166 19.3323C15.9349 17.9008 14.0727 17 12 17C9.92734 17 8.06492 17.9008 6.7832 19.3323M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21ZM12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11C15 12.6569 13.6569 14 12 14Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                            </svg>
+                        </div>
+                        <p class="dark:text-neutral-100 tracking-[.0416em] leading-tight">
+                            {{ __('Profile') }}
+                        </p>
+                    </a>
+
+                </div>
+                <div class="divider my-5 sm:my-0 flex sm:hidden">
+                    <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+                        <a href="{{ route('logout') }}"
+                            class=" group min-h-[56px] flex w-32
+                            flex-col items-center justify-center px-0 gap-1 py-1
+                            text-white text-sm ">
+                            <div
+                            class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
+                            dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
+                            dark:group-hover:bg-opacity-80 flex items-center justify-center
+                            rounded-2xl ">
+                            <svg class="w-8 h-8 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 7.63636L14 4.5C14 4.22386 13.7761 4 13.5 4L4.5 4C4.22386 4 4 4.22386 4 4.5L4 19.5C4 19.7761 4.22386 20 4.5 20L13.5 20C13.7761 20 14 19.7761 14 19.5L14 16.3636" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 12L21 12M21 12L18.0004 8.5M21 12L18 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                            <p class="dark:text-neutral-100 tracking-[.0416em] leading-tight">
+                                {{ __('Log Out') }}
+                            </p>
+                        </a>
+                    </form>
+                </div>
             </div>
 
         </div>
