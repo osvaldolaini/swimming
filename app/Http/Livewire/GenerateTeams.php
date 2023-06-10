@@ -30,6 +30,7 @@ class GenerateTeams extends Component
     public $modalidades;
     public $message = null;
     public $qtd_athletes = 12;
+    public $combinations = 0;
 
     public $times;
 
@@ -83,6 +84,7 @@ class GenerateTeams extends Component
     public function cleanSearch()
     {
         $this->equipes = [];
+        $this->combinations = 0;
     }
     //Função que monta as equipes
     public function generateTeams()
@@ -124,6 +126,8 @@ class GenerateTeams extends Component
         }
 
         // dd($this->equipes);
+        $this->combinations = count($this->equipes);
+
         $this->equipes = $this->getTeams($this->equipes);
         // dd($this->equipes);
         if($this->select_team == 'best'){
@@ -432,7 +436,7 @@ class GenerateTeams extends Component
             $bestsP = $this->qtdTeam($atletas,4);
             $bests = $bestsL->merge($bestsB,$bestsC,$bestsP);
        }
-    //    dd($bests->unique());
+        //    dd($bests->unique());
        return $bests->unique();
     }
     public function qtdTeam($atletas,$modality)
