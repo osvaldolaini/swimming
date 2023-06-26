@@ -174,7 +174,8 @@
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="sm:w-full col-span-2 ">
+
+                    <div class="sm:w-full col-span-1">
                         <label for="nick"
                             class="block text-sm font-medium text-gray-900 dark:text-white">Apelido</label>
                         <input type="text" wire:model="nick" name="nick" id="nick" placeholder="Apelido"
@@ -184,7 +185,20 @@
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="sm:w-full col-span-2 ">
+                    <div class="sm:w-full col-span-1" x-data x-init="Inputmask({
+                        'mask': '99/99/9999'
+                    }).mask($refs.birth)">
+                        <label for="birth"
+                            class="block text-sm font-medium text-gray-900 dark:text-white">Data de nascimento</label>
+                        <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                            rounded-lg focus:ring-primary-600 focus:border-primary-600
+                            block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @error('birth')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="sm:w-full col-span-1 ">
                         <label for="register" class="block text-sm font-medium text-gray-900 dark:text-white">Nº de
                             registro</label>
                         <input type="text" wire:model="register" placeholder="Registro"
@@ -193,16 +207,16 @@
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="sm:col-span-2" x-data x-init="Inputmask({
+                    <div class="sm:w-full col-span-1" x-data x-init="Inputmask({
                         'mask': '99/99/9999'
-                    }).mask($refs.birth)">
-                        <label for="birth"
-                            class="block text-sm font-medium text-gray-900 dark:text-white">Data</label>
-                        <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""
+                    }).mask($refs.register_date)">
+                        <label for="register_date"
+                            class="block text-sm font-medium text-gray-900 dark:text-white">Data de registro</label>
+                        <input type="text" x-ref="register_date" wire:model="register_date" placeholder="Data" required=""
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                             rounded-lg focus:ring-primary-600 focus:border-primary-600
                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('birth')
+                        @error('register_date')
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
@@ -256,7 +270,8 @@
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="sm:w-full col-span-2 ">
+
+                    <div class="sm:w-full col-span-1">
                         <label for="nick"
                             class="block text-sm font-medium text-gray-900 dark:text-white">Apelido</label>
                         <input type="text" wire:model="nick" name="nick" id="nick" placeholder="Apelido"
@@ -266,7 +281,20 @@
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="sm:w-full col-span-2 ">
+                    <div class="sm:w-full col-span-1" x-data x-init="Inputmask({
+                        'mask': '99/99/9999'
+                    }).mask($refs.birth)">
+                        <label for="birth"
+                            class="block text-sm font-medium text-gray-900 dark:text-white">Data de nascimento</label>
+                        <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                            rounded-lg focus:ring-primary-600 focus:border-primary-600
+                            block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @error('birth')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="sm:w-full col-span-1 ">
                         <label for="register" class="block text-sm font-medium text-gray-900 dark:text-white">Nº de
                             registro</label>
                         <input type="text" wire:model="register" placeholder="Registro"
@@ -275,16 +303,16 @@
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="sm:col-span-2" x-data x-init="Inputmask({
+                    <div class="sm:w-full col-span-1" x-data x-init="Inputmask({
                         'mask': '99/99/9999'
-                    }).mask($refs.birth)">
-                        <label for="birth"
-                            class="block text-sm font-medium text-gray-900 dark:text-white">Data</label>
-                        <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""
+                    }).mask($refs.register_date)">
+                        <label for="register_date"
+                            class="block text-sm font-medium text-gray-900 dark:text-white">Data de registro</label>
+                        <input type="text" x-ref="register_date" wire:model="register_date" placeholder="Data" required=""
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                             rounded-lg focus:ring-primary-600 focus:border-primary-600
                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('birth')
+                        @error('register_date')
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>

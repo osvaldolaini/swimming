@@ -19,12 +19,13 @@ class SheetsExport extends Component
     public $type_time = 'tomada';
     public $modality = '1';
     public $category;
-    public $birth_year = 'todas';
+    public $birth_year;
     public $allAthletes;
 
     public function mount()
     {
         $this->category = Categories::where('active', 1)->orderBy('birth_year','desc')->get();
+        $this->birth_year = Categories::where('active', 1)->orderBy('birth_year','desc')->first()->birth_year;
     }
 
     public function render()

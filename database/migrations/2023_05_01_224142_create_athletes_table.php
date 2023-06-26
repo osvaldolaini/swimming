@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('code')->nullable();
             $table->integer('register')->nullable();
+            $table->date('register_date')->nullable();
             $table->timestamps();
             $table->string('updated_by',50)->nullable();
             $table->string('created_by',50)->nullable();

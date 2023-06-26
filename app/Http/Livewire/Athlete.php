@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
-
-
 class Athlete extends Component
 {
     // public Athletes $athletes;
@@ -40,6 +38,7 @@ class Athlete extends Component
     public $name;
     public $birth;
     public $nick;
+    public $register_date;
     public $register;
     public $active;
 
@@ -83,11 +82,19 @@ class Athlete extends Component
             "-",
             array_reverse(explode("/", $this->birth))
         );
+        if($this->register_date != ''){
+            $this->register_date = implode(
+                "-",
+                array_reverse(explode("/", $this->register_date))
+            );
+        }
+
 
         Athletes::create([
             'name'      =>mb_strtoupper($this->name),
             'nick'      =>mb_strtoupper($this->nick),
             'register'  =>$this->register,
+            'register_date'  =>$this->register_date,
             'active'    =>1,
             'sex'       =>$this->sex,
             'birth'     =>$this->birth,
@@ -103,7 +110,8 @@ class Athlete extends Component
                 'nick',
                 'sex',
                 'birth',
-                'register'
+                'register',
+                'register_date'
             );
             $this->mount();
     }
@@ -143,6 +151,7 @@ class Athlete extends Component
         $this->register = $athletes->register;
         $this->sex      = $athletes->sex;
         $this->birth    = convertOnlyDate($athletes->birth);
+        $this->register_date    = convertOnlyDate($athletes->register_date);
         $this->showModalEdit = true;
     }
     public function update()
@@ -158,6 +167,12 @@ class Athlete extends Component
             "-",
             array_reverse(explode("/", $this->birth))
         );
+        if($this->register_date != ''){
+            $this->register_date = implode(
+                "-",
+                array_reverse(explode("/", $this->register_date))
+            );
+        }
 
         Athletes::updateOrCreate([
             'id'=>$this->model_id,
@@ -180,7 +195,8 @@ class Athlete extends Component
                 'nick',
                 'sex',
                 'birth',
-                'register'
+                'register',
+                'register_date'
             );
 
             $this->mount();
@@ -209,7 +225,8 @@ class Athlete extends Component
                 'name',
                 'nick',
                 'sex',
-                'birth'
+                'birth',
+                'register_date'
             );
 
             $this->mount();

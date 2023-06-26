@@ -18,7 +18,7 @@ class Athletes extends Model
 
     protected $fillable = [
         'id','active','sex','name','birth','nick','updated_by',
-        'created_by','code','slug','register'
+        'created_by','code','slug','register','register_date'
     ];
 
     public function setNameAttribute($value)
@@ -29,6 +29,7 @@ class Athletes extends Model
 
     protected $casts = [
         'birth' => 'datetime:Y-m-d',
+        'register_date'=>'datetime:Y-m-d',
     ];
 
     protected $visible = ['id','active','sex','name'];
