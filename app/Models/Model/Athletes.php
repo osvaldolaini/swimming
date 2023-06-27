@@ -40,7 +40,7 @@ class Athletes extends Model
     }
     public function timess()
     {
-        return $this->hasMany(Times::class,'athlete_id','id');
+        return $this->BelongsTo(Times::class,'athlete_id','id');
     }
 
 }
