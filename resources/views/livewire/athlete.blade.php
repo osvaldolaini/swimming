@@ -39,17 +39,14 @@
                         ->first();
                     $borbo = $item->timess
                         ->where('distance', 50)
-                        ->where('athlete_id', $item->id)
                         ->where('modality_id', 2)
                         ->first();
                     $costa = $item->timess
                         ->where('distance', 50)
-                        ->where('athlete_id', $item->id)
                         ->where('modality_id', 3)
                         ->first();
                     $peito = $item->timess
                         ->where('distance', 50)
-                        ->where('athlete_id', $item->id)
                         ->where('modality_id', 4)
                         ->first();
                 @endphp

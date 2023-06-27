@@ -51,7 +51,8 @@ class Athlete extends Component
     {
 
         if (isset($this->getCategory)) {
-            $this->athletes = Athletes::select('id','nick','name','birth','sex')->where('active', 1)
+            $this->athletes = Athletes::select('id','nick','name','birth','sex')
+            ->where('active', 1)
             ->with('timess')
             ->where('birth', 'LIKE', '%' . $this->getCategory. '%')
             ->orderBy('name','asc')
