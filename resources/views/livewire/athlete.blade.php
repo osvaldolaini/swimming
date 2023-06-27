@@ -36,6 +36,7 @@
                     $livre = $item->timess
                         ->where('distance', 50)
                         ->where('modality_id', 1)
+                        ->orderBy('record','asc')
                         ->first();
                     $borbo = $item->timess
                         ->where('distance', 50)
