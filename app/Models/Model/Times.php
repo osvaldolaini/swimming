@@ -2,6 +2,7 @@
 
 namespace App\Models\Model;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,5 +28,10 @@ class Times extends Model
     public function modality()
     {
         return $this->belongsTo(Modalities::class);
+    }
+    public function dayMonth()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->day)
+                ->format('d/m/Y');
     }
 }

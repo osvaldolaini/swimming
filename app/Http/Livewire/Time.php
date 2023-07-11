@@ -19,19 +19,12 @@ class Time extends Component
     use WithPagination;
 
     public Times $times;
-    public $search;
-    public $sortField = 'day';
-    public $sortDirection = 'desc';
     public $showJetModal = false;
     public $showModalView = false;
     public $showModalCreate = false;
     public $showModalEdit = false;
     public $registerId;
     public $alertSession = false;
-    public $selectFilter = 'name';
-
-    public $getStat;
-    public bool $toggleStatus;
 
     public $detail;
     public $active = 1;
@@ -51,42 +44,31 @@ class Time extends Component
     public $categories;
     public $athletes;
 
+    protected $listeners =
+    [
+        'showModalCreate',
+        'showModalRead',
+        'showModalUpdate',
+        'showModalDelete'
+    ];
+
     public function mount()
     {
-        // $this->athletes = Athletes::where('active',1)->get();
         $this->modalities = Modalities::where('active',1)->get();
         $this->categories = Categories::where('active',1)->get();
     }
 
-    public function getAthletes()
-    {
-        $birth_year = Categories::find($this->category_id)->birth_year;
-        $this->athletes = Athletes::where('active', 1)
-        ->where('birth', 'LIKE', '%' . $birth_year . '%')
-        ->get();
-    }
+    // public function getAthletes()
+    // {
+    //     $birth_year = Categories::find($this->category_id)->birth_year;
+    //     $this->athletes = Athletes::where('active', 1)
+    //     ->where('birth', 'LIKE', '%' . $birth_year . '%')
+    //     ->get();
+    // }
 
     public function render()
     {
-        // Gate::authorize('admin');
-
-        $data = Times::when($this->search, function ($query, $search) {
-            return $query->where($this->selectFilter, 'LIKE', "%$search%");
-        })
-            ->with(['athletes', 'modality'])
-            ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate(10);
-
-        $this->heads = [
-            // ['label' => 'Categoria','filter'=>true,'orderable' => true,'field'=>'name','direction'=>'asc'],
-            ['label' => 'Data', 'filter' => true, 'orderable' => true, 'field' => 'day', 'direction' => 'asc'],
-        ];
-
-        return view('livewire.time',
-            [
-                'data'      => $data,
-            ]
-        );
+        return view('livewire.time');
     }
 
     //CREATE
@@ -121,9 +103,9 @@ class Time extends Component
             'code'          => Str::uuid(),
             'created_by'    => Auth::user()->name,
         ]);
-        session()->flash('success', 'Registro criado com sucesso');
 
-        $this->alertSession = true;
+        $this->openAlert('success','Registro criado com sucesso.');
+
         $this->showModalCreate = false;
         $this->reset(
             'athlete_id',
@@ -137,7 +119,7 @@ class Time extends Component
         );
     }
     //READ
-    public function showView($id)
+    public function showModalRead($id)
     {
         $this->showModalView = true;
 
@@ -162,7 +144,7 @@ class Time extends Component
         }
     }
     //UPDATE
-    public function showModalEdit(Times $times)
+    public function showModalUpdate(Times $times)
     {
         $this->model_id     = $times->id;
         $this->athlete_id   = $times->athlete_id;
@@ -213,9 +195,8 @@ class Time extends Component
             'updated_by' => Auth::user()->name,
         ]);
 
-        session()->flash('success', 'Registro atualizado com sucesso');
+        $this->openAlert('success','Registro atualizado com sucesso.');
 
-        $this->alertSession = true;
         $this->showModalEdit = false;
         $this->reset(
             'athlete_id',
@@ -229,7 +210,7 @@ class Time extends Component
         );
     }
     //DELETE
-    public function showModal($id)
+    public function showModalDelete($id)
     {
         $this->showJetModal = true;
         if (isset($id)) {
@@ -243,9 +224,8 @@ class Time extends Component
         $data = Times::where('id', $id)->first();
         $data->delete();
 
-        session()->flash('success', 'Registro excluido com sucesso.');
+        $this->openAlert('success','Registro excluido com sucesso.');
 
-        $this->alertSession = true;
         $this->showJetModal = false;
         $this->reset(
             'athlete_id',
@@ -254,26 +234,9 @@ class Time extends Component
             'record'
         );
     }
-
-    //EXTRAS
-    //Ordena os colunas nas tabelas
-    public function sortBy($field)
-    {
-        if ($field == $this->sortField) {
-            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-    //Fecha a caixa da mensagem
-    public function closeAlert()
-    {
-        $this->alertSession = false;
-    }
     //pega o status do registro
-    public function getStatus($id)
+    public function openAlert($status,$msg)
     {
-        return Times::where('id', $id)->first()->status;
+        $this->emit('openAlert', $status, $msg);
     }
 }

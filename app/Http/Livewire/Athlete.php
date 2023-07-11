@@ -44,7 +44,9 @@ class Athlete extends Component
 
     public function mount()
     {
-        $this->getCategory = $_GET['category'];
+        if(isset($_GET['category'])){
+            $this->getCategory = $_GET['category'];
+        }
     }
 
     public function loadPosts()
@@ -181,6 +183,7 @@ class Athlete extends Component
             'name'      =>mb_strtoupper($this->name),
             'nick'      =>mb_strtoupper($this->nick),
             'register'  =>$this->register,
+            'register_date'  =>$this->register_date,
             'active'    =>$this->active,
             'sex'       =>$this->sex,
             'birth'     =>$this->birth,
@@ -200,7 +203,7 @@ class Athlete extends Component
                 'register_date'
             );
 
-            $this->mount();
+            // $this->mount();
     }
     //DELETE
     public function showModal($id)
