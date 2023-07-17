@@ -21,7 +21,7 @@ class RadarStats extends Component
         $this->name = $athlete->name;
 
         $this->category = getCategory($athlete->birth);
-// dd($this->category);
+        // dd($this->category);
         $this->labels = [
             'Medley',
             'Crawl',
@@ -66,8 +66,7 @@ class RadarStats extends Component
 
             if ($time) {
                 if($time->record < $most){
-
-                    $most = $time->record;
+                    $most = invertTime($time->record);
                 }
                 $at +=1;
             }
@@ -83,7 +82,7 @@ class RadarStats extends Component
             ->first();
 
         if($timeAthlete){
-            $r = $timeAthlete->record;
+            $r = invertTime($timeAthlete->record);
         }else{
             $r = 0;
         }

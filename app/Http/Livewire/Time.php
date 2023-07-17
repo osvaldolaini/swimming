@@ -153,8 +153,8 @@ class Time extends Component
         $this->distance     = $times->distance;
         $this->type_time    = $times->type_time;
         $this->category_id  = $times->category_id;
-        $this->record       = converTime($times->record);
-        $this->day          = convertOnlyDate($times->day);
+        $this->record       = $times->record;
+        $this->day          = $times->day;
         $this->active       = $times->active;
         $this->showModalEdit = true;
 
