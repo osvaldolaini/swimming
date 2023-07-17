@@ -23,12 +23,12 @@ class AllStatsBar extends Component
             // $this->labels = $questions->pluck('created_at')->toArray();
             $this->labels[] = $time->map(
                 fn($question)=>[
-                    'day' => convertOnlyDate($question->day)
+                    'day' => $question->day
                 ]
             )->pluck('day')->toArray();
 
-            $this->data[] = Times::where('id',$times[$i])->first()->record;
-            $this->times[] = converTime(Times::where('id',$times[$i])->first()->record);
+            $this->data[] = InvertTime(Times::where('id',$times[$i])->first()->record);
+            $this->times[] = Times::where('id',$times[$i])->first()->record;
         }
 
 

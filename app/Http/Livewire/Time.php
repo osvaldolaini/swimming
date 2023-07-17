@@ -58,13 +58,13 @@ class Time extends Component
         $this->categories = Categories::where('active',1)->get();
     }
 
-    // public function getAthletes()
-    // {
-    //     $birth_year = Categories::find($this->category_id)->birth_year;
-    //     $this->athletes = Athletes::where('active', 1)
-    //     ->where('birth', 'LIKE', '%' . $birth_year . '%')
-    //     ->get();
-    // }
+    public function getAthletes()
+    {
+        $birth_year = Categories::find($this->category_id)->birth_year;
+        $this->athletes = Athletes::where('active', 1)
+        ->where('birth', 'LIKE', '%' . $birth_year . '%')
+        ->get();
+    }
 
     public function render()
     {
