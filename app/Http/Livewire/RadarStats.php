@@ -65,10 +65,10 @@ class RadarStats extends Component
             ->first();
 
             if ($time) {
-                if($time->record < $most){
+                if(invertTime($time->record) < $most){
                     $most = invertTime($time->record);
                 }
-                $at +=1;
+                $at += 1;
             }
         }
 
