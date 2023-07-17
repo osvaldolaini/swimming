@@ -9,19 +9,19 @@ use Livewire\WithPagination;
 
 class SearchBar extends Component
 {
+
     use WithPagination;
 
     public $search;
     public $searchDate;
     public $model;
     public $modelId;
-    public $showId;
     public $relationTables;
     public $sort;
-    public $searchable;
     public $columnsInclude;
     public $columnsNames;
-    public $customSearch;
+    public $searchable;
+    public $searchableDates;
     public $showButtons;
 
     public $paginate;
@@ -36,20 +36,18 @@ class SearchBar extends Component
     public function mount(
                         $model,
                         $modelId,
-                        $showId,
                         $relationTables,
                         $paginate,
                         $sort,
                         $columnsInclude,
                         $columnsNames,
                         $searchable,
-                        $customSearch,
+                        $searchableDates,
                         $showButtons
                     )
     {
         $this->model = $model;
         $this->modelId = $modelId;
-        $this->showId = strtolower(trim($showId));
         if(isset($relationTables)){
             $this->relationTables = $relationTables;
         }
@@ -60,7 +58,7 @@ class SearchBar extends Component
         $this->columnsInclude = $columnsInclude;
         $this->columnsNames = explode(',', $columnsNames);
         $this->searchable = $searchable;
-        $this->customSearch = $customSearch;
+        $this->searchableDates = $searchableDates;
         $this->showButtons = $showButtons;
         ($paginate != null ? $this->paginate = $paginate : $this->paginate = 10);
 
@@ -78,17 +76,8 @@ class SearchBar extends Component
 
     private function getData()
     {
-
         $query = $this->model::query();
-        $selects = array($this->modelId.' as id');
-        if($this->columnsInclude){
-            foreach (explode(',', $this->columnsInclude) as $key => $value) {
-                array_push($selects,$value);
-            }
-        }else{
-            $selects = '*';
-        }
-        $query->select($selects);
+        $query->select(explode(',', $this->columnsInclude),$this->modelId);
 
         if($this->relationTables != ""){
             $query = $this->relationTables($query);
@@ -96,37 +85,48 @@ class SearchBar extends Component
         if($this->sort != ""){
             $query = $this->sort($query);
         }
+
         if ($this->searchable && $this->search) {
-            $this->search($query);
-        }
-        return $query->paginate($this->paginate);
-    }
-    #PRICIPAL FUNCTIONS
-        public function search($query){
             $searchTerms = explode(',', $this->searchable);
-                $query->where(function ($innerQuery) use ($searchTerms) {
-                    foreach ($searchTerms as $term) {
-                        if ($this->customSearch) {
-                            $fields = explode('|', $this->customSearch);
-                            if(in_array($term,$fields)){
-                                $search = array($term=>$this->search);
-                                $formattedSearch = $this->model::filterFields($search);
-                                if($formattedSearch['converted'] != '%0%'){
-                                    $innerQuery->orWhere($term, $formattedSearch['f'], $formattedSearch['converted']);
-                                }else{
-                                    $innerQuery->orWhere($term, 'LIKE', '%' . $this->search . '%');
-                                }
-                            }else{
-                                $innerQuery->orWhere($term, 'LIKE', '%' . $this->search . '%');
-                            }
-                        }else{
-                            $innerQuery->orWhere($term, 'LIKE', '%' . $this->search . '%');
+            $query->where(function ($innerQuery) use ($searchTerms) {
+                if ($this->searchableDates) {
+                    if (substr_count($this->search, " ") === 1) {
+                        $partesSpace = explode(" ", $this->search);
+                        if (substr_count($partesSpace[0], "/") === 1) {
+                            $partes = explode("/", $partesSpace[0]);
+                            $this->searchDate = $partes[1] . "%-" . $partes[0] . "% " . $partesSpace[1];
+                        } elseif (substr_count($partesSpace[0], "/") === 2) {
+                            $partes = explode("/", $partesSpace[0]);
+                            $this->searchDate = $partes[2] . "%-" . $partes[1] . "-" . $partes[0] . "% " . $partesSpace[1];
+                        } else {
+                            $this->searchDate = $this->search;
+                        }
+                    } else {
+                        if (substr_count($this->search, "/") === 1) {
+                            $partes = explode("/", $this->search);
+                            $this->searchDate = $partes[1] . "%-" . $partes[0];
+                        } elseif (substr_count($this->search, "/") === 2) {
+                            $partes = explode("/", $this->search);
+                            $this->searchDate = $partes[2] . "%-" . $partes[1] . "-" . $partes[0];
+                        } else {
+                            $this->searchDate = $this->search;
                         }
                     }
-                });
-                // dd($query);
+
+                    $searchDates = explode(',', $this->searchableDates);
+                    foreach ($searchDates as $termDates) {
+                        $formattedSearch = '%' . $this->searchDate . '%';
+                        $innerQuery->orWhere($termDates, 'LIKE', $formattedSearch);
+                    }
+                }
+                foreach ($searchTerms as $term) {
+                    $innerQuery->orWhere($term, 'like', '%' . $this->search . '%');
+                }
+            });
         }
-    #END PRICIPAL FUNCTIONS
+
+        return $query->paginate($this->paginate);
+    }
     #EXTRA FUNCTIONS
         //SORT
         public function sort($query)
