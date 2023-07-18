@@ -35,6 +35,9 @@
                                     <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left text-gray-500 dark:text-gray-400">
                                         Ano
                                     </th>
+                                    <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left text-gray-500 dark:text-gray-400">
+                                        Ano Llimite
+                                    </th>
                                     <th scope="col" class="py-3.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
                                         Categoria
                                     </th>
@@ -53,6 +56,9 @@
                                 <tr >
                                     <td class="py-1.5 px-4 text-sm font-normal text-left text-gray-500 dark:text-gray-400">
                                         {{ $cat->birth_year  }}
+                                    </td>
+                                    <td class="py-1.5 px-4 text-sm font-normal text-left text-gray-500 dark:text-gray-400">
+                                        {{ $cat->birth_year_end  }}
                                     </td>
                                     <td class="py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
                                         {{ $cat->name }}
@@ -175,7 +181,7 @@
                             <input type="text" wire:model="name" name="name" id="name"  placeholder="Categoria" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @error('name') <span class="error">{{ $message }}</span> @enderror
                         </div>
-                        <div class="sm:col-span-2" x-data x-init="Inputmask({
+                        <div class="sm:col-span-2 sm:col-span-1" x-data x-init="Inputmask({
                             'mask': '9999'
                         }).mask($refs.birth_year)">
                             <label for="birth_year"
@@ -186,6 +192,20 @@
                                 rounded-lg focus:ring-primary-600 focus:border-primary-600
                                 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @error('birth_year')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="sm:col-span-2 sm:col-span-1" x-data x-init="Inputmask({
+                            'mask': '9999'
+                        }).mask($refs.birth_year_end)">
+                            <label for="birth_year_end"
+                                class="block text-sm font-medium text-gray-900 dark:text-white">Data limite</label>
+                            <input type="text" x-ref="birth_year_end" wire:model="birth_year_end" placeholder="Data limite"
+                                required=""
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                                rounded-lg focus:ring-primary-600 focus:border-primary-600
+                                block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('birth_year_end')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
@@ -216,11 +236,11 @@
                 <form wire:submit.prevent="update">
                     <div class="grid gap-4 mb-1 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                         <div class="col-span-2">
-                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">*Título</label>
-                            <input type="text" wire:model="name" name="name" id="name"  placeholder="Título" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">*Categoria</label>
+                            <input type="text" wire:model="name" name="name" id="name"  placeholder="Categoria" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @error('name') <span class="error">{{ $message }}</span> @enderror
                         </div>
-                        <div class="sm:col-span-2" x-data x-init="Inputmask({
+                        <div class="sm:col-span-2 sm:col-span-1" x-data x-init="Inputmask({
                             'mask': '9999'
                         }).mask($refs.birth_year)">
                             <label for="birth_year"
@@ -231,6 +251,20 @@
                                 rounded-lg focus:ring-primary-600 focus:border-primary-600
                                 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @error('birth_year')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="sm:col-span-2 sm:col-span-1" x-data x-init="Inputmask({
+                            'mask': '9999'
+                        }).mask($refs.birth_year_end)">
+                            <label for="birth_year_end"
+                                class="block text-sm font-medium text-gray-900 dark:text-white">Data limite</label>
+                            <input type="text" x-ref="birth_year_end" wire:model="birth_year_end" placeholder="Data limite"
+                                required=""
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                                rounded-lg focus:ring-primary-600 focus:border-primary-600
+                                block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('birth_year_end')
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </div>

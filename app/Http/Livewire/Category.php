@@ -34,6 +34,7 @@ class Category extends Component
     public $name;
     public $code;
     public $birth_year;
+    public $birth_year_end;
     public $rules;
     public $heads;
     public $model_id;
@@ -52,6 +53,7 @@ class Category extends Component
          $this->heads = [
             ['label' => 'Categoria','filter'=>true,'orderable' => true,'field'=>'name','direction'=>'asc'],
             ['label' => 'Ano','filter'=>true,'orderable' => true,'field'=>'birth_year','direction'=>'asc'],
+            ['label' => 'Ano','filter'=>true,'orderable' => true,'field'=>'birth_year_end','direction'=>'asc'],
         ];
 
         return view('livewire.category',
@@ -72,12 +74,14 @@ class Category extends Component
         $this->rules = [
                 'name'=>'required|min:4|max:255',
                 'birth_year'=>'required',
+                'birth_year_end'=>'required',
         ];
         $this->validate();
 
         Categories::create([
             'name'      =>ucwords(mb_strtolower($this->name)),
             'birth_year'=>$this->birth_year,
+            'birth_year_end'=>$this->birth_year_end,
             'active'    =>$this->active,
             'code'      =>Str::uuid(),
             'created_by'=>Auth::user()->name,
@@ -86,7 +90,7 @@ class Category extends Component
 
             $this->alertSession = true;
             $this->showModalCreate = false;
-            $this->reset('name','birth_year');
+            $this->reset('name','birth_year','birth_year_end');
     }
     //READ
     public function showView($id)
@@ -114,6 +118,7 @@ class Category extends Component
         $this->model_id = $categories->id;
         $this->name    = $categories->name;
         $this->birth_year    = $categories->birth_year;
+        $this->birth_year_end    = $categories->birth_year_end;
         $this->active   = $categories->active;
         $this->showModalEdit = true;
     }
@@ -122,6 +127,7 @@ class Category extends Component
         $this->rules = [
             'name'=>'required|min:4|max:255',
             'birth_year'=>'required',
+            'birth_year_end'=>'required',
         ];
         $this->validate();
 
@@ -130,6 +136,7 @@ class Category extends Component
         ],[
             'name'      =>ucwords(mb_strtolower($this->name)),
             'birth_year'=>$this->birth_year,
+            'birth_year_end'=>$this->birth_year_end,
             'active'    =>$this->active,
             'updated_by'=>Auth::user()->name,
         ]);
@@ -138,7 +145,7 @@ class Category extends Component
 
             $this->alertSession = true;
             $this->showModalEdit = false;
-            $this->reset('name','birth_year');
+            $this->reset('name','birth_year','birth_year_end');
     }
     //DELETE
     public function showModal($id)
@@ -160,7 +167,7 @@ class Category extends Component
 
             $this->alertSession = true;
             $this->showJetModal = false;
-            $this->reset('name','birth_year');
+            $this->reset('name','birth_year','birth_year_end');
     }
 
 
