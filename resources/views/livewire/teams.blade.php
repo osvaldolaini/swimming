@@ -4,10 +4,9 @@
             <h1 class="text-4xl font-black py-0 my-0">EQUIPES</h1>
         </div>
     </div>
-
     <div class="grid sm:grid-cols-3 grid-cols-1 gap-4 " wire:model="teams">
         @foreach ($teams as $item)
-            <div wire:click="goAthletes({{ $item->birth_year }})" class="cursor-pointer card card-side
+            <div wire:click="goAthletes({{ $item->birth_year }},{{ $item->birth_year_end }})" class="cursor-pointer card card-side
                 shadow-xl h-100 bg-neutral rounded-box text-neutral-content hover:bg-gray-100 hover:text-gray-900">
                 <div class="card-actions justify-end">
                     <div class="w-full">
@@ -50,9 +49,13 @@
                 </div>
                 <div class="card-body">
                     <h2 class="card-title ucfirst">{{ $item->name }}</h2>
-                    <p>Nascidos em: {{ $item->birth_year }}</p>
-                    <p>Meninos: {{ $item->athletes($item->birth_year)->where('sex','masculino')->count() }}</p>
-                    <p>Meninas: {{ $item->athletes($item->birth_year)->where('sex','feminino')->count() }}</p>
+                    @if ($item->birth_year == $item->birth_year_end)
+                        <p>Nascidos em: {{ $item->birth_year }}</p>
+                        <p>Meninos: {{ $item->athletes($item->birth_year)->where('sex','masculino')->count() }}</p>
+                        <p>Meninas: {{ $item->athletes($item->birth_year)->where('sex','feminino')->count() }}</p>
+                    @else
+                        <p>Nascidos entre: {{ $item->birth_year }} e {{ $item->birth_year_end }}</p>
+                    @endif
 
                 </div>
             </div>

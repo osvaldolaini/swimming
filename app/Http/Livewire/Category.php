@@ -16,7 +16,7 @@ class Category extends Component
 
     public Categories $categories;
     public $search;
-    public $sortField = 'birth_year';
+    public $sortField = 'birth_year_end';
     public $sortDirection = 'asc';
     public $showJetModal= false;
     public $showModalView = false;
