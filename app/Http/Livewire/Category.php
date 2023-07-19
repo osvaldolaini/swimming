@@ -39,6 +39,19 @@ class Category extends Component
     public $heads;
     public $model_id;
 
+    protected $listeners =
+    [
+        'showModalCreate',
+        'showModalRead',
+        'showModalUpdate',
+        'showModalDelete'
+    ];
+    //pega o status do registro
+    public function openAlert($status,$msg)
+    {
+        $this->emit('openAlert', $status, $msg);
+    }
+
     public function render()
     {
         // Gate::authorize('admin');
@@ -86,14 +99,14 @@ class Category extends Component
             'code'      =>Str::uuid(),
             'created_by'=>Auth::user()->name,
         ]);
-        session()->flash('success','Registro criado com sucesso');
+            $this->openAlert('success','Registro criado com sucesso.');
 
             $this->alertSession = true;
             $this->showModalCreate = false;
             $this->reset('name','birth_year','birth_year_end');
     }
     //READ
-    public function showView($id)
+    public function showModalRead($id)
     {
         $this->showModalView= true;
 
@@ -113,7 +126,7 @@ class Category extends Component
         }
     }
     //UPDATE
-    public function showModalEdit(Categories $categories)
+    public function showModalUpdate(Categories $categories)
     {
         $this->model_id = $categories->id;
         $this->name    = $categories->name;
@@ -141,14 +154,14 @@ class Category extends Component
             'updated_by'=>Auth::user()->name,
         ]);
 
-        session()->flash('success','Registro atualizado com sucesso');
+        $this->openAlert('success','Registro atualizado com sucesso.');
 
             $this->alertSession = true;
             $this->showModalEdit = false;
             $this->reset('name','birth_year','birth_year_end');
     }
     //DELETE
-    public function showModal($id)
+    public function showModalDelete($id)
     {
         $this->showJetModal= true;
         if (isset($id)) {
@@ -162,8 +175,7 @@ class Category extends Component
         $data = Categories::where('id',$id)->first();
         $data->active = '0';
         $data->save();
-
-        session()->flash('success','Registro excluido com sucesso.');
+        $this->openAlert('success','Registro excluido com sucesso.');
 
             $this->alertSession = true;
             $this->showJetModal = false;
@@ -183,11 +195,7 @@ class Category extends Component
             $this->sortDirection = 'asc';
         }
     }
-    //Fecha a caixa da mensagem
-    public function closeAlert()
-    {
-        $this->alertSession = false;
-    }
+
     //pega o status do registro
     public function getStatus($id)
     {
