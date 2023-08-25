@@ -27,7 +27,7 @@ class AllStatsBar extends Component
                 ]
             )->pluck('day')->toArray();
 
-            $this->data[] = invertTime(Times::where('id',$times[$i])->first()->record);
+            $this->data[] = invertTime(Times::where('id',$times[$i])->first()->recordConvert);
             $this->times[] = Times::where('id',$times[$i])->first()->record;
         }
 

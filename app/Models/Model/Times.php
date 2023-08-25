@@ -51,7 +51,7 @@ class Times extends Model
         }
         return $convert;
     }
-    public function getRecordAttribute($value)
+    public function getRecordConvertAttribute($value)
     {
         $time = explode('.', $value);
         if ($time[0] > 0) {
@@ -71,6 +71,7 @@ class Times extends Model
 
         return $sign;
     }
+
     public function getDayAttribute($value)
     {
         return Carbon::createFromFormat('Y-m-d', $value)

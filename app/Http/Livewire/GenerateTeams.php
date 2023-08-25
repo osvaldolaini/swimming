@@ -17,7 +17,7 @@ class GenerateTeams extends Component
     public $allAthletes;
     public $filterA = array();
     public $filterName = array();
-    public $birth_year;
+    public $birth;
     public $type_team = 'masculino';
     public $distance = '50';
     public $pool = '25';
@@ -36,9 +36,10 @@ class GenerateTeams extends Component
 
     public function mount()
     {
+        $cat = Categories::where('active', 1)->orderBy('birth_year', 'desc')->first();
         $this->modalidades = Modalities::where('active', 1)->get();
-        $this->category = Categories::where('active', 1)->orderBy('birth_year','desc')->get();
-        $this->birth_year = Categories::where('active', 1)->orderBy('birth_year','desc')->first()->birth_year;
+        $this->category = Categories::where('active', 1)->orderBy('birth_year', 'desc')->get();
+        $this->birth = $cat->birth_year . '|' . $cat->birth_year_end;
         $this->times = Times::all();
     }
     public function render()
@@ -48,7 +49,7 @@ class GenerateTeams extends Component
     //Remover atletas
     public function filterAthletes($a_id)
     {
-        if (in_array($a_id,$this->filterA)) {
+        if (in_array($a_id, $this->filterA)) {
             $a = Athletes::find($a_id)->name;
             $index = array_search($a_id, $this->filterA);
             $index2 = array_search($a, $this->filterName);
@@ -56,7 +57,7 @@ class GenerateTeams extends Component
                 unset($this->filterA[$index]);
                 unset($this->filterName[$index2]);
             }
-        }else{
+        } else {
             $this->filterName[] = Athletes::find($a_id)->name;
             $this->filterA[] = $a_id;
         }
@@ -67,17 +68,20 @@ class GenerateTeams extends Component
     }
     public function getfilterAthletes()
     {
-         //Ambos os sexos
-         if ($this->type_team == 'mista') {
-            $this->allAthletes = Athletes::where('active', 1)
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+        $birth_date = explode('|', $this->birth);
+        //Ambos os sexos
+        $this->allAthletes = Athletes::where('active', 1)
+
+            ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
+            ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
             ->get();
-        }else{
-            $this->allAthletes = Athletes::where('active', 1)
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-            ->where('sex', $this->type_team)
-            ->get();
+        if ($this->type_team != 'mista') {
+            // $this->allAthletes = Athletes::where('active', 1)
+            // ->get();
+            $this->allAthletes = $this->allAthletes->where('sex', $this->type_team);
         }
+
+
         $this->equipes = [];
     }
     //zerar equipes
@@ -92,7 +96,7 @@ class GenerateTeams extends Component
         //Ambos os sexos
         if ($this->type_team == 'mista') {
             $this->qtd_athletes = 6;
-        }else{
+        } else {
             $this->qtd_athletes = 12;
         }
 
@@ -103,22 +107,22 @@ class GenerateTeams extends Component
             $atletas = $atletas->diff($this->filterA);
             $atletas = $atletas->values();
         }
-        if($atletas->count() < 4){
+        if ($atletas->count() < 4) {
             $this->message = 'Quantidade de atletas é insuficiente para montar uma equipe ou não existem atletas com tempos cadastrados!';
             return;
-        }else{
+        } else {
             $this->message = null;
         }
 
         //Função que pega a equipe medley
         if ($this->modality == 'medley') {
-            if($this->select_team == 'best') {
+            if ($this->select_team == 'best') {
                 $atletas =  $this->qtdMedley($atletas);
             }
             // dd($atletas);
             $this->equipes = $this->medleyTeams($atletas);
-        }else{
-            if($this->select_team == 'best') {
+        } else {
+            if ($this->select_team == 'best') {
                 $atletas =  $this->qtdModality($atletas);
             }
             //Função que pega a equipe por modalidade
@@ -130,43 +134,57 @@ class GenerateTeams extends Component
 
         $this->equipes = $this->getTeams($this->equipes);
         // dd($this->equipes);
-        if($this->select_team == 'best'){
+        if ($this->select_team == 'best') {
             $this->equipes = $this->bestTeams($this->equipes);
         }
         // dd($this->equipes);
     }
     public function getAthletes()
     {
+        $birth_date = explode('|', $this->birth);
         //Ambos os sexos
-        if ($this->type_team == 'mista') {
-            $atletas = DB::table('athletes')->select('id')
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-            ->pluck('id');
-        }else{
+        $this->allAthletes = Athletes::where('active', 1)
+
+            ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
+            ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+            ->get();
         //Pega os atletas por sexo
-            $atletas = DB::table('athletes')->select('id')
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-            ->where('sex', $this->type_team)
-            ->pluck('id');
+        if ($this->type_team != 'mista') {
+            // $this->allAthletes = Athletes::where('active', 1)
+            // ->get();
+            $this->allAthletes = $this->allAthletes->where('sex', $this->type_team);
         }
+        // //Ambos os sexos
+        // if ($this->type_team == 'mista') {
+        //     $atletas = DB::table('athletes')->select('id')
+        //     ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+        //     ->pluck('id');
+        // }else{
+        // //Pega os atletas por sexo
+        //     $atletas = DB::table('athletes')->select('id')
+        //     ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+        //     ->where('sex', $this->type_team)
+        //     ->pluck('id');
+        // }
+        $atletas = $this->allAthletes->pluck('id');
         $athletes = collect();
 
         foreach ($atletas as $key) {
             //seleciona se o atleta ja nadou algo
             if ($this->type_time == 'ambos') {
                 $time = Times::select('id')
-                ->where('pool',$this->pool)
-                ->where('distance',$this->distance)
-                ->where('athlete_id', $key)
-                ->get();
-            }else{
+                    ->where('pool', $this->pool)
+                    ->where('distance', $this->distance)
+                    ->where('athlete_id', $key)
+                    ->get();
+            } else {
                 //filtra por tipo de tempo
                 $time = Times::select('id')
-                ->where('pool',$this->pool)
-                ->where('distance',$this->distance)
-                ->where('type_time',$this->type_time)
-                ->where('athlete_id', $key)
-                ->get();
+                    ->where('pool', $this->pool)
+                    ->where('distance', $this->distance)
+                    ->where('type_time', $this->type_time)
+                    ->where('athlete_id', $key)
+                    ->get();
             }
             if ($time->count() > 0) {
                 $athletes->push($key);
@@ -177,7 +195,8 @@ class GenerateTeams extends Component
     }
 
     //Pega a equipe medley
-    public function medleyTeams($atletas){
+    public function medleyTeams($atletas)
+    {
         $combArrays = [];
         foreach ($atletas as $a) {
             foreach ($atletas as $b) {
@@ -233,113 +252,116 @@ class GenerateTeams extends Component
         $arrayTeam = [];
         $title = 0;
         $time_total = 0;
-                foreach ($teams as $team ){
-                    $title += 1;
-                    $athletes       = [];
-                    $time_athlete   = [];
-                    $ids            = [];
-                    $mod=0;
-                    $sex=0;
-                    foreach ($team as $key => $athlete) {
-                        // $mod +=1;
-                        if ($this->modality == 'medley') {
-                            $mod +=1;
-                        }elseif($this->modality == 'livre') {
-                            $mod = 1;
-                        }else{
-                            $mod = $this->modality;
-                        }
-                        if($this->order == 'record'){
-                            $o = 'asc';
-                        }else{
-                            $o = 'desc';
-                        }
-                        if ($this->type_time != 'ambos') {
-                            $time = Times::select('record','athlete_id','modality_id')
-                            ->with(['athletes','modality'])
-                            ->where('pool',$this->pool)
-                            ->where('distance',$this->distance)
-                            ->where('type_time',$this->type_time)
-                            ->where('modality_id', $mod)
-                            ->where('athlete_id', $athlete)
-                            ->orderBy($this->order,$o)
-                            ->first();
-                        }else{
-                            $time = Times::select('record','athlete_id','modality_id')
-                            ->with(['athletes','modality'])
-                            ->where('pool',$this->pool)
-                            ->where('distance',$this->distance)
-                            ->where('modality_id', $mod)
-                            ->where('athlete_id', $athlete)
-                            ->orderBy($this->order,$o)
-                            ->first();
-                        }
-                        if($time)
-                        {
-                            if ($time->athletes->sex == 'masculino') {
-                                $sex+=1;
-                            }
-                            $time_total    += $time->record;
-                            $athletes[]     = ($time->athlete_id ? $time->athletes->nick : 'Excluido');
-                            $ids[]          = $athlete;
-                            $time_athlete[] = $time;
-                            // $time_athlete[] = date('i', strtotime($time->record)).':'.number_format(date('s.u', strtotime($time->record)), 2, '.', '');
-                        }
-                    }
-                    if (count($athletes) == 4) {
-                        if ($this->type_team == 'mista') {
-                            //Remove se existir mais de 2 meninos na equipe
-                            if ($sex == 2) {
-                                $arrayTeam = [
-                                    'time_total'    => $time_total,
-                                    'team'          => $time_athlete,
-                                    'ids'           => $ids,
-                                ];
-                            }
-                        }else{
-                            $arrayTeam = [
-                                'time_total'    => $time_total,
-                                'team'          => $time_athlete,
-                                'ids'           => $ids,
-                            ];
-                        }
-
-                        $allTeams[]=$arrayTeam;
-                    }
-                    $time_total = 0;
-                    // if($title == 8){
-                    //     break;
-                    // }
+        foreach ($teams as $team) {
+            $title += 1;
+            $athletes       = [];
+            $time_athlete   = [];
+            $ids            = [];
+            $mod = 0;
+            $sex = 0;
+            foreach ($team as $key => $athlete) {
+                // $mod +=1;
+                if ($this->modality == 'medley') {
+                    $mod += 1;
+                } elseif ($this->modality == 'livre') {
+                    $mod = 1;
+                } else {
+                    $mod = $this->modality;
                 }
-                return $this->array_msort(array_filter($allTeams), array('time_total'=>SORT_ASC));
+                if ($this->order == 'record') {
+                    $o = 'asc';
+                } else {
+                    $o = 'desc';
+                }
+                if ($this->type_time != 'ambos') {
+                    $time = Times::select('record', 'athlete_id', 'modality_id')
+                        ->with(['athletes', 'modality'])
+                        ->where('pool', $this->pool)
+                        ->where('distance', $this->distance)
+                        ->where('type_time', $this->type_time)
+                        ->where('modality_id', $mod)
+                        ->where('athlete_id', $athlete)
+                        ->orderBy($this->order, $o)
+                        ->first();
+                } else {
+                    $time = Times::select('record', 'athlete_id', 'modality_id')
+                        ->with(['athletes', 'modality'])
+                        ->where('pool', $this->pool)
+                        ->where('distance', $this->distance)
+                        ->where('modality_id', $mod)
+                        ->where('athlete_id', $athlete)
+                        ->orderBy($this->order, $o)
+                        ->first();
+                }
+                if ($time) {
+                    if ($time->athletes->sex == 'masculino') {
+                        $sex += 1;
+                    }
+
+                    $time_total    += $time->record;
+                    $athletes[]     = ($time->athlete_id ? $time->athletes->nick : 'Excluido');
+                    $ids[]          = $athlete;
+                    $time_athlete[] = $time;
+                    // $time_athlete[] = date('i', strtotime($time->record)).':'.number_format(date('s.u', strtotime($time->record)), 2, '.', '');
+                }
+            }
+            if (count($athletes) == 4) {
+                if ($this->type_team == 'mista') {
+                    //Remove se existir mais de 2 meninos na equipe
+                    if ($sex == 2) {
+                        $arrayTeam = [
+                            'time_total'    => $time_total,
+                            'team'          => $time_athlete,
+                            'ids'           => $ids,
+                        ];
+                    }
+                } else {
+                    $arrayTeam = [
+                        'time_total'    => $time_total,
+                        'team'          => $time_athlete,
+                        'ids'           => $ids,
+                    ];
+                }
+
+                // dd($allTeams);
+                $allTeams[] = $arrayTeam;
+            }
+            $time_total = 0;
+            // if($title == 8){
+            //     break;
+            // }
+        }
+        // dd($allTeams);
+        return $this->array_msort(array_filter($allTeams), array('time_total' => SORT_ASC));
         // return $allTeams;
     }
     //Função que ordena pelo melhor tempo
     function array_msort($array, $cols)
     {
-        $n=0;
+        $n = 0;
         $colarr = array();
         foreach ($cols as $col => $order) {
             $colarr[$col] = array();
-            foreach ($array as $k => $row) { $colarr[$col]['_'.$k] = strtolower($row[$col]); }
+            foreach ($array as $k => $row) {
+                $colarr[$col]['_' . $k] = strtolower($row[$col]);
+            }
         }
         $eval = 'array_multisort(';
         foreach ($cols as $col => $order) {
-            $eval .= '$colarr[\''.$col.'\'],'.$order.',';
+            $eval .= '$colarr[\'' . $col . '\'],' . $order . ',';
         }
-        $eval = substr($eval,0,-1).');';
+        $eval = substr($eval, 0, -1) . ');';
         eval($eval);
         $ret = array();
         foreach ($colarr as $col => $arr) {
             foreach ($arr as $k => $v) {
-                $k = substr($k,1);
+                $k = substr($k, 1);
                 if (!isset($ret[$n])) $ret[$n] = $array[$k];
                 $ret[$n][$col] = $array[$k][$col];
-                $n+=1;
+                $n += 1;
             }
         }
         return $ret;
-
     }
 
     //Pega os melhores times
@@ -355,16 +377,15 @@ class GenerateTeams extends Component
                 foreach ($teams[$i]['ids'] as $ids) {
                     for ($j = 0; $j < count($teams); $j++) {
                         $diff_j = in_array($teams[$j], $result); //Verifica se já está nos resultados
-                            if (!$diff_j){
+                        if (!$diff_j) {
 
-                                $diff_k = in_array($teams[$j], $arrays_i); //Verifica se já está nos não pesquisáveis
-                                if (!$diff_k){
+                            $diff_k = in_array($teams[$j], $arrays_i); //Verifica se já está nos não pesquisáveis
+                            if (!$diff_k) {
                                 $diff = in_array(intval($ids), $teams[$j]['ids']);
                                 if ($diff) {
                                     // echo '<p>';
                                     // print_r($teams[$j]['ids']);
                                     $arrays_i[] = $teams[$j];
-
                                 }
                             }
                         }
@@ -378,94 +399,94 @@ class GenerateTeams extends Component
     //Pega quantidade para montar as 3 melhores equipes
     public function qtdModality($atletas)
     {
-       //Ambos os sexos
-       if ($this->type_team == 'mista') {
-           $atletasM = DB::table('athletes')->select('id')
-           ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-           ->where('sex', 'masculino')
-           ->pluck('id');
-           $atletasF = DB::table('athletes')->select('id')
-           ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-           ->where('sex', 'feminino')
-           ->pluck('id');
+        //Ambos os sexos
+        if ($this->type_team == 'mista') {
+            $atletasM = DB::table('athletes')->select('id')
+                ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+                ->where('sex', 'masculino')
+                ->pluck('id');
+            $atletasF = DB::table('athletes')->select('id')
+                ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+                ->where('sex', 'feminino')
+                ->pluck('id');
 
-           $bestsF = $this->qtdTeam($atletasF,$this->modality);
-           $bestsM = $this->qtdTeam($atletasM,$this->modality);
-           $bests = $bestsF->merge($bestsM);
-       }else{
-           $bests = $this->qtdTeam($atletas,$this->modality);
-       }
-       return $bests;
-       // dd($bests);
+            $bestsF = $this->qtdTeam($atletasF, $this->modality);
+            $bestsM = $this->qtdTeam($atletasM, $this->modality);
+            $bests = $bestsF->merge($bestsM);
+        } else {
+            $bests = $this->qtdTeam($atletas, $this->modality);
+        }
+        return $bests;
+        // dd($bests);
     }
 
     //Pega quantidade para montar as 3 melhores equipes
     public function qtdMedley($atletas)
     {
-       //Ambos os sexos
-       if ($this->type_team == 'mista') {
-           $atletasM = DB::table('athletes')->select('id')
-           ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-           ->where('sex', 'masculino')
-           ->pluck('id');
-           $atletasF = DB::table('athletes')->select('id')
-           ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-           ->where('sex', 'feminino')
-           ->pluck('id');
+        //Ambos os sexos
+        if ($this->type_team == 'mista') {
+            $atletasM = DB::table('athletes')->select('id')
+                ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+                ->where('sex', 'masculino')
+                ->pluck('id');
+            $atletasF = DB::table('athletes')->select('id')
+                ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+                ->where('sex', 'feminino')
+                ->pluck('id');
 
             $this->qtd_athletes = 4;
 
-            $bestsLF = $this->qtdTeam($atletasF,1);
-            $bestsBF = $this->qtdTeam($atletasF,2);
-            $bestsCF = $this->qtdTeam($atletasF,3);
-            $bestsPF = $this->qtdTeam($atletasF,4);
+            $bestsLF = $this->qtdTeam($atletasF, 1);
+            $bestsBF = $this->qtdTeam($atletasF, 2);
+            $bestsCF = $this->qtdTeam($atletasF, 3);
+            $bestsPF = $this->qtdTeam($atletasF, 4);
 
-            $bestsLM = $this->qtdTeam($atletasM,1);
-            $bestsBM = $this->qtdTeam($atletasM,2);
-            $bestsCM = $this->qtdTeam($atletasM,3);
-            $bestsPM = $this->qtdTeam($atletasM,4);
+            $bestsLM = $this->qtdTeam($atletasM, 1);
+            $bestsBM = $this->qtdTeam($atletasM, 2);
+            $bestsCM = $this->qtdTeam($atletasM, 3);
+            $bestsPM = $this->qtdTeam($atletasM, 4);
 
             $bestsF = $bestsLF->merge($bestsBF)->merge($bestsCF)->merge($bestsPF);
             $bestsM = $bestsLM->merge($bestsBM)->merge($bestsCM)->merge($bestsPM);
 
             $bests = $bestsF->merge($bestsM);
-       }else{
-            $bestsL = $this->qtdTeam($atletas,1);
-            $bestsB = $this->qtdTeam($atletas,2);
-            $bestsC = $this->qtdTeam($atletas,3);
-            $bestsP = $this->qtdTeam($atletas,4);
-            $bests = $bestsL->merge($bestsB,$bestsC,$bestsP);
-       }
+        } else {
+            $bestsL = $this->qtdTeam($atletas, 1);
+            $bestsB = $this->qtdTeam($atletas, 2);
+            $bestsC = $this->qtdTeam($atletas, 3);
+            $bestsP = $this->qtdTeam($atletas, 4);
+            $bests = $bestsL->merge($bestsB, $bestsC, $bestsP);
+        }
         //    dd($bests->unique());
-       return $bests->unique();
+        return $bests->unique();
     }
-    public function qtdTeam($atletas,$modality)
+    public function qtdTeam($atletas, $modality)
     {
-           $bests = collect();
-           $aTimes = array();
-           foreach ($atletas as $key) {
-               $time = Times::select('record','athlete_id')
-               ->where('pool',$this->pool)
-               ->where('distance',$this->distance)
-               ->where('athlete_id', $key)
-               ->where('modality_id', $modality)
-               ->orderBy('record','asc')
-               ->first();
-               if ($time) {
-                   $aTimes[$time->athlete_id]=$time->record;
-               }
-           }
-           array_filter($aTimes);
-           // return array_slice($aTimes, 0, 8, true);
-           asort($aTimes);
-           if (count($atletas) < $this->qtd_athletes) {
-               $this->qtd_athletes = count($atletas);
-           }
-           // dd(array_slice($aTimes, 0, 8, true));
-           foreach (array_slice($aTimes, 0, $this->qtd_athletes, true) as $key => $value) {
-               $bests->push($key);
-           }
-           // dd( $this->qtd_athletes);
-           return $bests;
+        $bests = collect();
+        $aTimes = array();
+        foreach ($atletas as $key) {
+            $time = Times::select('record', 'athlete_id')
+                ->where('pool', $this->pool)
+                ->where('distance', $this->distance)
+                ->where('athlete_id', $key)
+                ->where('modality_id', $modality)
+                ->orderBy('record', 'asc')
+                ->first();
+            if ($time) {
+                $aTimes[$time->athlete_id] = $time->record;
+            }
+        }
+        array_filter($aTimes);
+        // return array_slice($aTimes, 0, 8, true);
+        asort($aTimes);
+        if (count($atletas) < $this->qtd_athletes) {
+            $this->qtd_athletes = count($atletas);
+        }
+        // dd(array_slice($aTimes, 0, 8, true));
+        foreach (array_slice($aTimes, 0, $this->qtd_athletes, true) as $key => $value) {
+            $bests->push($key);
+        }
+        // dd( $this->qtd_athletes);
+        return $bests;
     }
 }

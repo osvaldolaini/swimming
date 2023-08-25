@@ -92,10 +92,10 @@
                     </div>
                     <div class="col-span-full sm:col-span-3">
                         <label for="lastname" class="text-sm">Categoria</label>
-                        <Select wire:model="birth_year" wire:change='cleanSearch()'
+                        <Select wire:model="birth" wire:change='cleanSearch()'
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             @foreach ($category as $item)
-                                <option value="{{ $item->birth_year }}">{{ $item->name }}</option>
+                                <option value="{{ $item->birth_year }}|{{ $item->birth_year_end }}">{{ $item->name }}</option>
                             @endforeach
                         </Select>
                     </div>
