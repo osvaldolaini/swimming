@@ -4,6 +4,7 @@ namespace App\Models\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Stmt\Return_;
 
 class Modalities extends Model
 {
@@ -12,4 +13,5 @@ class Modalities extends Model
     {
         return $this->hasMany(Times::class);
     }
+
 }

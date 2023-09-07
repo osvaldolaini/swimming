@@ -25,6 +25,7 @@ class Category extends Component
     public $registerId;
     public $alertSession = false;
     public $selectFilter = 'name';
+    public $type = '1';
 
     public $getStat;
     public bool $toggleStatus;
@@ -88,6 +89,7 @@ class Category extends Component
                 'name'=>'required|min:4|max:255',
                 'birth_year'=>'required',
                 'birth_year_end'=>'required',
+                'type'=>'required',
         ];
         $this->validate();
 
@@ -96,6 +98,7 @@ class Category extends Component
             'birth_year'=>$this->birth_year,
             'birth_year_end'=>$this->birth_year_end,
             'active'    =>$this->active,
+            'type'      =>$this->type,
             'code'      =>Str::uuid(),
             'created_by'=>Auth::user()->name,
         ]);
@@ -103,7 +106,7 @@ class Category extends Component
 
             $this->alertSession = true;
             $this->showModalCreate = false;
-            $this->reset('name','birth_year','birth_year_end');
+            $this->reset('name','type','birth_year','birth_year_end');
     }
     //READ
     public function showModalRead($id)
@@ -141,6 +144,7 @@ class Category extends Component
             'name'=>'required|min:4|max:255',
             'birth_year'=>'required',
             'birth_year_end'=>'required',
+            'type'=>'required',
         ];
         $this->validate();
 
@@ -150,6 +154,7 @@ class Category extends Component
             'name'      =>ucwords(mb_strtolower($this->name)),
             'birth_year'=>$this->birth_year,
             'birth_year_end'=>$this->birth_year_end,
+            'type'      =>$this->type,
             'active'    =>$this->active,
             'updated_by'=>Auth::user()->name,
         ]);

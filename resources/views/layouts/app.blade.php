@@ -30,7 +30,7 @@
         @livewire('navigation-menu')
         <!-- Page Content -->
         <main>
-            <div class="drawer drawer-mobile">
+            <div class="drawer lg:drawer-open">
                 <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content">
                     <!-- Page content here -->

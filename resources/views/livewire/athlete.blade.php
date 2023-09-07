@@ -4,8 +4,6 @@
         <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
             <h1 class="text-4xl font-black py-0 my-0">ATLETAS {{ mb_strtoupper($cat) }}</h1>
         </div>
-
-
     </div>
 
     <style>
