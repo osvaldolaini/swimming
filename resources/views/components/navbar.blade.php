@@ -137,7 +137,7 @@
                 <a href="{{ route('generateTeam') }}"
                     class=" group min-h-[56px] flex w-32
                     flex-col items-center justify-center px-0 gap-1 py-1
-                    {{ Request::is('gerar-equipe*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
+                    {{ Request::is('*equipe*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
                     <div
                         class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
