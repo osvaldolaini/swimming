@@ -34,22 +34,22 @@
                 $livre = $item->timess
                     ->where('distance', 50)
                     ->where('modality_id', 1)
-                    ->sortBy('day')
+                    ->sortByDesc('day')
                     ->first();
                 $borbo = $item->timess
                     ->where('distance', 50)
                     ->where('modality_id', 2)
-                    ->sortBy('day')
+                    ->sortByDesc('day')
                     ->first();
                 $costa = $item->timess
                     ->where('distance', 50)
                     ->where('modality_id', 3)
-                    ->sortBy('day')
+                    ->sortByDesc('day')
                     ->first();
                 $peito = $item->timess
                     ->where('distance', 50)
                     ->where('modality_id', 4)
-                    ->sortBy('day')
+                    ->sortByDesc('day')
                     ->first();
             @endphp
             <div class="card card-side shadow-xl h-100 {{ $item->sex == 'feminino' ? 'bg-red-100' : 'bg-blue-100' }}">
