@@ -3,8 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\Model\Athletes;
-use App\Models\Model\Categories;
 use App\Models\Model\Modalities;
+use App\Models\Model\Teams;
 use App\Models\Model\Times;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -30,7 +30,7 @@ class Time extends Component
     public $active = 1;
     public $athlete_id;
     public $modality_id;
-    public $category_id;
+    public $team_id;
     public $type_time = 'tomada';
     public $distance = 50;
     public $pool = 25;
@@ -41,7 +41,7 @@ class Time extends Component
     public $heads;
     public $model_id;
     public $modalities;
-    public $categories;
+    public $teams;
     public $athletes;
 
     protected $listeners =
@@ -55,14 +55,15 @@ class Time extends Component
     public function mount()
     {
         $this->modalities = Modalities::where('active',1)->get();
-        $this->categories = Categories::where('active',1)->get();
+        $this->teams = Teams::where('active',1)->get();
     }
 
     public function getAthletes()
     {
-        $birth_year = Categories::find($this->category_id)->birth_year;
-        $this->athletes = Athletes::where('active', 1)
-        ->where('birth', 'LIKE', '%' . $birth_year . '%')
+        $team = Teams::find($this->team_id);
+
+        $this->athletes = Athletes::select('name','id')->where('active', 1)
+        ->whereBetween('birth', [$team->birth_year . '-01-01', $team->birth_year_end . '-12-31'])
         ->get();
     }
 
@@ -91,13 +92,14 @@ class Time extends Component
             array_reverse(explode("/", $this->day))
         );
         Times::create([
+            'team_id'       => $this->team_id,
             'athlete_id'    => $this->athlete_id,
             'modality_id'   => $this->modality_id,
-            'category_id'   => $this->category_id,
             'distance'      => $this->distance,
             'type_time'     => $this->type_time,
             'pool'          => $this->pool,
-            'record'        => invertTime($this->recordConvert),
+            'record'        => invertTime($this->record),
+            'recordConverte' => $this->record,
             'day'           => $this->day,
             'active'        => 1,
             'code'          => Str::uuid(),
@@ -114,7 +116,7 @@ class Time extends Component
             'record',
             'distance',
             'pool',
-            'category_id',
+            'team_id',
             'type_time'
         );
     }
@@ -152,16 +154,15 @@ class Time extends Component
         $this->pool         = $times->pool;
         $this->distance     = $times->distance;
         $this->type_time    = $times->type_time;
-        $this->category_id  = $times->category_id;
-        $this->record       = $times->record;
+        $this->record       = $times->recordConvert;
         $this->day          = $times->day;
         $this->active       = $times->active;
         $this->showModalEdit = true;
 
-        if($this->category_id){
-            $birth_year = Categories::find($this->category_id)->birth_year;
-            $this->athletes = Athletes::where('active', 1)
-            ->where('birth', 'LIKE', '%' . $birth_year . '%')
+        if($this->team_id){
+            $team = Teams::find($this->team_id);
+            $this->athletes = Athletes::select('name','id')->where('active', 1)
+            ->whereBetween('birth', [$team->birth_year . '-01-01', $team->birth_year_end . '-12-31'])
             ->get();
         }
 
@@ -183,13 +184,14 @@ class Time extends Component
         Times::updateOrCreate([
             'id' => $this->model_id,
         ], [
+            'team_id'       => $this->team_id,
             'athlete_id'    => $this->athlete_id,
             'modality_id'   => $this->modality_id,
-            'category_id'   => $this->category_id,
             'distance'      => $this->distance,
             'type_time'     => $this->type_time,
             'pool'          => $this->pool,
-            'record'        => invertTime($this->recordConvert),
+            'record'        => invertTime($this->record),
+            'recordConverte' => $this->record,
             'day'           => $this->day,
             // 'active'        => $this->active,
             'updated_by' => Auth::user()->name,
@@ -205,7 +207,7 @@ class Time extends Component
             'record',
             'distance',
             'pool',
-            'category_id',
+            'team_id',
             'type_time'
         );
     }

@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Model\Categories;
+use App\Models\Model\Teams;
 use App\Models\Model\Times;
 use Carbon\Carbon;
 
@@ -19,7 +19,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
         protected $type_time;
         protected $pool;
         protected $distance;
-        protected $birth_year;
+        protected $team_id;
         protected $modality;
         protected $record;
 
@@ -27,7 +27,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
         {
             $config = explode('_',$sheetConfigs);
             $this->type_time = $config[1];
-            $this->birth_year = $config[3];
+            $this->team_id = $config[3];
             $this->modality = $config[4];
             $this->pool = $config[5];
             $this->distance = $config[6];
@@ -42,7 +42,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
     {
 
         // dd($row);
-        $category = Categories::where('active',1)->where('birth_year',$this->birth_year)->first();
+        // $category = Teams::find($this->team_id);
 
         if($row['id_atleta'] != "*" OR $row['id_atleta'] != ""){
 
@@ -69,11 +69,12 @@ class PlanilhaImport implements ToModel, WithHeadingRow
                         Times::create([
                             'athlete_id'    => $row['id_atleta'],
                             'modality_id'   => intval($this->modality_id[$i]),
-                            'category_id'   => $category->id,
+                            'tema_id'       => $this->team_id,
                             'distance'      => $this->distance,
                             'type_time'     => $this->type_time,
                             'pool'          => $this->pool,
                             'record'        => $this->record,
+                            'recordConverte' => converTime($this->record),
                             'day'           => $this->day,
                             'active'        => 1,
                             'code'          => Str::uuid(),
@@ -100,11 +101,12 @@ class PlanilhaImport implements ToModel, WithHeadingRow
                     Times::create([
                         'athlete_id'    => $row['id_atleta'],
                         'modality_id'   => intval($this->modality_id),
-                        'category_id'   => $category->id,
+                        'tema_id'       => $this->team_id,
                         'distance'      => $this->distance,
                         'type_time'     => $this->type_time,
                         'pool'          => $this->pool,
                         'record'        => $this->record,
+                        'recordConverte' => converTime($this->record),
                         'day'           => $this->day,
                         'active'        => 1,
                         'code'          => Str::uuid(),

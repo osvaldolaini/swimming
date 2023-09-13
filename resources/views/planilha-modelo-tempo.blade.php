@@ -7,7 +7,7 @@
         <th>ID atleta</th>
         <th>Atleta</th>
         <th>Apelido</th>
-        <th>Categoria</th>
+        {{-- <th>Categoria</th> --}}
         <th>Dia (dd/mm/aaaa)</th>
         @if ($modality == 'medley')
             <th>Crawl (00:00,00)</th>
@@ -25,7 +25,7 @@
                 <td>{{ $athlete->id }}</td>
                 <td>{{ mb_strtoupper($athlete->name) }}</td>
                 <td>{{ mb_strtoupper($athlete->nick) }}</td>
-                <td>{{ mb_strtoupper(getCategory($athlete->birth)->name) }}</td>
+                {{-- <td>{{ mb_strtoupper(getCategory($athlete->birth)->name) }}</td> --}}
                 <td>{{ date('d/m/Y') }}</td>
                 @if ($modality == 'medley')
                     <td>00:00,00</td>

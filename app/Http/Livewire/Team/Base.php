@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Team;
 use App\Models\Model\Athletes;
 use App\Models\Model\Categories;
 use App\Models\Model\Modalities;
+use App\Models\Model\Relays;
+use App\Models\Model\Teams;
 use App\Models\Model\Times;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -37,9 +39,9 @@ class Base extends Component
 
     public function mount()
     {
-        $cat = Categories::where('active', 1)->where('type', 1)->orderBy('birth_year', 'desc')->first();
+        $cat = Teams::where('active', 1)->where('type', 1)->orderBy('min_age', 'asc')->first();
         $this->modalidades = Modalities::where('active', 1)->get();
-        $this->category = Categories::where('active', 1)->where('type', 1)->orderBy('birth_year', 'desc')->get();
+        $this->category = Relays::where('active', 1)->where('type', 1)->orderBy('min_age', 'asc')->get();
         $this->birth = $cat->birth_year . '|' . $cat->birth_year_end;
         $this->times = Times::all();
     }
@@ -72,9 +74,7 @@ class Base extends Component
         $birth_date = explode('|', $this->birth);
         //Ambos os sexos
         $this->allAthletes = Athletes::where('active', 1)
-
-            ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
-            ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+            ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
             ->get();
         if ($this->type_team != 'mista') {
             // $this->allAthletes = Athletes::where('active', 1)
@@ -145,27 +145,13 @@ class Base extends Component
         $birth_date = explode('|', $this->birth);
         //Ambos os sexos
         $this->allAthletes = Athletes::where('active', 1)
-            ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
-            ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+            ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
             ->get();
         //Pega os atletas por sexo
         if ($this->type_team != 'mista') {
-            // $this->allAthletes = Athletes::where('active', 1)
-            // ->get();
             $this->allAthletes = $this->allAthletes->where('sex', $this->type_team);
         }
-        // //Ambos os sexos
-        // if ($this->type_team == 'mista') {
-        //     $atletas = DB::table('athletes')->select('id')
-        //     ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-        //     ->pluck('id');
-        // }else{
-        // //Pega os atletas por sexo
-        //     $atletas = DB::table('athletes')->select('id')
-        //     ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-        //     ->where('sex', $this->type_team)
-        //     ->pluck('id');
-        // }
+
         $atletas = $this->allAthletes->pluck('id');
         $athletes = collect();
 
@@ -404,13 +390,11 @@ class Base extends Component
         if ($this->type_team == 'mista') {
             $atletasM = DB::table('athletes')->select('id')
                 ->where('sex', 'masculino')
-                ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
-                ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+                ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->pluck('id');
             $atletasF = DB::table('athletes')->select('id')
                 ->where('sex', 'feminino')
-                ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
-                ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+                ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->pluck('id');
 
             $bestsF = $this->qtdTeam($atletasF, $this->modality);
@@ -431,13 +415,11 @@ class Base extends Component
         if ($this->type_team == 'mista') {
             $atletasM = DB::table('athletes')->select('id')
                 ->where('sex', 'masculino')
-                ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
-                ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+                ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->pluck('id');
             $atletasF = DB::table('athletes')->select('id')
                 ->where('sex', 'feminino')
-                ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
-                ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+                ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->pluck('id');
 
             $this->qtd_athletes = 4;

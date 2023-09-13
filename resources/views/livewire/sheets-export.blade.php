@@ -31,12 +31,12 @@
                         </Select>
                     </div>
                     <div class="col-span-full sm:col-span-2">
-                        <label for="lastname" class="text-sm">Categoria</label>
-                        <Select wire:model="birth_year" required
+                        <label for="team_id" class="text-sm">Equipe</label>
+                        <Select wire:model="team_id" required
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             <option value="">Selecione</option>
-                            @foreach ($category as $item)
-                                <option value="{{ $item->birth_year }}">{{ $item->name }}</option>
+                            @foreach ($teams as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </Select>
                     </div>

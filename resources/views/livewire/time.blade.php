@@ -10,14 +10,14 @@
             {{-- REQUIRED --}}  model="App\Models\Model\Times" {{-- Model principal --}}
             {{-- REQUIRED --}}  modelId="times.id" {{-- Ex: 'table.id' or 'id' --}}
             {{-- REQUIRED --}}  showId="false" {{-- 'true' or 'false' --}}
-            {{-- REQUIRED --}}  columnsInclude="day,athletes.name,modalities.title,record,pool,distance,type_time" {{-- Colunas incluidas --}}
+            {{-- REQUIRED --}}  columnsInclude="day,athletes.name,modalities.title,recordConverte,pool,distance,type_time" {{-- Colunas incluidas --}}
             {{-- REQUIRED --}}  columnsNames="Data,Atleta,Modalidade,Tempo,Piscina,Distância,Tipo" {{-- Cabeçalho da tabela --}}
-            {{-- REQUIRED --}}  searchable="type_time,athletes.name,modalities.title,pool,distance,day,record" {{-- Colunas pesquisadas no banco de dados --}}
+            {{-- REQUIRED --}}  searchable="type_time,athletes.name,modalities.title,recordConverte,pool,distance,day,record" {{-- Colunas pesquisadas no banco de dados --}}
             {{-- OK --}} customSearch="day|record" {{-- Colunas personalizadas, customizar no model --}}
             {{-- OK --}} activeButton="" {{-- Toogle de ativar e desativear registro --}}
             {{-- OK --}} relationTables="athletes,athletes.id,times.athlete_id | modalities,modalities.id,times.modality_id " {{-- Relacionamentos ( table , key , foreingKey ) --}}
             {{-- OK --}} showButtons="Ações" {{-- Botões --}}
-            {{-- OK --}} sort="times.day , asc | times.record , asc" {{-- Ordenação da tabela --}}
+            {{-- OK --}} sort="times.day , desc | times.record , asc" {{-- Ordenação da tabela --}}
             {{-- OK --}} paginate="15" {{-- Qtd de registros por página --}}
         />
     </div>
@@ -75,17 +75,17 @@
             <form action="#" wire:submit.prevent="store()" wire.loading.attr='disable'>
                 <div class="grid gap-4 mb-1 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                     <div class="col-span-2">
-                        <label for="category_id"
+                        <label for="team_id"
                             class="block text-sm font-medium text-gray-900 dark:text-white">*Categoria</label>
-                        <select wire:model="category_id" wire:change="getAthletes()" name="category_id"
-                            id="category_id" placeholder="Categoria"
+                        <select wire:model="team_id" wire:change="getAthletes()" name="team_id"
+                            id="team_id" placeholder="Categoria"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option value="">Selecione uma opção</option>
-                            @foreach ($categories as $item)
+                            @foreach ($teams as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                        @error('athlete_id')
+                        @error('team_id')
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
@@ -187,8 +187,10 @@
                         @enderror
                     </div>
                 </div>
-                <div class="flex items-end space-x-4">
-                    <button type="submit"
+            </form>
+        </x-slot>
+        <x-slot name="footer">
+            <button type="submit" wire:click="store"
                         class="text-white
                         bg-blue-700 hover:bg-blue-800
                         focus:ring-4 focus:outline-none focus:ring-blue-300
@@ -197,11 +199,6 @@
                         dark:focus:ring-blue-800">
                         Salvar
                     </button>
-                </div>
-            </form>
-
-        </x-slot>
-        <x-slot name="footer">
             <x-secondary-button wire:click="$toggle('showModalCreate')" class="mx-2">
                 Fechar
             </x-secondary-button>
@@ -214,17 +211,17 @@
             <form wire:submit.prevent="update">
                 <div class="grid gap-4 mb-1 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                     <div class="col-span-2">
-                        <label for="category_id"
+                        <label for="team_id"
                             class="block text-sm font-medium text-gray-900 dark:text-white">*Categoria</label>
-                        <select wire:model="category_id" wire:change="getAthletes()" name="category_id"
-                            id="category_id" placeholder="Categoria"
+                            <select wire:model="team_id" wire:change="getAthletes()" name="team_id"
+                            id="team_id" placeholder="Categoria"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option value="">Selecione uma opção</option>
-                            @foreach ($categories as $item)
+                            @foreach ($teams as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                        @error('athlete_id')
+                        @error('team_id')
                             <span class="error">{{ $message }}</span>
                         @enderror
                     </div>
@@ -326,8 +323,10 @@
                         @enderror
                     </div>
                 </div>
-                <div class="flex items-end space-x-4">
-                    <button type="submit"
+            </form>
+        </x-slot>
+        <x-slot name="footer">
+            <button type="submit" wire:click="update"
                         class="text-white
                         bg-blue-700 hover:bg-blue-800
                         focus:ring-4 focus:outline-none focus:ring-blue-300
@@ -336,10 +335,6 @@
                         dark:focus:ring-blue-800">
                         Atualizar
                     </button>
-                </div>
-            </form>
-        </x-slot>
-        <x-slot name="footer">
             <x-primary-button wire:click="$toggle('showModalEdit')" class="mx-2">
                 Fechar
                 </x-secondary-button>

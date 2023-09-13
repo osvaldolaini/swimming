@@ -2,20 +2,20 @@
 
 namespace App\Models\Model;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categories extends Model
+class Relays extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id','type','name','min_age','max_age','code',
-        'updated_by','created_by'
+        'id','category_id','type','active','min_age',
+        'max_age','type','old_min','old_max',
+        'updated_by','created_by','code','name'
     ];
-    // protected $casts = [
-    //     'birth_year' => 'datetime:Y',
-    // ];
+
     public function athletes($birth)
     {
         return Athletes::where('active', 1)
@@ -76,5 +76,23 @@ class Categories extends Model
             }
 
         }
+    }
+    public function getBirthYearAttribute()
+    {
+        // Obter a data atual
+        $nowYear = Carbon::now()->year;
+        $BirthYear = Carbon::parse($nowYear . '-01-01');
+        return $BirthYear->subYears($this->min_age)->year;
+    }
+    public function getBirthYearEndAttribute()
+    {
+        // Obter a data atual
+        $nowYear = Carbon::now()->year;
+        $BirthYearEnd = Carbon::parse($nowYear . '-01-01');
+        return $BirthYearEnd->subYears($this->max_age)->year;
+    }
+    public function category()
+    {
+        return $this->belongsTo(Categories::class);
     }
 }

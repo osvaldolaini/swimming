@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Model\Athletes;
+use App\Models\Model\Teams;
 use App\Models\Model\Times;
 use Livewire\Component;
 use Carbon\Carbon;
@@ -15,12 +16,14 @@ class RadarStats extends Component
     public $labels;
     public $data;
 
-    public function mount($athlete)
+    public function mount($athlete,$category)
     {
         $this->athletes = $athlete;
         $this->name = $athlete->name;
 
-        $this->category = getCategory($athlete->birth);
+        $this->category = Teams::select('name','min_age','max_age')->find($category);
+        // dd($this->category);
+
         // dd($this->category);
         $this->labels = [
             'Medley',
@@ -47,7 +50,7 @@ class RadarStats extends Component
     public function getMedia($mod)
     {
         $allAthletes = Athletes::where('active',1)
-        ->where('birth', 'LIKE', '%' . $this->category->birth_year. '%')
+        ->whereBetween('birth', [$this->category->birth_year . '-01-01', $this->category->birth_year_end . '-12-31'])
          ->where('sex',$this->athletes->sex)
         ->get();
 
@@ -60,7 +63,7 @@ class RadarStats extends Component
             ->where('distance',50)
             ->where('athlete_id',$key->id)
             ->where('modality_id',$mod)
-            ->where('category_id',$this->category->id)
+            // ->where('category_id',$this->category->id)
             ->orderBy('record','asc')
             ->first();
 
@@ -77,7 +80,7 @@ class RadarStats extends Component
             ->where('distance',50)
             ->where('modality_id',$mod)
             ->where('athlete_id',$this->athletes->id)
-            ->where('category_id',$this->category->id)
+            // ->where('category_id',$this->category->id)
             ->orderBy('record','asc')
             ->first();
 

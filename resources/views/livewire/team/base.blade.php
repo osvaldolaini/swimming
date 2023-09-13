@@ -93,9 +93,9 @@
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             <option value="1">Livre</option>
                             <option value="medley">Medley</option>
-                            <option value="2">Borboleta</option>
+                            {{-- <option value="2">Borboleta</option>
                             <option value="3">Costas</option>
-                            <option value="4">Peito</option>
+                            <option value="4">Peito</option> --}}
                         </Select>
                     </div>
                     <div class="col-span-full sm:col-span-3">

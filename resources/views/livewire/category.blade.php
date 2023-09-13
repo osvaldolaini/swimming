@@ -10,14 +10,14 @@
         {{-- REQUIRED --}}  model="App\Models\Model\Categories" {{-- Model principal --}}
         {{-- REQUIRED --}}  modelId="id" {{-- Ex: 'table.id' or 'id' --}}
         {{-- REQUIRED --}}  showId="false" {{-- 'true' or 'false' --}}
-        {{-- REQUIRED --}}  columnsInclude="type,birth_year,birth_year_end,name" {{-- Colunas incluidas --}}
-        {{-- REQUIRED --}}  columnsNames="Tipo,Ano,Ano limite,Categoria" {{-- Cabeçalho da tabela --}}
+        {{-- REQUIRED --}}  columnsInclude="name,type,birth_year,birth_year_end" {{-- Colunas incluidas --}}
+        {{-- REQUIRED --}}  columnsNames="Categoria,Tipo,Ano,Ano limite" {{-- Cabeçalho da tabela --}}
         {{-- REQUIRED --}}  searchable="name,birth_year,birth_year_end" {{-- Colunas pesquisadas no banco de dados --}}
         {{-- OK --}} customSearch="type" {{-- Colunas personalizadas, customizar no model --}}
         {{-- OK --}} activeButton="active" {{-- Toogle de ativar e desativar registro --}}
         {{-- OK --}} relationTables="" {{-- Relacionamentos ( table , key , foreingKey ) --}}
         {{-- OK --}} showButtons="Ações" {{-- Botões --}}
-        {{-- OK --}} sort="name , asc" {{-- Ordenação da tabela --}}
+        {{-- OK --}} sort="type , asc" {{-- Ordenação da tabela --}}
         {{-- OK --}} paginate="10" {{-- Qtd de registros por página --}}
     />
     </div>
@@ -76,15 +76,27 @@
                         <div class="col-span-2">
                             <label for="type" class="block text-sm font-medium text-gray-900 dark:text-white">*Categoria</label>
                             <select wire:model="type" name="type" id="type" placeholder="Tipo"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option value="1">Base</option>
-                            <option value="2">Absoluto</option>
-                            <option value="3">Master</option>
-                        </select>
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="1">Base</option>
+                                <option value="2">Absoluto</option>
+                                <option value="3">Master</option>
+                            </select>
                             @error('type') <span class="error">{{ $message }}</span> @enderror
                         </div>
+                        <div class="col-span-2 sm:col-span-1 {{ ($type == 3 ? 'block':'hidden') }} ">
+                            <label for="old_min" class="block text-sm font-medium text-gray-900 dark:text-white">
+                                *Soma mínima das idades</label>
+                            <input type="text" wire:model="old_min" placeholder="Soma das idades" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('old_min') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 {{ ($type == 3 ? 'block':'hidden') }} ">
+                            <label for="old_max" class="block text-sm font-medium text-gray-900 dark:text-white">
+                                *Soma máxima das idades</label>
+                            <input type="text" wire:model="old_max" placeholder="Soma das idades" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('old_max') <span class="error">{{ $message }}</span> @enderror
+                        </div>
 
-                        <div class="sm:col-span-2 sm:col-span-1" x-data x-init="Inputmask({
+                        <div class="col-span-2 sm:col-span-1" x-data x-init="Inputmask({
                             'mask': '9999'
                         }).mask($refs.birth_year)">
                             <label for="birth_year"
@@ -98,7 +110,7 @@
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="sm:col-span-2 sm:col-span-1" x-data x-init="Inputmask({
+                        <div class="col-span-2 sm:col-span-1" x-data x-init="Inputmask({
                             'mask': '9999'
                         }).mask($refs.birth_year_end)">
                             <label for="birth_year_end"
@@ -143,17 +155,29 @@
                             <input type="text" wire:model="name" name="name" id="name"  placeholder="Categoria" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @error('name') <span class="error">{{ $message }}</span> @enderror
                         </div>
+                        <div class="col-span-2 sm:col-span-1 {{ ($type == 3 ? 'block':'hidden') }} ">
+                            <label for="old_min" class="block text-sm font-medium text-gray-900 dark:text-white">
+                                *Soma mínima das idades</label>
+                            <input type="text" wire:model="old_min" placeholder="Soma das idades" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('old_min') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 {{ ($type == 3 ? 'block':'hidden') }} ">
+                            <label for="old_max" class="block text-sm font-medium text-gray-900 dark:text-white">
+                                *Soma máxima das idades</label>
+                            <input type="text" wire:model="old_max" placeholder="Soma das idades" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('old_max') <span class="error">{{ $message }}</span> @enderror
+                        </div>
                         <div class="col-span-2">
                             <label for="type" class="block text-sm font-medium text-gray-900 dark:text-white">*Categoria</label>
-                            <select wire:model="type" name="type" id="type" placeholder="Tipo"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option value="1">Base</option>
-                            <option value="2">Absoluto</option>
-                            <option value="3">Master</option>
-                        </select>
+                            <select wire:model="type" placeholder="Tipo"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="1">Base </option>
+                                <option value="2">Absoluto </option>
+                                <option value="3">Master </option>
+                            </select>
                             @error('type') <span class="error">{{ $message }}</span> @enderror
                         </div>
-                        <div class="sm:col-span-2 sm:col-span-1" x-data x-init="Inputmask({
+                        <div class="col-span-2 sm:col-span-1" x-data x-init="Inputmask({
                             'mask': '9999'
                         }).mask($refs.birth_year)">
                             <label for="birth_year"
@@ -167,7 +191,7 @@
                                 <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="sm:col-span-2 sm:col-span-1" x-data x-init="Inputmask({
+                        <div class="col-span-2 sm:col-span-1" x-data x-init="Inputmask({
                             'mask': '9999'
                         }).mask($refs.birth_year_end)">
                             <label for="birth_year_end"

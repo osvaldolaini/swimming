@@ -3,7 +3,7 @@
     <div class="relative">
         <div class="w-54 bg-blue-400 text-white dark:bg-surfacedark-100 flex items-center flex-col gap-8 py-5">
             <div class="flex flex-col items-center gap-5 sm:gap-3">
-                <a href="{{ route('teams') }}"
+                <a href="{{ route('teamsList') }}"
                     class=" group min-h-[56px] flex w-32
                 flex-col items-center justify-center px-0 gap-1 py-1
                 {{ Request::is('atletas*') ? 'text-blue-900 font-semibold' : 'text-white ' }} text-sm ">
@@ -76,10 +76,10 @@
                         Modalidades
                     </p>
                 </a> --}}
-                <a href="{{ route('category') }}"
+                <a href="{{ route('team') }}"
                     class="group min-h-[56px] flex w-32 flex-col items-center justify-center
                     px-0 gap-1
-                    {{ Request::is('categorias*') ? 'text-blue-900 font-semibold' : 'text-white  ' }} text-sm">
+                    {{ Request::is('times*') ? 'text-blue-900 font-semibold' : 'text-white  ' }} text-sm">
                     <div
                         class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
                     dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
@@ -107,7 +107,42 @@
                         </svg>
                     </div>
                     <p class=" dark:text-neutral-100 tracking-[.0416em] leading-tight">
-                        Categorias
+                        Equipes
+                    </p>
+                </a>
+                <div class="divider my-10 sm:my-0 hidden sm:flex"></div>
+                <a href="{{ route('relay') }}"
+                    class="group min-h-[56px] flex w-32 flex-col items-center justify-center
+                    px-0 gap-1
+                    {{ Request::is('revezamentos*') ? 'text-blue-900 font-semibold' : 'text-white  ' }} text-sm">
+                    <div
+                        class="relative w-14 h-8 hover-icon group-hover:bg-secondary-100
+                    dark:group-hover:bg-secondary-700 group-hover:bg-opacity-80
+                    dark:group-hover:bg-opacity-80 flex items-center justify-center
+                    rounded-2xl ">
+                        <svg class="w-8 h-8 " fill="currentColor" version="1.1" id="_x32_"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 512 512" xml:space="preserve">
+
+                            <g>
+                                <path fill="currentColor"
+                                    d="M378.405,0H133.594C86.229,0,47.703,38.526,47.703,85.891v340.217c0,47.358,38.526,85.892,85.892,85.892
+		                            h170.12h13.164l9.319-9.311L454.986,373.9l9.311-9.318v-13.18V85.891C464.297,38.526,425.771,0,378.405,0z M432.495,351.402h-83.71
+		                            c-24.898,0-45.072,20.189-45.072,45.078v83.718h-170.12c-29.868,0-54.09-24.215-54.09-54.09V85.891
+		                            c0-29.875,24.223-54.09,54.09-54.09h244.811c29.883,0,54.09,24.215,54.09,54.09V351.402z" />
+                                <rect x="133.677" y="126.915" class="st0" width="30.684" height="29.282" />
+                                <rect x="133.677" y="198.195" class="st0" width="30.684" height="29.276" />
+                                <rect x="133.677" y="269.476" class="st0" width="30.684" height="29.276" />
+                                <rect x="133.677" y="340.756" class="st0" width="30.684" height="29.275" />
+                                <rect x="197.461" y="126.915" class="st0" width="180.87" height="29.282" />
+                                <rect x="197.461" y="198.195" class="st0" width="180.87" height="29.276" />
+                                <rect x="197.461" y="269.476" class="st0" width="180.87" height="29.276" />
+                                <rect x="197.461" y="340.756" class="st0" width="74.339" height="29.275" />
+                            </g>
+                        </svg>
+                    </div>
+                    <p class=" dark:text-neutral-100 tracking-[.0416em] leading-tight">
+                        Revezamentos
                     </p>
                 </a>
                 <div class="divider my-10 sm:my-0 hidden sm:flex"></div>

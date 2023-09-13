@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('times', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained();
-            $table->foreignId('athlete_id')->constrained();
-            $table->foreignId('modality_id')->constrained();
-            $table->date('day')->nullable();
-            $table->integer('pool')->nullable();
-            $table->integer('distance')->nullable();
-            $table->string('type_time',100)->nullable();
-            $table->decimal('record',10,2)->nullable();
+            $table->string('type',2)->nullable();
+            $table->boolean('active')->nullable();
+            $table->string('name',100)->nullable();
+            $table->integer('min_age')->nullable();
+            $table->integer('max_age')->nullable();
             $table->string('code')->nullable();
             $table->timestamps();
             $table->string('updated_by',50)->nullable();
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('times');
+        Schema::dropIfExists('teams');
     }
 };

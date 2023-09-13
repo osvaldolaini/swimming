@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Model\Categories;
+use App\Models\Model\Teams;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
-class Category extends Component
+class Team extends Component
 {
     use WithPagination;
 
-    public Categories $categories;
+    public Teams $Teams;
     public $search;
     public $sortField = 'birth_year_end';
     public $sortDirection = 'asc';
@@ -25,22 +26,25 @@ class Category extends Component
     public $registerId;
     public $alertSession = false;
     public $selectFilter = 'name';
-    public $type = '1';
-    public $old_min;
-    public $old_max;
+
 
     public $getStat;
     public bool $toggleStatus;
 
     public $detail;
+    public $categories = '';
     public $active = 1;
     public $name;
+    public $type;
     public $code;
-    public $birth_year;
-    public $birth_year_end;
+    public $min_age;
+    public $max_age;
+    public $category_id = '';
     public $rules;
     public $heads;
     public $model_id;
+    public $initial;
+    public $final;
 
     protected $listeners =
     [
@@ -54,44 +58,52 @@ class Category extends Component
     {
         $this->emit('openAlert', $status, $msg);
     }
+    public function mount()
+    {
+        $this->categories = Categories::orderBy('id','asc')
+        ->get();
+    }
+    public function changeType()
+    {
+        $cat = Categories::find($this->category_id);
+        $this->type = $cat->convertType;
+        $this->min_age = $cat->min_age;
+        $this->max_age = $cat->max_age;
+        $this->initial = $cat->min_age;
+        $this->final   = $cat->max_age + 1;
+    }
 
     public function render()
     {
-        return view('livewire.category');
+        return view('livewire.team');
     }
-
-
     //CREATE
     public function showModalCreate()
     {
+        $this->reset('name',
+                         'max_age',
+                         'min_age',
+                         'type',
+                         'category_id',
+                        );
         $this->showModalCreate = true;
     }
     public function store()
     {
         $this->rules = [
-                'name'=>'required|min:4|max:255',
-                'birth_year'=>'required',
-                'birth_year_end'=>'required',
-                'type'=>'required',
+                'name'  =>'required|min:4|max:255',
+                'category_id'=>'required',
         ];
-        if ($this->type == 3) {
-            $this->rules = [
-                'old_min'=>'required',
-                'old_max'=>'required',
-            ];
-        }
-
 
         $this->validate();
 
-        Categories::create([
+        Teams::create([
             'name'          =>ucwords(mb_strtolower($this->name)),
-            'birth_year'    =>$this->birth_year,
-            'birth_year_end'=>$this->birth_year_end,
+            'min_age'       =>$this->min_age,
+            'max_age'       =>$this->max_age,
             'active'        =>$this->active,
+            'category_id'   =>$this->category_id,
             'type'          =>$this->type,
-            'old_min'       =>$this->old_min,
-            'old_max'       =>$this->old_max,
             'code'          =>Str::uuid(),
             'created_by'    =>Auth::user()->name,
         ]);
@@ -100,11 +112,9 @@ class Category extends Component
             $this->alertSession = true;
             $this->showModalCreate = false;
             $this->reset('name',
-                         'birth_year',
-                         'birth_year_end',
+                         'max_age',
                          'type',
-                         'old_min',
-                         'old_max'
+                         'category_id',
                         );
     }
     //READ
@@ -113,7 +123,7 @@ class Category extends Component
         $this->showModalView= true;
 
         if (isset($id)) {
-            $data = Categories::where('id',$id)->first();
+            $data = Teams::where('id',$id)->first();
             // dd($data);
             $this->detail = [
                 'Categoria'         => ucwords(mb_strtolower($data->name)),
@@ -128,44 +138,35 @@ class Category extends Component
         }
     }
     //UPDATE
-    public function showModalUpdate(Categories $categories)
+    public function showModalUpdate(Teams $teams)
     {
-        $this->model_id         = $categories->id;
-        $this->name             = $categories->name;
-        $this->birth_year       = $categories->birth_year;
-        $this->birth_year_end   = $categories->birth_year_end;
-        $this->type             = $categories->convertType;
-        $this->old_min          = $categories->old_min;
-        $this->old_max          = $categories->old_max;
-        $this->active           = $categories->active;
+        $this->model_id         = $teams->id;
+        $this->name             = $teams->name;
+        $this->min_age          = $teams->min_age;
+        $this->max_age          = $teams->max_age;
+        $this->initial          = $teams->min_age;
+        $this->final            = $teams->max_age + 1;
+        $this->category_id      = $teams->category_id;
+        $this->active           = $teams->active;
         $this->showModalEdit    = true;
     }
     public function update()
     {
         $this->rules = [
-            'name'=>'required|min:4|max:255',
-            'birth_year'=>'required',
-            'birth_year_end'=>'required',
-            'type'=>'required',
-        ];
-        if ($this->type == 3) {
-            $this->rules = [
-                'old_min'=>'required',
-                'old_max'=>'required',
-            ];
-        }
+            'name'  =>'required|min:4|max:255',
+            'category_id'=>'required',
+    ];
+               $this->validate();
 
-        $this->validate();
-
-        Categories::updateOrCreate([
+        Teams::updateOrCreate([
             'id'=>$this->model_id,
         ],[
             'name'          =>ucwords(mb_strtolower($this->name)),
-            'birth_year'    =>$this->birth_year,
-            'birth_year_end'=>$this->birth_year_end,
+            'min_age'       =>$this->min_age,
+            'max_age'       =>$this->max_age,
+            'active'        =>$this->active,
+            'category_id'   =>$this->category_id,
             'type'          =>$this->type,
-            'old_min'       =>$this->old_min,
-            'old_max'       =>$this->old_max,
             'active'        =>$this->active,
             'updated_by'    =>Auth::user()->name,
         ]);
@@ -175,12 +176,11 @@ class Category extends Component
             $this->alertSession = true;
             $this->showModalEdit = false;
             $this->reset('name',
-            'birth_year',
-            'birth_year_end',
-            'type',
-            'old_min',
-            'old_max'
-           );
+                         'max_age',
+                         'min_age',
+                         'type',
+                         'category_id',
+                        );
     }
     //DELETE
     public function showModalDelete($id)
@@ -194,14 +194,18 @@ class Category extends Component
     }
     public function delete($id)
     {
-        $data = Categories::where('id',$id)->first();
+        $data = Teams::where('id',$id)->first();
         $data->active = '0';
         $data->save();
         $this->openAlert('success','Registro excluido com sucesso.');
 
             $this->alertSession = true;
             $this->showJetModal = false;
-            $this->reset('name','birth_year','birth_year_end');
+            $this->reset('name',
+                         'max_age',
+                         'type',
+                         'category_id',
+                        );
     }
 
 
@@ -221,8 +225,7 @@ class Category extends Component
     //pega o status do registro
     public function getStatus($id)
     {
-        return Categories::where('id',$id)->first()->status;
+        return Teams::where('id',$id)->first()->status;
     }
-
 
 }

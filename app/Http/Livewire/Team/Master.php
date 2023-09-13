@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Team;
 use App\Models\Model\Athletes;
 use App\Models\Model\Categories;
 use App\Models\Model\Modalities;
+use App\Models\Model\Relays;
+use App\Models\Model\Teams;
 use App\Models\Model\Times;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -37,10 +39,10 @@ class Master extends Component
 
     public function mount()
     {
-        $cat = Categories::where('active', 1)->where('type', 3)->orderBy('birth_year', 'desc')->first();
+        $cat = Teams::where('active', 1)->where('type', 3)->orderBy('min_age', 'asc')->first();
         $this->modalidades = Modalities::where('active', 1)->get();
-        $this->category = Categories::where('active', 1)->where('type', 3)->orderBy('birth_year', 'desc')->get();
-        $this->birth = $cat->birth_year . '|' . $cat->birth_year_end;
+        $this->category = Relays::where('active', 1)->where('type', 3)->orderBy('min_age', 'asc')->get();
+        $this->birth = $cat->birth_year . '|' . $cat->birth_year_end . '|' . $cat->id;
         $this->times = Times::all();
     }
     public function render()
@@ -72,17 +74,13 @@ class Master extends Component
         $birth_date = explode('|', $this->birth);
         //Ambos os sexos
         $this->allAthletes = Athletes::where('active', 1)
-
-            ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
-            ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+            ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
             ->get();
         if ($this->type_team != 'mista') {
-            // $this->allAthletes = Athletes::where('active', 1)
-            // ->get();
             $this->allAthletes = $this->allAthletes->where('sex', $this->type_team);
         }
 
-
+        // dd($this->allAthletes);
         $this->equipes = [];
     }
     //zerar equipes
@@ -145,28 +143,13 @@ class Master extends Component
         $birth_date = explode('|', $this->birth);
         //Ambos os sexos
         $this->allAthletes = Athletes::where('active', 1)
-
-            ->where('birth', 'LIKE', '%' . $birth_date[0] . '%')
-            ->orWhere('birth', 'LIKE', '%' . $birth_date[1] . '%')
+            ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
             ->get();
         //Pega os atletas por sexo
         if ($this->type_team != 'mista') {
-            // $this->allAthletes = Athletes::where('active', 1)
-            // ->get();
             $this->allAthletes = $this->allAthletes->where('sex', $this->type_team);
         }
-        // //Ambos os sexos
-        // if ($this->type_team == 'mista') {
-        //     $atletas = DB::table('athletes')->select('id')
-        //     ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-        //     ->pluck('id');
-        // }else{
-        // //Pega os atletas por sexo
-        //     $atletas = DB::table('athletes')->select('id')
-        //     ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-        //     ->where('sex', $this->type_team)
-        //     ->pluck('id');
-        // }
+
         $atletas = $this->allAthletes->pluck('id');
         $athletes = collect();
 
@@ -260,6 +243,7 @@ class Master extends Component
             $ids            = [];
             $mod = 0;
             $sex = 0;
+            $totAge = 0;
             foreach ($team as $key => $athlete) {
                 // $mod +=1;
                 if ($this->modality == 'medley') {
@@ -299,6 +283,8 @@ class Master extends Component
                         $sex += 1;
                     }
 
+                    $totAge += $time->athletes->age;
+
                     $time_total    += $time->record;
                     $athletes[]     = ($time->athlete_id ? $time->athletes->nick : 'Excluido');
                     $ids[]          = $athlete;
@@ -307,24 +293,30 @@ class Master extends Component
                 }
             }
             if (count($athletes) == 4) {
-                if ($this->type_team == 'mista') {
-                    //Remove se existir mais de 2 meninos na equipe
-                    if ($sex == 2) {
+                $catMaster = explode('|', $this->birth);
+                $catM = Categories::select('old_max','old_min')->find($catMaster[2]);
+                if ($totAge >= $catM->old_min && $totAge <= $catM->old_max) {
+                    if ($this->type_team == 'mista') {
+                        //Remove se existir mais de 2 meninos na equipe
+                        if ($sex == 2) {
+                            $arrayTeam = [
+                                'time_total'    => $time_total,
+                                'team'          => $time_athlete,
+                                'ids'           => $ids,
+                                'old'           => $totAge,
+                            ];
+                        }
+                    } else {
                         $arrayTeam = [
                             'time_total'    => $time_total,
                             'team'          => $time_athlete,
                             'ids'           => $ids,
+                            'old'           => $totAge,
                         ];
                     }
-                } else {
-                    $arrayTeam = [
-                        'time_total'    => $time_total,
-                        'team'          => $time_athlete,
-                        'ids'           => $ids,
-                    ];
                 }
 
-                // dd($allTeams);
+
                 $allTeams[] = $arrayTeam;
             }
             $time_total = 0;
@@ -332,7 +324,7 @@ class Master extends Component
             //     break;
             // }
         }
-        // dd($allTeams);
+        // dd($catM);
         return $this->array_msort(array_filter($allTeams), array('time_total' => SORT_ASC));
         // return $allTeams;
     }
@@ -400,14 +392,15 @@ class Master extends Component
     //Pega quantidade para montar as 3 melhores equipes
     public function qtdModality($atletas)
     {
+        $birth_date = explode('|', $this->birth);
         //Ambos os sexos
         if ($this->type_team == 'mista') {
             $atletasM = DB::table('athletes')->select('id')
-                ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+            ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->where('sex', 'masculino')
                 ->pluck('id');
             $atletasF = DB::table('athletes')->select('id')
-                ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+            ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->where('sex', 'feminino')
                 ->pluck('id');
 
@@ -424,14 +417,15 @@ class Master extends Component
     //Pega quantidade para montar as 3 melhores equipes
     public function qtdMedley($atletas)
     {
+        $birth_date = explode('|', $this->birth);
         //Ambos os sexos
         if ($this->type_team == 'mista') {
             $atletasM = DB::table('athletes')->select('id')
-                ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+                ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->where('sex', 'masculino')
                 ->pluck('id');
             $atletasF = DB::table('athletes')->select('id')
-                ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+                ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->where('sex', 'feminino')
                 ->pluck('id');
 
@@ -491,4 +485,3 @@ class Master extends Component
         return $bests;
     }
 }
-

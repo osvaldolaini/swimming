@@ -10,6 +10,7 @@ use App\Exports\PlanilhaExportView;
 
 use App\Models\Model\Athletes;
 use App\Models\Model\Categories;
+use App\Models\Model\Teams;
 
 class SheetsExport extends Component
 {
@@ -18,14 +19,14 @@ class SheetsExport extends Component
     public $pool = '25';
     public $type_time = 'tomada';
     public $modality = '1';
-    public $category;
-    public $birth_year;
+    public $teams;
+    public $team_id;
     public $allAthletes;
 
     public function mount()
     {
-        $this->category = Categories::where('active', 1)->orderBy('birth_year','desc')->get();
-        $this->birth_year = Categories::where('active', 1)->orderBy('birth_year','desc')->first()->birth_year;
+        $this->teams = Teams::where('active', 1)->orderBy('min_age','asc')->get();
+        $this->team_id = Teams::where('active', 1)->orderBy('min_age','asc')->first()->id;
     }
 
     public function render()
@@ -35,21 +36,22 @@ class SheetsExport extends Component
     public function downloadExcel()
     {
         // return Excel::download(new PlanilhaExport(), 'planilha_modelo_tempos.xlsx');
-        $name = 'planilha_'.$this->type_time.'_'.$this->type_team.'_'.$this->birth_year.'_'.$this->modality.'_'.$this->pool.'_'.$this->distance.'_excel';
+        $name = 'planilha_'.$this->type_time.'_'.$this->type_team.'_'.$this->team_id.'_'.$this->modality.'_'.$this->pool.'_'.$this->distance.'_excel';
 
-        if($this->birth_year != 'todas'){
+        // if($this->birth_year != 'todas'){
+            $team = Teams::find($this->team_id);
             $this->allAthletes = Athletes::where('active', 1)
-            ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+            ->whereBetween('birth', [$team->birth_year . '-01-01', $team->birth_year_end . '-12-31'])
             ->orderBy('name','desc')
             ->orderBy('sex','desc')
             ->get();
-        }else{
-            $this->allAthletes = Athletes::where('active', 1)
-            ->orderBy('name','desc')
-            ->orderBy('sex','desc')
-            // ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
-            ->get();
-        }
+        // }else{
+        //     $this->allAthletes = Athletes::where('active', 1)
+        //     ->orderBy('name','desc')
+        //     ->orderBy('sex','desc')
+        //     // ->where('birth', 'LIKE', '%' . $this->birth_year . '%')
+        //     ->get();
+        // }
 
         if ($this->type_team != 'todos') {
             $this->allAthletes = $this->allAthletes->where('sex', $this->type_team);

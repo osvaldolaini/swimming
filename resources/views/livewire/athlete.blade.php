@@ -1,8 +1,8 @@
-<div class="relative" >
+<div class="relative">
     <x-action-loading></x-action-loading>
     <div class="hero bg-gray-100 rounded-t-lg mb-5 ">
         <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
-            <h1 class="text-4xl font-black py-0 my-0">ATLETAS {{ mb_strtoupper($cat) }}</h1>
+            <h1 class="text-4xl font-black py-0 my-0">ATLETAS {{ mb_strtoupper($category->name) }}</h1>
         </div>
     </div>
 
@@ -27,30 +27,29 @@
         </button>
         <x-message-session></x-message-session>
     </div>
-    <div class="grid sm:grid-cols-2 grid-cols-1 gap-4"  wire:init="loadPosts" wire:model="athletes">
+    <div class="grid sm:grid-cols-2 grid-cols-1 gap-4" wire:init="loadPosts" wire:model="athletes">
 
-            @foreach ($athletes as $item)
-                @php
-                    $livre = $item->timess
-                        ->where('distance', 50)
-                        ->where('modality_id', 1)
-                        ->first();
-                    $borbo = $item->timess
-                        ->where('distance', 50)
-                        ->where('modality_id', 2)
-                        ->first();
-                    $costa = $item->timess
-                        ->where('distance', 50)
-                        ->where('modality_id', 3)
-                        ->first();
-                    $peito = $item->timess
-                        ->where('distance', 50)
-                        ->where('modality_id', 4)
-                        ->first();
-                @endphp
-                <div
-                    class="card card-side shadow-xl h-100 {{ $item->sex == 'feminino' ? 'bg-red-100' : 'bg-blue-100' }}">
-                    {{-- <figure class="w-48">
+        @foreach ($athletes as $item)
+            @php
+                $livre = $item->timess
+                    ->where('distance', 50)
+                    ->where('modality_id', 1)
+                    ->first();
+                $borbo = $item->timess
+                    ->where('distance', 50)
+                    ->where('modality_id', 2)
+                    ->first();
+                $costa = $item->timess
+                    ->where('distance', 50)
+                    ->where('modality_id', 3)
+                    ->first();
+                $peito = $item->timess
+                    ->where('distance', 50)
+                    ->where('modality_id', 4)
+                    ->first();
+            @endphp
+            <div class="card card-side shadow-xl h-100 {{ $item->sex == 'feminino' ? 'bg-red-100' : 'bg-blue-100' }}">
+                {{-- <figure class="w-48">
                     @if ($item->register)
                         <img class="photo" src="{{ imageProfile($item->register.'/'.$item->slug)}}"
                         alt="Movie" />
@@ -60,50 +59,50 @@
                     @endif
                 </figure> --}}
 
-                    <div class="w-64 hidden sm:block" >
-                        @livewire('radar-stats', ['athlete' => $item], key($item->id))
-                    </div>
-                    <div class="card-body px-2">
-                        <h2 class="card-title ucfirst">{{ ucwords(mb_strtolower($item->nick)) }}
-                            {{-- (
-                            {{ getCategory($item->birth)->name }} ) --}}</h2>
-                        <p>{{ $item->name }}</p>
-                        <h2 class="card-title">Tempos 50m</h2>
-                        <div class="grid grid-cols-4 gap-1">
-                            <div class="px-0 badge badge-info mb-2 w-full text-xs justify-center inline-block text-center ">
-                                @isset($borbo)
-                                    {{ $borbo->recordConvert }}
-                                @endisset
-                                <span class="block ">Borbo</span>
-                            </div>
-                            <div
-                                class="px-0 badge badge-success mb-2 w-full text-xs justify-center inline-block text-center">
+                <div class="w-64 hidden sm:block">
+                    @livewire('radar-stats', ['athlete' => $item,'category'=>$category->id], key($item->id))
+                </div>
+                <div class="card-body px-2">
+                    <h2 class="card-title ucfirst">
+                        {{ ucwords(mb_strtolower($item->nick)) }}
+                    </h2>
+                    <p>{{ $item->name }} ({{ $item->realAge }} anos)</p>
+                    <h2 class="card-title">Tempos 50m</h2>
+                    <div class="grid grid-cols-4 gap-1">
+                        <div class="px-0 badge badge-info mb-2 w-full text-xs justify-center inline-block text-center ">
+                            @isset($borbo)
+                                {{ $borbo->recordConvert }}
+                            @endisset
+                            <span class="block ">Borbo</span>
+                        </div>
+                        <div
+                            class="px-0 badge badge-success mb-2 w-full text-xs justify-center inline-block text-center">
 
-                                @isset($costa)
-                                    {{ $costa->recordConvert }}
-                                @endisset
-                                <span class="block ">Costa</span>
-                            </div>
-                            <div
-                                class="px-0 badge badge-warning mb-2 w-full text-xs justify-center inline-block text-center">
-                                @isset($peito)
-                                    {{ $peito->recordConvert }}
-                                @endisset
-                                <span class="block ">Peito</span>
-                            </div>
-                            <div class="px-0 badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
-                                @isset($livre)
-                                    {{ $livre->recordConvert }}
-                                @endisset
-                                <span class="block ">Crawl</span>
-                            </div>
+                            @isset($costa)
+                                {{ $costa->recordConvert }}
+                            @endisset
+                            <span class="block ">Costa</span>
                         </div>
-                        <div class="card-actions justify-end">
-                            <x-table-buttons-modals id="{{ $item->id }}"></x-table-buttons-modals>
+                        <div
+                            class="px-0 badge badge-warning mb-2 w-full text-xs justify-center inline-block text-center">
+                            @isset($peito)
+                                {{ $peito->recordConvert }}
+                            @endisset
+                            <span class="block ">Peito</span>
                         </div>
+                        <div class="px-0 badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
+                            @isset($livre)
+                                {{ $livre->recordConvert }}
+                            @endisset
+                            <span class="block ">Crawl</span>
+                        </div>
+                    </div>
+                    <div class="card-actions justify-end">
+                        <x-table-buttons-modals id="{{ $item->id }}"></x-table-buttons-modals>
                     </div>
                 </div>
-            @endforeach
+            </div>
+        @endforeach
 
     </div>
     {{-- MODAL DELETE --}}
@@ -183,8 +182,8 @@
                     <div class="sm:w-full col-span-1" x-data x-init="Inputmask({
                         'mask': '99/99/9999'
                     }).mask($refs.birth)">
-                        <label for="birth"
-                            class="block text-sm font-medium text-gray-900 dark:text-white">Data de nascimento</label>
+                        <label for="birth" class="block text-sm font-medium text-gray-900 dark:text-white">Data de
+                            nascimento</label>
                         <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                             rounded-lg focus:ring-primary-600 focus:border-primary-600
@@ -207,7 +206,7 @@
                     }).mask($refs.register_date)">
                         <label for="register_date"
                             class="block text-sm font-medium text-gray-900 dark:text-white">Data de registro</label>
-                        <input type="text" x-ref="register_date" wire:model="register_date" placeholder="Data" required=""
+                        <input type="text" x-ref="register_date" wire:model="register_date" placeholder="Data"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                             rounded-lg focus:ring-primary-600 focus:border-primary-600
                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -229,8 +228,11 @@
                         @enderror
                     </div>
                 </div>
-                <div class="flex items-end space-x-4">
-                    <button type="submit"
+            </form>
+
+        </x-slot>
+        <x-slot name="footer">
+            <button type="submit" wire:click="store"
                         class="text-white
                     bg-blue-700 hover:bg-blue-800
                     focus:ring-4 focus:outline-none focus:ring-blue-300
@@ -239,11 +241,6 @@
                     dark:focus:ring-blue-800">
                         Salvar
                     </button>
-                </div>
-            </form>
-
-        </x-slot>
-        <x-slot name="footer">
             <x-secondary-button wire:click="$toggle('showModalCreate')" class="mx-2">
                 Fechar
             </x-secondary-button>
@@ -279,8 +276,8 @@
                     <div class="sm:w-full col-span-1" x-data x-init="Inputmask({
                         'mask': '99/99/9999'
                     }).mask($refs.birth)">
-                        <label for="birth"
-                            class="block text-sm font-medium text-gray-900 dark:text-white">Data de nascimento</label>
+                        <label for="birth" class="block text-sm font-medium text-gray-900 dark:text-white">Data de
+                            nascimento</label>
                         <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                             rounded-lg focus:ring-primary-600 focus:border-primary-600
@@ -303,7 +300,7 @@
                     }).mask($refs.register_date)">
                         <label for="register_date"
                             class="block text-sm font-medium text-gray-900 dark:text-white">Data de registro</label>
-                        <input type="text" x-ref="register_date" wire:model="register_date" placeholder="Data" required=""
+                        <input type="text" x-ref="register_date" wire:model="register_date" placeholder="Data"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                             rounded-lg focus:ring-primary-600 focus:border-primary-600
                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -325,20 +322,17 @@
                         @enderror
                     </div>
                 </div>
-                <div class="flex items-end space-x-4">
-                    <button type="submit"
-                        class="text-white
+            </form>
+        </x-slot>
+        <x-slot name="footer">
+            <button type="submit" wire:click="update" class="text-white
                     bg-blue-700 hover:bg-blue-800
                     focus:ring-4 focus:outline-none focus:ring-blue-300
                     font-medium rounded-lg text-sm px-5 py-2.5
                     text-center dark:bg-blue-600 dark:hover:bg-blue-700
                     dark:focus:ring-blue-800">
                         Atualizar
-                    </button>
-                </div>
-            </form>
-        </x-slot>
-        <x-slot name="footer">
+                </button>
             <x-primary-button wire:click="$toggle('showModalEdit')" class="mx-2">
                 Fechar
                 </x-secondary-button>
@@ -346,4 +340,3 @@
     </x-dialog-modal>
 
 </div>
-

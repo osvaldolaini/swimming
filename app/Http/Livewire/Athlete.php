@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Model\Athletes;
 use App\Models\Model\Categories;
+use App\Models\Model\Teams;
 use App\Models\Model\Times;
 use Livewire\Component;
 
@@ -46,20 +47,20 @@ class Athlete extends Component
     {
         if(isset($_GET['category'])){
             $this->getCategory = $_GET['category'];
+            $this->category = Teams::select('name','min_age','max_age')->find($this->getCategory);
         }
     }
 
     public function loadPosts()
     {
-
         if (isset($this->getCategory)) {
+            $this->category = Teams::select('id','name','min_age','max_age')->find($this->getCategory);
             $this->athletes = Athletes::select('id','nick','name','birth','sex')
             ->where('active', 1)
             ->with('timess')
-            ->where('birth', 'LIKE', '%' . $this->getCategory. '%')
+            ->whereBetween('birth', [$this->category->birth_year . '-01-01', $this->category->birth_year_end . '-12-31'])
             ->orderBy('name','asc')
             ->get();
-            $this->cat = Categories::where('birth_year',$this->getCategory)->first()->name;
         }
     }
     public function render()
