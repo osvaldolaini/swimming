@@ -71,7 +71,7 @@
                     <div class="grid grid-cols-4 gap-1">
                         <div class="px-0 badge badge-info mb-2 w-full text-xs justify-center inline-block text-center ">
                             @isset($borbo)
-                                {{ $borbo->recordConvert }}
+                                {{ $borbo->recordConverte }}
                             @endisset
                             <span class="block ">Borbo</span>
                         </div>
@@ -79,20 +79,20 @@
                             class="px-0 badge badge-success mb-2 w-full text-xs justify-center inline-block text-center">
 
                             @isset($costa)
-                                {{ $costa->recordConvert }}
+                                {{ $costa->recordConverte }}
                             @endisset
                             <span class="block ">Costa</span>
                         </div>
                         <div
                             class="px-0 badge badge-warning mb-2 w-full text-xs justify-center inline-block text-center">
                             @isset($peito)
-                                {{ $peito->recordConvert }}
+                                {{ $peito->recordConverte }}
                             @endisset
                             <span class="block ">Peito</span>
                         </div>
                         <div class="px-0 badge badge-error mb-2 w-full text-xs justify-center inline-block text-center">
                             @isset($livre)
-                                {{ $livre->recordConvert }}
+                                {{ $livre->recordConverte }}
                             @endisset
                             <span class="block ">Crawl</span>
                         </div>
