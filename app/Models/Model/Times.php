@@ -52,6 +52,22 @@ class Times extends Model
         }
         return $convert;
     }
+    public function getConvertTypeAttribute($value)
+    {
+        switch ($value) {
+            case 'Tomada de tempo':
+                $convert = 'tomada';
+                break;
+            case 'Prova':
+                $convert = 'prova';
+                break;
+
+            default:
+                $convert = '';
+                break;
+        }
+        return $convert;
+    }
     public function getRecordConvertAttribute($value)
     {
         $time = explode('.', $this->record);

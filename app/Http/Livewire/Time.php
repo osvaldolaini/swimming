@@ -193,7 +193,7 @@ class Time extends Component
             'athlete_id'    => $this->athlete_id,
             'modality_id'   => $this->modality_id,
             'distance'      => $this->distance,
-            'type_time'     => $this->type_time,
+            'type_time'     => $this->convert_type,
             'pool'          => $this->pool,
             'record'        => invertTime($this->record),
             'recordConverte' => $this->record,
