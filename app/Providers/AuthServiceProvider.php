@@ -28,6 +28,12 @@ class AuthServiceProvider extends ServiceProvider
                 redirect()->route('groupUser');
             }
         });
+        Gate::define('group-admin', function (User $user) {
+            // dd($user->group);
+            if ($user->group->type != 1) {
+                redirect()->route('dashboard');
+            }
+        });
         Gate::define('group-user-ok', function (User $user) {
             // dd($user->group);
             if ($user->group != null) {

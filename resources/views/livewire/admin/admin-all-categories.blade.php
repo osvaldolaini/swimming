@@ -2,23 +2,21 @@
     <x-header>EQUIPES</x-header>
     <div class="grid sm:grid-cols-3 grid-cols-1 gap-4 pt-3 " wire:model="teams">
         @foreach ($teams as $item)
-            @if ($item->status)
-                <div wire:click="goAthletes({{ $item->id }})" class="cursor-pointer card card-side
+            <div wire:click="goAthletes({{ $item->id }})"
+                class="cursor-pointer card card-side
                     shadow-xl h-100 bg-neutral rounded-box text-neutral-content hover:bg-gray-100 hover:text-gray-900">
-                    <div class="card-actions justify-end">
-                        <div class="w-full">
-                            <div class="flex justify-between font-medium duration-200 my-10">
-                                <div class="tooltip tooltip-bottom p-0" data-tip="Atletas">
-                                    <span
-                                        class="flex py-2 px-3 whitespace-nowrap">
-                                        <svg class="w-20 " fill="currentColor" version="1.1" id="Capa_1"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 554.653 554.653"
-                                            xml:space="preserve">
+                <div class="card-actions justify-end">
+                    <div class="w-full">
+                        <div class="flex justify-between font-medium duration-200 my-10">
+                            <div class="tooltip tooltip-bottom p-0" data-tip="Atletas">
+                                <span class="flex py-2 px-3 whitespace-nowrap">
+                                    <svg class="w-20 " fill="currentColor" version="1.1" id="Capa_1"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        viewBox="0 0 554.653 554.653" xml:space="preserve">
+                                        <g>
                                             <g>
-                                                <g>
-                                                    <path
-                                                        d="M533.176,405.093l-56.505,41.76c-3.385,2.505-10.471,2.716-14.009,0.363l-49.515-32.646
+                                                <path
+                                                    d="M533.176,405.093l-56.505,41.76c-3.385,2.505-10.471,2.716-14.009,0.363l-49.515-32.646
                                             c-12.737-8.415-32.025-8.511-44.811-0.182l-50.71,32.904c-3.892,2.506-11.81,2.562-15.729,0.096l-52.699-33.277
                                             c-13.148-8.281-32.417-7.487-44.839,1.854l-40.927,30.83c-3.385,2.562-10.414,2.802-13.971,0.487l-50.701-32.876
                                             c-13.339-8.673-32.618-7.516-44.829,2.678L4.848,458.021c-5.718,4.762-6.483,13.253-1.731,18.972
@@ -27,31 +25,32 @@
                                             c12.804,8.08,32.053,7.966,44.781-0.277l50.7-32.904c3.825-2.468,11.522-2.429,15.31,0.076l49.505,32.637
                                             c13.024,8.616,32.34,8.109,44.887-1.166l56.504-41.77c5.986-4.428,7.239-12.871,2.821-18.848
                                             C547.605,401.918,539.162,400.655,533.176,405.093z" />
-                                                    <path
-                                                        d="M164.972,249.225c-19.747,0-35.869,16.007-35.869,35.802c0,19.852,16.123,35.974,35.869,35.974
+                                                <path
+                                                    d="M164.972,249.225c-19.747,0-35.869,16.007-35.869,35.802c0,19.852,16.123,35.974,35.869,35.974
                                             c19.794,0,35.907-16.122,35.907-35.974C200.879,265.232,184.766,249.225,164.972,249.225z" />
-                                                    <path
-                                                        d="M199.339,365.963c6.436,4.953,17.939,4.332,25.704-1.396l14.038-10.346l119.426-82.658
+                                                <path
+                                                    d="M199.339,365.963c6.436,4.953,17.939,4.332,25.704-1.396l14.038-10.346l119.426-82.658
                                             c5.432-2.974,9.878-7.43,12.814-12.804l87.123-148.276c6.895-11.991,2.764-27.339-9.228-34.348
                                             c-12.097-6.895-27.454-2.707-34.349,9.342l-72.693,123.749l-106.986,64.881c-5.316,2.936-19.584,20.072-27.339,31.748
                                             c-7.287,10.978-13.684,27.521-15.989,35.916C189.557,350.194,192.904,361.02,199.339,365.963z" />
-                                                </g>
                                             </g>
-                                        </svg>
-                                    </span>
-                                </div>
-
+                                        </g>
+                                    </svg>
+                                </span>
                             </div>
+
                         </div>
                     </div>
-                    <div class="card-body">
-                        <h2 class="card-title ucfirst">{{ $item->name }}</h2>
-                        <p>{{$item->year}}</p>
-                        <p>Masculino: {{ $item->athletes($item->min_age,$item->max_age)->where('sex','masculino')->count() }}</p>
-                        <p>Feminino: {{ $item->athletes($item->min_age,$item->max_age)->where('sex','feminino')->count() }}</p>
-                    </div>
                 </div>
-            @endif
+                <div class="card-body">
+                    <h2 class="card-title ucfirst">{{ $item->name }}</h2>
+                    <p>{{ $item->year }}</p>
+                    <p>Masculino:
+                        {{ $item->athletes($item->min_age, $item->max_age)->where('sex', 'masculino')->count() }}</p>
+                    <p>Feminino: {{ $item->athletes($item->min_age, $item->max_age)->where('sex', 'feminino')->count() }}
+                    </p>
+                </div>
+            </div>
         @endforeach
     </div>
 

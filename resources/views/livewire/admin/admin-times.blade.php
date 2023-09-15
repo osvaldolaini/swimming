@@ -1,12 +1,7 @@
 <div class="w-100">
-    <div class="bg-white shadow-md dark:bg-gray-800 sm:rounded-lg mb-3">
-        @livewire('sheets-export')
-    </div>
-    <div class="bg-white shadow-md dark:bg-gray-800 sm:rounded-lg mb-3">
-        @livewire('sheets-import')
-    </div>
-    <div class="bg-white shadow-md dark:bg-gray-800 pt-3 sm:rounded-lg">
-        <livewire:search-bar.search-bar-times
+
+    <div class="bg-white dark:bg-gray-800 pt-3 sm:rounded-lg">
+        <livewire:search-bar.search-bar
             {{-- REQUIRED --}}  model="App\Models\Model\Times" {{-- Model principal --}}
             {{-- REQUIRED --}}  modelId="times.id" {{-- Ex: 'table.id' or 'id' --}}
             {{-- REQUIRED --}}  showId="false" {{-- 'true' or 'false' --}}

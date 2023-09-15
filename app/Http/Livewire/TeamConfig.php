@@ -75,6 +75,8 @@ class TeamConfig extends Component
         }
 
         $this->alertSession = true;
+
+        return redirect()->route('configTeam');
     }
     //Fecha a caixa da mensagem
     public function closeAlert()

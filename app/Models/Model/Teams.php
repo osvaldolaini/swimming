@@ -27,10 +27,17 @@ class Teams extends Model
         $min_year = $min_year->subYears($min)->year;
         $max_year = $max_year->subYears($max)->year;
 
-        return Athletes::select('sex')->where('active', 1)
-        ->where('teams_configs_id',Auth::user()->team->id)
-        ->whereBetween('birth', [$min_year . '-01-01', $max_year . '-12-31'])
-        ->get();
+        if (Auth::user()->group->type == 1){
+            return Athletes::select('sex')->where('active', 1)
+            ->whereBetween('birth', [$min_year . '-01-01', $max_year . '-12-31'])
+            ->get();
+        }else{
+            return Athletes::select('sex')->where('active', 1)
+            ->where('teams_configs_id',Auth::user()->team->id)
+            ->whereBetween('birth', [$min_year . '-01-01', $max_year . '-12-31'])
+            ->get();
+        }
+
     }
 
     public function getYearAttribute()
@@ -63,8 +70,13 @@ class Teams extends Model
 
     public function getStatusAttribute()
     {
-        $qry = TeamsRestriction::where('team_id',$this->id)
-                ->where('teams_configs_id',Auth::user()->team->id)->first();
+        if (Auth::user()->group->type == 1){
+            $qry = TeamsRestriction::where('team_id',$this->id)->first();
+        }else{
+            $qry = TeamsRestriction::where('team_id',$this->id)
+            ->where('teams_configs_id',Auth::user()->team->id)->first();
+        }
+
         if($qry){
             return $qry;
         }else{
