@@ -158,7 +158,7 @@ class Time extends Component
         $this->modality_id  = $times->modality_id;
         $this->pool         = $times->pool;
         $this->distance     = $times->distance;
-        $this->type_time    = $times->convert_type;
+        $this->type_time    = $times->convert($times->type_time);
         $this->record       = $times->recordConvert;
         $this->day          = $times->day;
         $this->active       = $times->active;

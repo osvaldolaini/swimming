@@ -36,9 +36,9 @@ class Times extends Model
             ->format('d/m/Y');
     }
 
-    public function getTypeTimeAttribute()
+    public function convert($value)
     {
-        switch ($this->type_time) {
+        switch ($value) {
             case 'tomada':
                 $convert = 'Tomada de tempo';
                 break;
