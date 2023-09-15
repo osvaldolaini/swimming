@@ -20,7 +20,7 @@ class Athletes extends Model
 
     protected $fillable = [
         'id', 'active', 'sex', 'name', 'birth', 'nick', 'updated_by',
-        'created_by', 'code', 'slug', 'register', 'register_date'
+        'created_by', 'code', 'slug', 'register', 'register_date','teams_configs_id'
     ];
 
     public function setNameAttribute($value)

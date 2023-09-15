@@ -54,6 +54,9 @@ class Time extends Component
 
     public function mount()
     {
+        if (Gate::allows('group-user')) {
+            abort(403);
+        }
         $this->modalities = Modalities::where('active',1)->get();
         $this->teams = Teams::where('active',1)->get();
     }

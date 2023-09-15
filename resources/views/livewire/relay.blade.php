@@ -16,7 +16,7 @@
         {{-- OK --}} customSearch="type" {{-- Colunas personalizadas, customizar no model --}}
         {{-- OK --}} activeButton="active" {{-- Toogle de ativar e desativar registro --}}
         {{-- OK --}} relationTables="" {{-- Relacionamentos ( table , key , foreingKey ) --}}
-        {{-- OK --}} showButtons="Ações" {{-- Botões --}}
+        {{-- OK --}} showButtons="{{ (Auth::user()->group->type == 1 ? 'Ações' : '') }}" {{-- Botões --}}
         {{-- OK --}} sort="min_age , asc" {{-- Ordenação da tabela --}}
         {{-- OK --}} paginate="10" {{-- Qtd de registros por página --}}
     />

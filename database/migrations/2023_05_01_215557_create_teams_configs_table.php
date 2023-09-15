@@ -11,21 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('athletes', function (Blueprint $table) {
+        Schema::create('teams_configs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teams_configs_id')->constrained();
-            $table->boolean('active')->nullable();
-            $table->string('sex',20)->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->string('team_photo_path', 2048)->nullable();
             $table->string('name',100)->nullable();
             $table->string('nick',30)->nullable();
             $table->date('birth')->nullable();
             $table->string('slug')->nullable();
             $table->string('code')->nullable();
-            $table->integer('register')->nullable();
-            $table->date('register_date')->nullable();
             $table->timestamps();
-            $table->string('updated_by',50)->nullable();
-            $table->string('created_by',50)->nullable();
         });
     }
 
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('athletes');
+        Schema::dropIfExists('teams_configs');
     }
 };

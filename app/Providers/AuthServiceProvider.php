@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,6 +22,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('group-user', function (User $user) {
+            // dd($user->group);
+            if ($user->group == null) {
+                redirect()->route('groupUser');
+            }
+        });
+        Gate::define('group-user-ok', function (User $user) {
+            // dd($user->group);
+            if ($user->group != null) {
+                redirect()->route('dashboard');
+            }
+        });
     }
 }

@@ -60,6 +60,9 @@ class Team extends Component
     }
     public function mount()
     {
+        if (Gate::allows('group-user')) {
+            abort(403);
+        }
         $this->categories = Categories::orderBy('id','asc')
         ->get();
     }
@@ -81,11 +84,11 @@ class Team extends Component
     public function showModalCreate()
     {
         $this->reset('name',
-                         'max_age',
-                         'min_age',
-                         'type',
-                         'category_id',
-                        );
+                    'max_age',
+                    'min_age',
+                    'type',
+                    'category_id',
+                    );
         $this->showModalCreate = true;
     }
     public function store()

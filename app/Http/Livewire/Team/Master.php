@@ -8,6 +8,7 @@ use App\Models\Model\Modalities;
 use App\Models\Model\Relays;
 use App\Models\Model\Teams;
 use App\Models\Model\Times;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -74,6 +75,7 @@ class Master extends Component
         $birth_date = explode('|', $this->birth);
         //Ambos os sexos
         $this->allAthletes = Athletes::where('active', 1)
+            ->where('teams_configs_id',Auth::user()->team->id)
             ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
             ->get();
         if ($this->type_team != 'mista') {
@@ -143,6 +145,7 @@ class Master extends Component
         $birth_date = explode('|', $this->birth);
         //Ambos os sexos
         $this->allAthletes = Athletes::where('active', 1)
+            ->where('teams_configs_id',Auth::user()->team->id)
             ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
             ->get();
         //Pega os atletas por sexo
@@ -396,11 +399,13 @@ class Master extends Component
         //Ambos os sexos
         if ($this->type_team == 'mista') {
             $atletasM = DB::table('athletes')->select('id')
-            ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
+                ->where('teams_configs_id',Auth::user()->team->id)
+                ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->where('sex', 'masculino')
                 ->pluck('id');
             $atletasF = DB::table('athletes')->select('id')
-            ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
+                ->where('teams_configs_id',Auth::user()->team->id)
+                ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->where('sex', 'feminino')
                 ->pluck('id');
 
@@ -421,10 +426,12 @@ class Master extends Component
         //Ambos os sexos
         if ($this->type_team == 'mista') {
             $atletasM = DB::table('athletes')->select('id')
+                ->where('teams_configs_id',Auth::user()->team->id)
                 ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->where('sex', 'masculino')
                 ->pluck('id');
             $atletasF = DB::table('athletes')->select('id')
+                ->where('teams_configs_id',Auth::user()->team->id)
                 ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->where('sex', 'feminino')
                 ->pluck('id');

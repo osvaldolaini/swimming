@@ -5,6 +5,7 @@ namespace App\Models\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Teams extends Model
 {
@@ -27,9 +28,11 @@ class Teams extends Model
         $max_year = $max_year->subYears($max)->year;
 
         return Athletes::select('sex')->where('active', 1)
+        ->where('teams_configs_id',Auth::user()->team->id)
         ->whereBetween('birth', [$min_year . '-01-01', $max_year . '-12-31'])
         ->get();
     }
+
     public function getYearAttribute()
     {
         // Obter a data atual

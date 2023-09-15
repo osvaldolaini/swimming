@@ -23,6 +23,7 @@
 
 <body class="font-sans antialiased">
 
+
     <x-banner />
 
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -33,25 +34,13 @@
                 <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content">
                     <!-- Page content here -->
-                    <div class="card m-3 sm:m-4 sm:p-5
-                    bg-white rounded-2xl dark:bg-gray-700
-                     shadow-xl">
+                    <div class="card m-3 sm:m-4 py-1 sm:p-5 bg-gray-200 shadow-xl">
                         {{ $slot }}
                     </div>
                 </div>
                 <div class="drawer-side">
                     <label for="my-drawer-3" class="drawer-overlay"></label>
-                    @if (Auth::user()->group != null)
-                        @if (Auth::user()->group->type == 1)
-                            <x-navbar></x-navbar>
-                        @elseif (Auth::user()->group->type == 2)
-                            <x-navbar-head></x-navbar-head>
-                        @elseif (Auth::user()->group->type == 3)
-                            <x-navbar-coach></x-navbar-coach>
-                        @elseif (Auth::user()->group->type > 4)
-                            <x-navbar-user></x-navbar-user>
-                        @endif
-                    @endif
+                    <x-navbar></x-navbar>
                 </div>
             </div>
         </main>

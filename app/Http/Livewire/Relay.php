@@ -63,6 +63,9 @@ class Relay extends Component
     }
     public function mount()
     {
+        if (Gate::allows('group-user')) {
+            abort(403);
+        }
         $this->categories = Categories::orderBy('id','asc')
         ->get();
     }

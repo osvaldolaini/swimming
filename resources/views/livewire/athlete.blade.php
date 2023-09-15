@@ -185,7 +185,7 @@
                     </div>
                     <div class="sm:w-full col-span-1" x-data x-init="Inputmask({
                         'mask': '99/99/9999'
-                    }).mask($refs.birth)">
+                        }).mask($refs.birth)">
                         <label for="birth" class="block text-sm font-medium text-gray-900 dark:text-white">Data de
                             nascimento</label>
                         <input type="text" x-ref="birth" wire:model="birth" placeholder="Data" required=""

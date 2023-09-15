@@ -1,7 +1,7 @@
 <div class="w-100">
     <div class="hero bg-gray-100 rounded-t-lg mb-5">
         <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
-            <h1 class="text-4xl font-black py-0 my-0">Equipes</h1>
+            <h1 class="text-4xl font-black py-0 my-0">EQUIPES</h1>
         </div>
     </div>
     {{-- @livewire('admin.filters.institution.institution-table') --}}
@@ -16,7 +16,7 @@
             {{-- OK --}} customSearch="" {{-- Colunas personalizadas, customizar no model --}}
             {{-- OK --}} activeButton="active" {{-- Toogle de ativar e desativar registro --}}
             {{-- OK --}} relationTables="" {{-- Relacionamentos ( table , key , foreingKey ) --}}
-            {{-- OK --}} showButtons="Ações" {{-- Botões --}}
+            {{-- OK --}} showButtons="{{ (Auth::user()->group->type == 1 ? 'Ações' : '') }}" {{-- Botões --}}
             {{-- OK --}} sort="min_age , asc" {{-- Ordenação da tabela --}}
             {{-- OK --}} paginate="10" {{-- Qtd de registros por página --}} />
     </div>

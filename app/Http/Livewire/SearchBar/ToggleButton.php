@@ -23,6 +23,7 @@ class ToggleButton extends Component
     public function updating($field, $value)
     {
         $this->model->setAttribute($this->field, $value)->save();
+        dd($this->model);
         $this->openAlert('success', 'Registro atualizado com sucesso.');
     }
     //pega o status do registro

@@ -57,6 +57,9 @@ class Category extends Component
 
     public function render()
     {
+        if (Gate::allows('group-user')) {
+            abort(403);
+        }
         return view('livewire.category');
     }
 

@@ -13,13 +13,16 @@ border-b border-gray-900 dark:border-gray-700">
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    <div class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 dark:border-indigo-600 text-sm font-medium leading-5 text-white dark:text-gray-100 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                        @if (Auth::user()->group != null)
+                            {{ Auth::user()->group->activity }}
+                        @endif
+                    </div>
                 </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ml-3 relative">
@@ -223,4 +226,5 @@ border-b border-gray-900 dark:border-gray-700">
             </div>
         </div>
     </div>
+
 </nav>

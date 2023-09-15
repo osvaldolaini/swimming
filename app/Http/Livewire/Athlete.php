@@ -49,6 +49,9 @@ class Athlete extends Component
             $this->getCategory = $_GET['category'];
             $this->category = Teams::select('name','min_age','max_age')->find($this->getCategory);
         }
+        if (Gate::allows('group-user')) {
+            abort(403);
+        }
     }
 
     public function loadPosts()
@@ -65,6 +68,7 @@ class Athlete extends Component
     }
     public function render()
     {
+
         return view('livewire.athlete');
     }
 
