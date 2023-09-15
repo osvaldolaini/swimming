@@ -31,10 +31,10 @@ class TeamConfig extends Component
             $this->model_id = $this->config->id;
             $this->name     = $this->config->name;
             $this->nick     = $this->config->nick;
-            if ($this->birth != '') {
+            if ($this->config->birth != '') {
                 $this->birth = convertOnlyDatee($this->config->birth);
             }
-            // dd(convertOnlyDatee($this->config->birth));
+            // dd($this->birth);
         }
     }
 
