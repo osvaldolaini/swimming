@@ -103,6 +103,18 @@ if (!function_exists('convertOnlyDate')) {
         }
     }
 }
+if (!function_exists('convertOnlyDatee')) {
+    function convertOnlyDatee($date)
+    {
+        if ($date) {
+
+            return Carbon::createFromFormat('Y-m-d', $date)
+                ->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+}
 if (!function_exists('getCategory')) {
     // function getCategory($date)
     // {
