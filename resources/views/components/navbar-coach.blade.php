@@ -1,6 +1,6 @@
 <div class="flex flex-col h-full mt-0 sm:mt-4 sm:ml-3">
     <!-- Navigation Rail -->
-    <div class="relative h-screen lg:block w-64 pb-3 ">
+    <div class="relative h-screen lg:block w-52 pb-3 ">
         <div class="h-full bg-white rounded-2xl dark:bg-gray-700 py-2">
             <nav class="mt-5">
                 <div>

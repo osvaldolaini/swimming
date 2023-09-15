@@ -1,35 +1,32 @@
-<div >
-    <div class="hero bg-gray-100 rounded-t-lg mb-0">
-        <div class="hero-content flex-col lg:flex-row-reverse py-2.5 my-0">
-            <h1 class="text-4xl font-black py-0 my-0"> {{ mb_strtoupper($titles) }}</h1>
-        </div>
-    </div>
-    <section class="px-6 pb-1 dark:bg-gray-800 dark:text-gray-50">
-
+<div>
+    <x-header>{{ mb_strtoupper($titles) }}</x-header>
+    <section class="px-1.5 pb-1 dark:bg-gray-800 dark:text-gray-50">
         @isset($message)
-
-        <div class="w-full text-white bg-blue-500 rounded-md">
-            <div class="container flex items-center justify-between px-6 py-2 mx-auto">
-                <div class="flex">
-                    <svg viewBox="0 0 40 40" class="w-6 h-6 fill-current">
-                        <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z">
-                        </path>
-                    </svg>
-                    <p class="mx-3"> {{ $message }}</p>
-                </div>
-                {{--
+            <div class="w-full text-white bg-blue-500 rounded-md">
+                <div class="container flex items-center justify-between px-6 py-2 mx-auto">
+                    <div class="flex">
+                        <svg viewBox="0 0 40 40" class="w-6 h-6 fill-current">
+                            <path
+                                d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z">
+                            </path>
+                        </svg>
+                        <p class="mx-3"> {{ $message }}</p>
+                    </div>
+                    {{--
                 <button class="p-1 transition-colors duration-300 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button> --}}
+                </div>
             </div>
-        </div>
-    @endisset
-        <div class="container flex flex-col mx-auto space-y-4 sm:space-y-8
+        @endisset
+        <div
+            class="container flex flex-col mx-auto space-y-4 sm:space-y-8
         ng-untouched ng-pristine ng-valid relative">
-        <x-action-loading ></x-action-loading>
-            <fieldset class="grid grid-cols-4 sm:gap-4 sm:gap-6 px-6 pt-2 pb-10 sm:py-2 px-6 rounded-md shadow-sm dark:bg-gray-900">
+            <x-action-loading></x-action-loading>
+            <fieldset
+                class="grid grid-cols-4 sm:gap-4 sm:gap-6 px-6 pt-2 pb-10 sm:py-2 px-6 rounded-md shadow-sm dark:bg-gray-900">
                 <div class="space-y-2 col-span-full lg:col-span-1">
                     <p class="font-medium">Monte a(s) equipe(s)</p>
                     <p class="text-xs">Informe os dados necessários para formar a(s) equipe(s).</p>
@@ -42,9 +39,12 @@
                                 duration-300 ease-out w-full mx-auto text-center itens-center ">
 
                                 <span class="px-2 ">Gerar equipe(s) </span>
-                                <svg fill="currentColor" class="w-6 h-6" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <svg fill="currentColor" class="w-6 h-6" viewBox="0 0 32 32" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <title>puzzle</title>
-                                    <path d="M23.994 18.252h-2.711c-0.014-0.001-0.025-0.008-0.039-0.008-0.414 0-0.75 0.336-0.75 0.75v0c0 0.002 0 0.004 0 0.006 0 1.104-0.895 2-2 2s-2-0.895-2-2c0-0.002 0-0.004 0-0.007v0c-0-0.414-0.336-0.75-0.75-0.75v0c-0.014 0-0.025 0.007-0.039 0.008h-1.957v-1.33c1.584-0.354 2.75-1.748 2.75-3.415s-1.166-3.060-2.727-3.41l-0.023-0.004v-2.095c-0-0.414-0.336-0.75-0.75-0.75h-10.999c-0.414 0-0.75 0.336-0.75 0.75v0 10.976l-0.005 0.024v11c0 0.414 0.336 0.75 0.75 0.75l21.999 0.004c0.414-0 0.75-0.336 0.75-0.75v0-11c-0-0.414-0.336-0.75-0.75-0.75v0zM2.75 8.748h9.499v2.010c0 0.414 0.336 0.75 0.75 0.75v0c1.105 0 2 0.895 2 2s-0.895 2-2 2v0c-0.414 0-0.75 0.336-0.75 0.75v0 1.99h-1.331c-0.351-1.588-1.746-2.758-3.415-2.758s-3.064 1.17-3.411 2.734l-0.004 0.023h-1.338zM2.745 19.748h1.957c0.017 0.001 0.031 0.010 0.048 0.010 0.416-0.006 0.751-0.343 0.754-0.759v-0c0.003-1.101 0.896-1.993 1.998-1.993 1.103 0 1.998 0.894 1.998 1.998 0 0.002 0 0.003 0 0.005v-0c0 0.414 0.336 0.75 0.75 0.75v0c0.017 0 0.031-0.009 0.048-0.010h1.948v1.332c-1.584 0.355-2.75 1.75-2.75 3.416 0 1.442 0.873 2.681 2.12 3.215l0.023 0.009c0.171 0.074 0.374 0.139 0.584 0.186l0.023 0.004v1.338h-9.5zM23.244 29.252h-9.499v-1.96c0.001-0.015 0.009-0.028 0.009-0.043-0.006-0.416-0.343-0.751-0.758-0.754h-0c-1.102-0.003-1.994-0.896-1.994-1.998 0-1.104 0.895-1.998 1.998-1.998 0.002 0 0.003 0 0.005 0h-0c0.414-0 0.75-0.336 0.75-0.75v0c0-0.015-0.008-0.028-0.009-0.043v-1.953h1.338c0.357 1.58 1.749 2.742 3.412 2.742s3.055-1.162 3.407-2.719l0.004-0.023h1.338zM29.994 1.25h-10.998c-0.414 0-0.75 0.336-0.75 0.75v0 2.702c-0.001 0.017-0.010 0.031-0.010 0.048 0 0.414 0.336 0.75 0.75 0.75v0c1.105 0 2 0.895 2 2s-0.895 2-2 2v0c-0.414 0-0.75 0.336-0.75 0.75v0c0 0.017 0.009 0.031 0.010 0.048v2.702c0 0.414 0.336 0.75 0.75 0.75h2.076c0.354 1.584 1.748 2.75 3.415 2.75s3.060-1.166 3.41-2.727l0.004-0.023h2.093c0.414-0 0.75-0.336 0.75-0.75v0-11c-0-0.414-0.336-0.75-0.75-0.75h-0zM29.244 12.25h-2.008c-0.414 0-0.75 0.336-0.75 0.75v0c0 1.105-0.895 2-2 2s-2-0.895-2-2v0c-0-0.414-0.336-0.75-0.75-0.75h-1.99v-1.338c1.579-0.358 2.74-1.749 2.74-3.412s-1.161-3.054-2.717-3.407l-0.023-0.004v-1.338h9.498z"></path>
+                                    <path
+                                        d="M23.994 18.252h-2.711c-0.014-0.001-0.025-0.008-0.039-0.008-0.414 0-0.75 0.336-0.75 0.75v0c0 0.002 0 0.004 0 0.006 0 1.104-0.895 2-2 2s-2-0.895-2-2c0-0.002 0-0.004 0-0.007v0c-0-0.414-0.336-0.75-0.75-0.75v0c-0.014 0-0.025 0.007-0.039 0.008h-1.957v-1.33c1.584-0.354 2.75-1.748 2.75-3.415s-1.166-3.060-2.727-3.41l-0.023-0.004v-2.095c-0-0.414-0.336-0.75-0.75-0.75h-10.999c-0.414 0-0.75 0.336-0.75 0.75v0 10.976l-0.005 0.024v11c0 0.414 0.336 0.75 0.75 0.75l21.999 0.004c0.414-0 0.75-0.336 0.75-0.75v0-11c-0-0.414-0.336-0.75-0.75-0.75v0zM2.75 8.748h9.499v2.010c0 0.414 0.336 0.75 0.75 0.75v0c1.105 0 2 0.895 2 2s-0.895 2-2 2v0c-0.414 0-0.75 0.336-0.75 0.75v0 1.99h-1.331c-0.351-1.588-1.746-2.758-3.415-2.758s-3.064 1.17-3.411 2.734l-0.004 0.023h-1.338zM2.745 19.748h1.957c0.017 0.001 0.031 0.010 0.048 0.010 0.416-0.006 0.751-0.343 0.754-0.759v-0c0.003-1.101 0.896-1.993 1.998-1.993 1.103 0 1.998 0.894 1.998 1.998 0 0.002 0 0.003 0 0.005v-0c0 0.414 0.336 0.75 0.75 0.75v0c0.017 0 0.031-0.009 0.048-0.010h1.948v1.332c-1.584 0.355-2.75 1.75-2.75 3.416 0 1.442 0.873 2.681 2.12 3.215l0.023 0.009c0.171 0.074 0.374 0.139 0.584 0.186l0.023 0.004v1.338h-9.5zM23.244 29.252h-9.499v-1.96c0.001-0.015 0.009-0.028 0.009-0.043-0.006-0.416-0.343-0.751-0.758-0.754h-0c-1.102-0.003-1.994-0.896-1.994-1.998 0-1.104 0.895-1.998 1.998-1.998 0.002 0 0.003 0 0.005 0h-0c0.414-0 0.75-0.336 0.75-0.75v0c0-0.015-0.008-0.028-0.009-0.043v-1.953h1.338c0.357 1.58 1.749 2.742 3.412 2.742s3.055-1.162 3.407-2.719l0.004-0.023h1.338zM29.994 1.25h-10.998c-0.414 0-0.75 0.336-0.75 0.75v0 2.702c-0.001 0.017-0.010 0.031-0.010 0.048 0 0.414 0.336 0.75 0.75 0.75v0c1.105 0 2 0.895 2 2s-0.895 2-2 2v0c-0.414 0-0.75 0.336-0.75 0.75v0c0 0.017 0.009 0.031 0.010 0.048v2.702c0 0.414 0.336 0.75 0.75 0.75h2.076c0.354 1.584 1.748 2.75 3.415 2.75s3.060-1.166 3.41-2.727l0.004-0.023h2.093c0.414-0 0.75-0.336 0.75-0.75v0-11c-0-0.414-0.336-0.75-0.75-0.75h-0zM29.244 12.25h-2.008c-0.414 0-0.75 0.336-0.75 0.75v0c0 1.105-0.895 2-2 2s-2-0.895-2-2v0c-0-0.414-0.336-0.75-0.75-0.75h-1.99v-1.338c1.579-0.358 2.74-1.749 2.74-3.412s-1.161-3.054-2.717-3.407l-0.023-0.004v-1.338h9.498z">
+                                    </path>
                                 </svg>
                                 {{-- <svg fill="currentColor" class="w-6 h-6 " viewBox="0 -3.19 54.13 54.13" id="Layer_1"
                                     data-name="Layer 1" xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +100,11 @@
                         <Select wire:model="birth" wire:change='cleanSearch()'
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             @foreach ($category as $item)
-                                <option value="{{ $item->birth_year }}|{{ $item->birth_year_end }}|{{ $item->id }}">{{ $item->name }}</option>
+                                @if ($item->status)
+                                    <option
+                                        value="{{ $item->birth_year }}|{{ $item->birth_year_end }}|{{ $item->id }}">
+                                        {{ $item->name }}</option>
+                                @endif
                             @endforeach
                         </Select>
                     </div>
@@ -153,18 +157,17 @@
                     <div class="col-span-full sm:col-span-3">
                         {{-- <label for="lastname" class="text-sm">Atletas</label> --}}
 
-                            <a href="#my-modal-2" wire:click='getfilterAthletes()'
-                                class="btn btn-error w-full">
-                                <span class="leading-none">
-                                    Remover atletas
-                                </span>
-                                <svg class="w-6 h-6 " fill="currentColor" version="1.1" id="Capa_1"
-                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    viewBox="0 0 554.653 554.653" xml:space="preserve">
+                        <a href="#my-modal-2" wire:click='getfilterAthletes()' class="btn btn-error w-full">
+                            <span class="leading-none">
+                                Remover atletas
+                            </span>
+                            <svg class="w-6 h-6 " fill="currentColor" version="1.1" id="Capa_1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                viewBox="0 0 554.653 554.653" xml:space="preserve">
+                                <g>
                                     <g>
-                                        <g>
-                                            <path
-                                                d="M533.176,405.093l-56.505,41.76c-3.385,2.505-10.471,2.716-14.009,0.363l-49.515-32.646
+                                        <path
+                                            d="M533.176,405.093l-56.505,41.76c-3.385,2.505-10.471,2.716-14.009,0.363l-49.515-32.646
                                                     c-12.737-8.415-32.025-8.511-44.811-0.182l-50.71,32.904c-3.892,2.506-11.81,2.562-15.729,0.096l-52.699-33.277
                                                     c-13.148-8.281-32.417-7.487-44.839,1.854l-40.927,30.83c-3.385,2.562-10.414,2.802-13.971,0.487l-50.701-32.876
                                                     c-13.339-8.673-32.618-7.516-44.829,2.678L4.848,458.021c-5.718,4.762-6.483,13.253-1.731,18.972
@@ -173,28 +176,28 @@
                                                     c12.804,8.08,32.053,7.966,44.781-0.277l50.7-32.904c3.825-2.468,11.522-2.429,15.31,0.076l49.505,32.637
                                                     c13.024,8.616,32.34,8.109,44.887-1.166l56.504-41.77c5.986-4.428,7.239-12.871,2.821-18.848
                                                     C547.605,401.918,539.162,400.655,533.176,405.093z" />
-                                            <path
-                                                d="M164.972,249.225c-19.747,0-35.869,16.007-35.869,35.802c0,19.852,16.123,35.974,35.869,35.974
+                                        <path
+                                            d="M164.972,249.225c-19.747,0-35.869,16.007-35.869,35.802c0,19.852,16.123,35.974,35.869,35.974
                                                     c19.794,0,35.907-16.122,35.907-35.974C200.879,265.232,184.766,249.225,164.972,249.225z" />
-                                            <path
-                                                d="M199.339,365.963c6.436,4.953,17.939,4.332,25.704-1.396l14.038-10.346l119.426-82.658
+                                        <path
+                                            d="M199.339,365.963c6.436,4.953,17.939,4.332,25.704-1.396l14.038-10.346l119.426-82.658
                                                     c5.432-2.974,9.878-7.43,12.814-12.804l87.123-148.276c6.895-11.991,2.764-27.339-9.228-34.348
                                                     c-12.097-6.895-27.454-2.707-34.349,9.342l-72.693,123.749l-106.986,64.881c-5.316,2.936-19.584,20.072-27.339,31.748
                                                     c-7.287,10.978-13.684,27.521-15.989,35.916C189.557,350.194,192.904,361.02,199.339,365.963z" />
-                                        </g>
                                     </g>
-                                </svg>
-                            </a>
+                                </g>
+                            </svg>
+                        </a>
                     </div>
                     @isset($combinations)
-                    <div class="col-span-full sm:col-span-3">
-                        <button class="btn btn-info w-full">
-                        <span class="leading-none" wire:model="combinations">
-                            Combinações: {{ $combinations }}
-                        </span>
+                        <div class="col-span-full sm:col-span-3">
+                            <button class="btn btn-info w-full">
+                                <span class="leading-none" wire:model="combinations">
+                                    Combinações: {{ $combinations }}
+                                </span>
 
-                    </button>
-                    </div>
+                            </button>
+                        </div>
                     @endisset
 
                 </div>
@@ -216,7 +219,8 @@
                     <div class="card card-side bg-neutral rounded-box text-neutral-content px-1 sm:px-0">
                         <div class="py-2 card-body mx-auto px-3 sm:px-2">
                             <div class="w-full text-center">
-                                <x-action-counter time="{{ $t }}" title="{{ $title }}" old="{{ $old }}">
+                                <x-action-counter time="{{ $t }}" title="{{ $title }}"
+                                    old="{{ $old }}">
                                 </x-action-counter>
                             </div>
                             <ul>
@@ -226,18 +230,21 @@
                                             @case(1)
                                                 @php $color = 'badge-error'; @endphp
                                             @break
+
                                             @case(2)
                                                 @php $color = 'badge-info'; @endphp
                                             @break
+
                                             @case(3)
                                                 @php $color = 'badge-success'; @endphp
                                             @break
+
                                             @case(4)
                                                 @php $color = 'badge-warning'; @endphp
                                             @break
                                         @endswitch
                                         <div class="badge {{ $color }} mb-2 w-full">
-                                            <strong>{{ $athlete->modality->title }}:  &nbsp;</strong>
+                                            <strong>{{ $athlete->modality->title }}: &nbsp;</strong>
                                             {{ $athlete->athletes->nick }} -
                                             [ {{ $athlete->athletes->sexAbrev }} | {{ $athlete->athletes->age }} ] -
                                             ({{ converTime($athlete->record) }})

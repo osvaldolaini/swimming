@@ -98,10 +98,8 @@
                                             @elseif($key == $activeButton)
                                                 <td
                                                     class="w-1/6 py-1.5 px-4 text-sm font-normal text-center text-gray-500 dark:text-gray-400">
-                                                    <livewire:search-bar.toggle-button
-                                                        :model="$data"
-                                                        field="{{$activeButton}}"
-                                                        key="{{$data->id}}"
+                                                    <livewire:search-bar.toggle-button :model="$data"
+                                                        field="{{ $activeButton }}" key="{{ $data->id }}"
                                                         width="sm" />
                                                 </td>
                                             @else
@@ -111,6 +109,30 @@
                                                 </td>
                                             @endif
                                         @endforeach
+                                        @if ($activeButton != 'active')
+                                            @if ($activeButton == 'restrictTeam')
+                                                <td
+                                                    class="w-1/6 py-1.5 px-4 text-sm font-normal text-center
+                                                    text-gray-500 dark:text-gray-400">
+                                                        <livewire:search-bar.toggle-button-team
+                                                        :model="$data"
+                                                        field="{{ $activeButton }}"
+                                                        key="{{ $data->id }}"
+                                                        width="sm" />
+                                                </td>
+                                            @endif
+                                            @if ($activeButton == 'restrictRelay')
+                                                <td
+                                                    class="w-1/6 py-1.5 px-4 text-sm font-normal text-center
+                                                    text-gray-500 dark:text-gray-400">
+                                                        <livewire:search-bar.toggle-button-relay
+                                                        :model="$data"
+                                                        field="{{ $activeButton }}"
+                                                        key="{{ $data->id }}"
+                                                        width="sm" />
+                                                </td>
+                                            @endif
+                                        @endif
 
                                         @if ($showButtons)
                                             <td

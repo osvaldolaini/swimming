@@ -59,6 +59,7 @@ class Athlete extends Component
         if (isset($this->getCategory)) {
             $this->category = Teams::select('id','name','min_age','max_age')->find($this->getCategory);
             $this->athletes = Athletes::select('id','nick','name','birth','sex')
+            ->where('teams_configs_id',Auth::user()->team->id)
             ->where('active', 1)
             ->with('timess')
             ->whereBetween('birth', [$this->category->birth_year . '-01-01', $this->category->birth_year_end . '-12-31'])

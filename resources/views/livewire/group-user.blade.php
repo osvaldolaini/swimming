@@ -1,9 +1,5 @@
 <div>
-    <div class="hero bg-gray-100 rounded-t-lg mb-5 ">
-        <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
-            <h1 class="text-4xl font-black py-0 my-0">ESCOLHA UMA DAS OPÇÕES ABAIXO</h1>
-        </div>
-    </div>
+    <x-header>ESCOLHA UMA DAS OPÇÕES ABAIXO</x-header>
     <div class="w-full p-2 grid sm:grid-cols-2 grid-cols-1 gap-4 ">
         <div class="stats shadow">
             <a wire:click="showGroupModal(2)" class="cursor-pointer">

@@ -5,6 +5,7 @@ namespace App\Models\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Relays extends Model
 {
@@ -94,5 +95,15 @@ class Relays extends Model
     public function category()
     {
         return $this->belongsTo(Categories::class);
+    }
+    public function getStatusAttribute()
+    {
+        $qry = RelaysRestriction::where('relay_id',$this->id)
+                ->where('teams_configs_id',Auth::user()->team->id)->first();
+        if($qry){
+            return $qry;
+        }else{
+            return false;
+        }
     }
 }

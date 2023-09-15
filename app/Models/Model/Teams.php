@@ -61,4 +61,15 @@ class Teams extends Model
         return $BirthYearEnd->subYears($this->max_age)->year;
     }
 
+    public function getStatusAttribute()
+    {
+        $qry = TeamsRestriction::where('team_id',$this->id)
+                ->where('teams_configs_id',Auth::user()->team->id)->first();
+        if($qry){
+            return $qry;
+        }else{
+            return false;
+        }
+    }
+
 }

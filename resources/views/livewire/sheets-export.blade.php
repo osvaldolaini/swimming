@@ -1,9 +1,6 @@
 <div>
-    <div class="hero bg-gray-100 rounded-t-lg">
-        <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
-            <h1 class="text-5xl font-bold py-0 my-0">Selecione os filtros e clique no botão verde.</h1>
-        </div>
-      </div>
+    <x-header>Selecione os filtros e clique no botão verde.</x-header>
+
     <div class="p-2 flex flex-col items-stretch justify-end w-full
     space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
         <section class="px-6 py-2 dark:bg-gray-800 dark:text-gray-50">

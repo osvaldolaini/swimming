@@ -40,7 +40,8 @@ class Base extends Component
 
     public function mount()
     {
-        $cat = Teams::where('active', 1)->where('type', 1)->orderBy('min_age', 'asc')->first();
+        $cat = Teams::where('active', 1)->where('type', 1)
+            ->orderBy('min_age', 'asc')->first();
         $this->modalidades = Modalities::where('active', 1)->get();
         $this->category = Relays::where('active', 1)->where('type', 1)->orderBy('min_age', 'asc')->get();
         $this->birth = $cat->birth_year . '|' . $cat->birth_year_end;

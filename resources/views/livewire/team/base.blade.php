@@ -1,10 +1,6 @@
 <div>
-    <div class="hero bg-gray-100 rounded-t-lg mb-0">
-        <div class="hero-content flex-col lg:flex-row-reverse py-2.5 my-0">
-            <h1 class="text-4xl font-black py-0 my-0"> {{ mb_strtoupper($titles) }}</h1>
-        </div>
-    </div>
-    <section class="px-6 pb-1 dark:bg-gray-800 dark:text-gray-50">
+    <x-header>{{ mb_strtoupper($titles) }}</x-header>
+    <section class="px-1.5 pb-1 dark:bg-gray-800 dark:text-gray-50">
 
         @isset($message)
             <div class="w-full text-white bg-blue-500 rounded-md">
@@ -103,8 +99,11 @@
                         <Select wire:model="birth" wire:change='cleanSearch()'
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             @foreach ($category as $item)
-                                <option value="{{ $item->birth_year }}|{{ $item->birth_year_end }}">{{ $item->name }}
-                                </option>
+                                @if ($item->status)
+                                    <option value="{{ $item->birth_year }}|{{ $item->birth_year_end }}">
+                                        {{ $item->name }}
+                                    </option>
+                                @endif
                             @endforeach
                         </Select>
                     </div>

@@ -93,7 +93,7 @@ class SearchBar extends Component
         }else{
             $selects = '*';
         }
-        if ($this->activeButton) {
+        if ($this->activeButton == 'active') {
             array_push($selects,$this->activeButton);
         }
         $query->select($selects);

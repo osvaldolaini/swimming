@@ -1,9 +1,5 @@
 <div>
-    <div class="hero bg-gray-100 rounded-t-lg">
-        <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
-            <h1 class="text-5xl font-bold py-0 my-0">Selecione o arquivo e clique no botão azul.</h1>
-        </div>
-    </div>
+    <x-header>Selecione o arquivo e clique no botão azul.</x-header>
 
     <div class="w-full">
         <x-message-session></x-message-session>

@@ -1,10 +1,6 @@
 <div class="relative">
     <x-action-loading></x-action-loading>
-    <div class="hero bg-gray-100 rounded-t-lg mb-5 ">
-        <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
-            <h1 class="text-4xl font-black py-0 my-0">ATLETAS {{ mb_strtoupper($category->name) }}</h1>
-        </div>
-    </div>
+    <x-header>ATLETAS {{ mb_strtoupper($category->name) }}</x-header>
 
     <style>
         .photo {

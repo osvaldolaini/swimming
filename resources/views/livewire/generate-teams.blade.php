@@ -1,10 +1,6 @@
 <div>
     <div class="sm:col-span-2 col-span-1 mx-auto">
-        <div class="hero bg-gray-100 rounded-t-lg mb-5 ">
-            <div class="hero-content flex-col lg:flex-row-reverse py-5 my-0">
-                <h1 class="text-4xl font-black py-0 my-0"> {{ mb_strtoupper($titles) }}</h1>
-            </div>
-        </div>
+        <x-header>{{ mb_strtoupper($titles) }}</x-header>
         <div class="w-full p-2 grid sm:grid-cols-3 grid-cols-1 gap-4 ">
             <div class="stats shadow">
                 <a href="{{ route('generateBaseTeam') }}">

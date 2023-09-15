@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class ToggleButton extends Component
+class ToggleButtonTeam extends Component
 {
     public Model $model;
     public string $field;
@@ -16,7 +16,11 @@ class ToggleButton extends Component
 
     public function mount()
     {
-        $this->hasStatus = (bool) $this->model->getAttribute($this->field);
+        if ($this->model->status) {
+            $this->hasStatus = true;
+        }else{
+            $this->hasStatus = false;
+        }
     }
     public function render()
     {
@@ -24,19 +28,19 @@ class ToggleButton extends Component
     }
     public function updating($field, $value)
     {
-        $this->model->setAttribute($this->field, $value)->save();
-
-        // if ($value == false) {
-        //     TeamsRestriction::create([
-        //         'teams_configs_id'  =>Auth::user()->team->id,
-        //         'team_id'           =>$this->model->id,
-        //         'user_id'           =>Auth::user()->id,
-        //     ]);
-        // }else{
-        //     if ($this->model->status) {
-        //         $this->model->status->delete();
-        //     }
-        // }
+        // $this->model->setAttribute($this->field, $value)->save();
+        // dd($this->model->status);
+        if ($value == true) {
+            TeamsRestriction::create([
+                'teams_configs_id'  =>Auth::user()->team->id,
+                'team_id'           =>$this->model->id,
+                'user_id'           =>Auth::user()->id,
+            ]);
+        }else{
+            if ($this->model->status) {
+                $this->model->status->delete();
+            }
+        }
         $this->openAlert('success', 'Registro atualizado com sucesso.');
     }
     //pega o status do registro
