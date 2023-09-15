@@ -12,7 +12,7 @@ class Times extends Model
 
     protected $fillable = [
         'athlete_id', 'category_id', 'record','recordConverte',
-        'modality_id', 'day', 'id',
+        'modality_id', 'day', 'id','teams_configs_id',
         'pool', 'distance', 'type_time',
         'updated_by', 'created_by', 'code'
     ];

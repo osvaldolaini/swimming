@@ -11,6 +11,7 @@ use App\Exports\PlanilhaExportView;
 use App\Models\Model\Athletes;
 use App\Models\Model\Categories;
 use App\Models\Model\Teams;
+use Illuminate\Support\Facades\Auth;
 
 class SheetsExport extends Component
 {
@@ -36,11 +37,14 @@ class SheetsExport extends Component
     public function downloadExcel()
     {
         // return Excel::download(new PlanilhaExport(), 'planilha_modelo_tempos.xlsx');
-        $name = 'planilha_'.$this->type_time.'_'.$this->type_team.'_'.$this->team_id.'_'.$this->modality.'_'.$this->pool.'_'.$this->distance.'_excel';
+        $name = 'planilha_'.$this->type_time.'_'.$this->type_team.'_'.$this->team_id.
+        '_'.$this->modality.'_'.$this->pool.'_'.$this->distance.'_'.
+        Auth::user()->team->id.'_excel';
 
         // if($this->birth_year != 'todas'){
             $team = Teams::find($this->team_id);
             $this->allAthletes = Athletes::where('active', 1)
+            ->where('teams_configs_id',Auth::user()->team->id)
             ->whereBetween('birth', [$team->birth_year . '-01-01', $team->birth_year_end . '-12-31'])
             ->orderBy('name','desc')
             ->orderBy('sex','desc')

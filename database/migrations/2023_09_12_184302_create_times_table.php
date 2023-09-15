@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('times', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teams_configs_id')->constrained();
             $table->foreignId('athlete_id')->constrained();
             $table->foreignId('modality_id')->constrained();
             $table->date('day')->nullable();

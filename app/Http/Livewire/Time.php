@@ -43,6 +43,7 @@ class Time extends Component
     public $modalities;
     public $teams;
     public $athletes;
+    public $teams_configs_id;
 
     protected $listeners =
     [
@@ -64,8 +65,8 @@ class Time extends Component
     public function getAthletes()
     {
         $team = Teams::find($this->team_id);
-
         $this->athletes = Athletes::select('name','id')->where('active', 1)
+        ->where('teams_configs_id',Auth::user()->team->id)
         ->whereBetween('birth', [$team->birth_year . '-01-01', $team->birth_year_end . '-12-31'])
         ->get();
     }
@@ -103,6 +104,7 @@ class Time extends Component
             'pool'          => $this->pool,
             'record'        => invertTime($this->record),
             'recordConverte' => $this->record,
+            'teams_configs_id' => Auth::user()->team->id,
             'day'           => $this->day,
             'active'        => 1,
             'code'          => Str::uuid(),

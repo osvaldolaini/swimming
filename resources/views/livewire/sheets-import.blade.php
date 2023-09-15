@@ -1,9 +1,9 @@
 <div>
     <x-header>Selecione o arquivo e clique no botão azul.</x-header>
 
-    <div class="w-full">
+    {{-- <div class="w-full">
         <x-message-session></x-message-session>
-    </div>
+    </div> --}}
     <form action="#" wire:submit.prevent="importExcel()" wire.loading.attr='disable'>
         <div
             class="p-2 flex flex-col items-stretch w-full

@@ -22,6 +22,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
         protected $team_id;
         protected $modality;
         protected $record;
+        protected $teams_configs_id;
 
         public function __construct($sheetConfigs)
         {
@@ -31,6 +32,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
             $this->modality = $config[4];
             $this->pool = $config[5];
             $this->distance = $config[6];
+            $this->teams_configs_id = $config[7];
 
             if($config[4] == 'medley'){
                 $this->modality_id=array(1,2,3,4);
@@ -75,6 +77,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
                             'pool'          => $this->pool,
                             'record'        => $this->record,
                             'recordConverte' => converTime($this->record),
+                            'teams_configs_id'=> $this->teams_configs_id,
                             'day'           => $this->day,
                             'active'        => 1,
                             'code'          => Str::uuid(),
@@ -107,6 +110,7 @@ class PlanilhaImport implements ToModel, WithHeadingRow
                         'pool'          => $this->pool,
                         'record'        => $this->record,
                         'recordConverte' => converTime($this->record),
+                        'teams_configs_id'=> $this->teams_configs_id,
                         'day'           => $this->day,
                         'active'        => 1,
                         'code'          => Str::uuid(),

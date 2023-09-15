@@ -33,7 +33,9 @@
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             <option value="">Selecione</option>
                             @foreach ($teams as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @if ($item->status)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endif
                             @endforeach
                         </Select>
                     </div>

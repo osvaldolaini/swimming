@@ -37,7 +37,7 @@ class SheetsImport extends Component
         $this->reset(
             'sheet'
         );
-
+        return redirect()->route('times');
 
     }
 }

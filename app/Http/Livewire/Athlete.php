@@ -98,10 +98,10 @@ class Athlete extends Component
             );
         }
 
-
         Athletes::create([
             'name'      =>mb_strtoupper($this->name),
             'nick'      =>mb_strtoupper($this->nick),
+            'teams_configs_id' => Auth::user()->team->id,
             'register'  =>$this->register,
             'register_date'  =>$this->register_date,
             'active'    =>1,
