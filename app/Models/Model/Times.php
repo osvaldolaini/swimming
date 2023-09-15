@@ -36,7 +36,7 @@ class Times extends Model
             ->format('d/m/Y');
     }
 
-    public function convert($value)
+    public function getTypeTimeAttribute($value)
     {
         switch ($value) {
             case 'tomada':
@@ -52,7 +52,7 @@ class Times extends Model
         }
         return $convert;
     }
-    public function getConvertTypeAttribute($value)
+    public function convert($value)
     {
         switch ($value) {
             case 'Tomada de tempo':
