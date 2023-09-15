@@ -240,7 +240,7 @@
                                                 @php $color = 'badge-warning'; @endphp
                                             @break
                                         @endswitch
-                                        <div class="badge {{ $color }} mb-2 w-full">
+                                        <div class="badge {{ $color }} mb-2 w-full text-xs">
                                             <strong>{{ $athlete->modality->title }} </strong>
                                             &nbsp;:{{ $athlete->athletes->nick }} ({{ converTime($athlete->record) }})
                                         </div>

@@ -12,17 +12,17 @@ class Relays extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id','category_id','type','active','min_age',
-        'max_age','type','old_min','old_max',
-        'updated_by','created_by','code','name'
+        'id', 'category_id', 'type', 'active', 'min_age',
+        'max_age', 'type', 'old_min', 'old_max',
+        'updated_by', 'created_by', 'code', 'name'
     ];
 
     public function athletes($birth)
     {
         return Athletes::where('active', 1)
-        ->where('birth', 'LIKE', '%' . $birth. '%')
-        ->orderBy('sex','asc')->orderBy('name','asc')
-        ->get();
+            ->where('birth', 'LIKE', '%' . $birth . '%')
+            ->orderBy('sex', 'asc')->orderBy('name', 'asc')
+            ->get();
     }
     public function getTypeAttribute($value)
     {
@@ -46,11 +46,11 @@ class Relays extends Model
     {
         if ($this->type == 'Base') {
             $type = 1;
-        }elseif ($this->type == 'Absoluto') {
+        } elseif ($this->type == 'Absoluto') {
             $type = 2;
-        }elseif ($this->type == 'Master') {
+        } elseif ($this->type == 'Master') {
             $type = 3;
-        }else {
+        } else {
             $type = 1;
         }
         return $type;
@@ -75,7 +75,6 @@ class Relays extends Model
                 }
                 return $type;
             }
-
         }
     }
     public function getBirthYearAttribute()
@@ -98,11 +97,11 @@ class Relays extends Model
     }
     public function getStatusAttribute()
     {
-        $qry = RelaysRestriction::where('relay_id',$this->id)
-                ->where('teams_configs_id',Auth::user()->team->id)->first();
-        if($qry){
+        $qry = RelaysRestriction::where('relay_id', $this->id)
+            ->where('teams_configs_id', Auth::user()->team->id)->first();
+        if ($qry) {
             return $qry;
-        }else{
+        } else {
             return false;
         }
     }
