@@ -9,6 +9,7 @@ use App\Http\Livewire\Admin\AdminTimes;
 use App\Http\Livewire\Admin\AdminTeams;
 use App\Http\Livewire\AllStats;
 use App\Http\Livewire\Athlete;
+use App\Http\Livewire\Coachs;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\GenerateTeams;
 use App\Http\Livewire\GroupUser;
@@ -45,6 +46,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/atletas', Athlete::class)->name('athlete');
+    Route::get('/treinadores', Coachs::class)->name('coachs');
     Route::get('/atletas-por-categoria', TeamsList::class)->name('teamsList');
     Route::get('/modalidades', Modality::class)->name('modality');
     Route::get('/times', Team::class)->name('team');

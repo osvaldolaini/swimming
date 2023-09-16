@@ -64,8 +64,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserGroup::class);
     }
-    public function team():HasOne
+    public function getTeamAttribute()
     {
-        return $this->hasOne(TeamsConfig::class);
+        if ($this->group->type <= 2) {
+            return TeamsConfig::where('user_id',$this->id)->first();
+        }elseif($this->group->type == 3 && $this->group->head_ok == 1){
+            return $this->group->coachTeam();
+        }
     }
 }

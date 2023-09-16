@@ -70,6 +70,7 @@ class Teams extends Model
 
     public function getStatusAttribute()
     {
+
         if (Auth::user()->group->type == 1){
             $qry = TeamsRestriction::where('team_id',$this->id)->first();
         }else{

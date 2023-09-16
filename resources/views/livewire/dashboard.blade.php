@@ -1,4 +1,5 @@
 <div>
+    <x-message-session></x-message-session>
     @if (Auth::user()->team)
         <div class="w-full p-2 grid grid-cols-1 gap-4 ">
             <div class="stats stats-vertical lg:stats-horizontal shadow">
@@ -37,14 +38,14 @@
                         {{-- <div class="stat-desc">↘︎ 90 (14%)</div> --}}
                     </div>
                 </a>
-                {{-- <div class="stat">
+                <div class="stat">
                     <div class="stat-title">Coordenadores</div>
                     <div class="stat-value">{{ $this->head }}</div>
                 </div>
                 <div class="stat">
                     <div class="stat-title">Treinadores</div>
                     <div class="stat-value">{{ $this->coachs }}</div>
-                </div> --}}
+                </div>
                 <a href="{{ route('times') }}" class="cursor-pointer">
                     <div class="stat">
                         <div class="stat-figure text-primary">
@@ -61,15 +62,13 @@
                         {{-- <div class="stat-desc">↘︎ 90 (14%)</div> --}}
                     </div>
                 </a>
-
-
             </div>
         </div>
     @else
         @if (Auth::user()->group->type == 2)
             <section class="dark:bg-gray-800 dark:text-gray-100">
                 <div
-                    class="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-3xl">
+                    class="container mx-auto flex flex-col items-center px-4 py-10 text-center md:py-24 md:px-10 lg:px-24 xl:max-w-3xl">
                     <h1 class="text-4xl font-bold leadi sm:text-5xl">Que bom que você
                         <span class="dark:text-violet-400">acreditou nesta</span> ideia
                     </h1>
@@ -82,19 +81,39 @@
                 </div>
             </section>
         @else
+        @if (Auth::user()->group->coach_ok == 0)
+            <section class="dark:bg-gray-800 dark:text-gray-100">
+                <div
+                    class="container mx-auto flex flex-col items-center px-4 py-10 text-center md:py-24 md:px-10 lg:px-24 xl:max-w-3xl">
+                    <h1 class="text-4xl font-bold leadi sm:text-5xl">Entre em contato com o
+                        <span class="dark:text-violet-400">Coordenador </span> da equipe
+                    </h1>
+                    <p class="px-8 mt-8 mb-12 text-lg">Aguarde o convite ser aceito para poder participar de uma equipe!</p>
+                    <div class="w-full flex justify-center mx-auto ">
+                        @livewire('search-team')
+                    </div>
+                </div>
+            </section>
+        @else
             <section class="dark:bg-gray-800 dark:text-gray-100">
                 <div
                     class="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-3xl">
                     <h1 class="text-4xl font-bold leadi sm:text-5xl">Entre em contato com o
-                        <span class="dark:text-violet-400">Coordenador </span> da equipe
+                        <span class="dark:text-violet-400">Coordenador </span> do(a)
+                        <span class="text-white bg-blue-900 px-2">
+                            {{ Auth::user()->group->team->nick }}
+                        </span>
                     </h1>
-                    <p class="px-8 mt-8 mb-12 text-lg">Aguarde o convite para participar de uma equipe!</p>
+                    <p class="px-8 mt-8 mb-12 text-lg">Aguarde o convite ser aceito para poder participar de uma equipe!</p>
                     {{-- <div class="flex flex-wrap justify-center">
                         <a href="{{ route('configTeam') }}"
                             class="cursor-pointer px-8 py-3 m-2 text-lg font-semibold rounded bg-blue-400 text-gray-900">Configurações</a>
                     </div> --}}
                 </div>
             </section>
+        @endif
+
+
         @endif
 
     @endif

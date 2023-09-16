@@ -3,9 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Model\Athletes;
-use App\Models\Model\Categories;
 use App\Models\Model\Teams;
-use App\Models\Model\Times;
 use Livewire\Component;
 
 use Illuminate\Support\Facades\Auth;
@@ -45,13 +43,14 @@ class Athlete extends Component
 
     public function mount()
     {
+        if (Gate::allows('group-user')) {
+            abort(403);
+        }
         if(isset($_GET['category'])){
             $this->getCategory = $_GET['category'];
             $this->category = Teams::select('name','min_age','max_age')->find($this->getCategory);
         }
-        if (Gate::allows('group-user')) {
-            abort(403);
-        }
+
     }
 
     public function loadPosts()

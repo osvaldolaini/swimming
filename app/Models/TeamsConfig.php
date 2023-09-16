@@ -20,18 +20,17 @@ class TeamsConfig extends Model
     {
         return $this->hasMany(Athletes::class,'teams_configs_id','id');
     }
-    // public function head():HasMany
-    // {
-    //     return $this->hasMany(UserGroup::class,'teams_configs_id','id');
-    // }
-    // public function coachs():HasMany
-    // {
-    //     return $this->hasMany(UserGroup::class,'teams_configs_id','id');
-    // }
+    public function head():HasMany
+    {
+        return $this->hasMany(UserGroup::class,'teams_configs_id','id');
+    }
+    public function coachs():HasMany
+    {
+        return $this->hasMany(UserGroup::class,'teams_configs_id','id');
+    }
     public function times():HasMany
     {
         return $this->hasMany(Times::class,'teams_configs_id','id');
     }
-
 
 }

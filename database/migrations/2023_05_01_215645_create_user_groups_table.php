@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('user_groups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('teams_configs_id')->nullable()->constrained();
+            $table->boolean('head_ok')->nullable();
+            $table->boolean('coach_ok')->nullable();
             $table->string('type',2)->nullable();
             $table->timestamps();
         });

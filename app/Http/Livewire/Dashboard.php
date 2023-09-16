@@ -16,26 +16,31 @@ class Dashboard extends Component
     public $athletes;
     public $head;
     public $coachs;
+    public $alertSession = false;
 
     public function mount()
     {
-        if (Gate::allows('group-user')) {
-            abort(403);
+        if (Auth::user()->group == null) {
+            redirect()->route('groupUser');
         }
-
-
-        // $this->head = $this->teamConfig->head->where('type',2)->count();
-        // $this->coachs = $this->teamConfig->coachs->where('type',3)->count();
-
-    }
-    public function render()
-    {
         if(Auth::user()->team){
             $this->teamConfig = TeamsConfig::find(Auth::user()->team->id);
 
             $this->athletes = $this->teamConfig->athletes->count();
             $this->times = $this->teamConfig->times->count();
+            $this->head = $this->teamConfig->head->where('type',2)->count();
+            $this->coachs = $this->teamConfig->coachs->where('type',3)
+            ->where('coach_ok',1)
+            ->where('head_ok',1)->count();
         }
+    }
+    public function render()
+    {
         return view('livewire.dashboard');
+    }
+      //Fecha a caixa da mensagem
+    public function closeAlert()
+    {
+        $this->alertSession = false;
     }
 }

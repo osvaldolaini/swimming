@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class UserGroup extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id', 'type', 'user_id',
+        'id', 'type', 'user_id','teams_configs_id','head_ok','coach_ok'
     ];
 
     public function getActivityAttribute()
@@ -32,5 +33,19 @@ class UserGroup extends Model
                 return 'Visitante';
                 break;
         }
+
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function team():HasOne
+    {
+        return $this->hasOne(TeamsConfig::class,'id','teams_configs_id');
+    }
+    public function coachTeam()
+    {
+        return TeamsConfig::find($this->teams_configs_id);
+    }
+
 }

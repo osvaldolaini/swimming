@@ -5,14 +5,17 @@
             <nav class="mt-5">
                 <div>
                     <a href="{{ route('dashboard') }}"
-                    class="flex items-center justify-start w-full px-4 py-2 my-1
+                        class="flex items-center justify-start w-full px-4 py-2 my-1
                     font-thin uppercase transition-colors duration-200
-                    {{ Request::is('dashboard') ? 'bg-gradient-to-r from-white to-blue-100
-                    dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                    'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}" >
+                    {{ Request::is('dashboard')
+                        ? 'bg-gradient-to-r from-white to-blue-100
+                                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                        : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}">
                         <span class="text-left">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1070 1178l306-564h-654l-306 564h654zm722-282q0 182-71 348t-191 286-286 191-348 71-348-71-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 2048 1792"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1070 1178l306-564h-654l-306 564h654zm722-282q0 182-71 348t-191 286-286 191-348 71-348-71-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z">
                                 </path>
                             </svg>
                         </span>
@@ -21,27 +24,105 @@
                         </span>
                     </a>
                     <a href="{{ route('configTeam') }}"
-                    class="flex items-center justify-start w-full px-4 py-2 my-1
+                        class="flex items-center justify-start w-full px-4 py-2 my-1
                     font-thin uppercase transition-colors duration-200
-                    {{ Request::is('configurações*') ? 'bg-gradient-to-r from-white to-blue-100
-                    dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                    'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}" >
+                    {{ Request::is('configurações*')
+                        ? 'bg-gradient-to-r from-white to-blue-100
+                                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                        : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}">
                         <span class="text-left">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 3.5A1.5 1.5 0 012.5 2h15A1.5 1.5 0 0119 3.5v2A1.5 1.5 0 0117.5 7h-15A1.5 1.5 0 011 5.5v-2zm3.5 1a1 1 0 11-2 0 1 1 0 012 0zM1 9.5A1.5 1.5 0 012.5 8h6.073a1.5 1.5 0 011.342 2.17l-1 2a1.5 1.5 0 01-1.342.83H2.5A1.5 1.5 0 011 11.5v-2zm3.5 1a1 1 0 11-2 0 1 1 0 012 0zM1 15.5A1.5 1.5 0 012.5 14h5.27a1.5 1.5 0 011.471 1.206l.4 2A1.5 1.5 0 018.171 19H2.5A1.5 1.5 0 011 17.5v-2zm3.5 1a1 1 0 11-2 0 1 1 0 012 0zM12.159 13.059l-.682-.429a.987.987 0 01-.452-.611.946.946 0 01.134-.742.983.983 0 01.639-.425 1.023 1.023 0 01.758.15l.682.427c.369-.31.8-.54 1.267-.676V9.97c0-.258.104-.504.291-.686.187-.182.44-.284.704-.284.264 0 .517.102.704.284a.957.957 0 01.291.686v.783c.472.138.903.37 1.267.676l.682-.429a1.02 1.02 0 01.735-.107c.25.058.467.208.606.419.14.21.19.465.141.71a.97.97 0 01-.403.608l-.682.429a3.296 3.296 0 010 1.882l.682.43a.987.987 0 01.452.611.946.946 0 01-.134.742.982.982 0 01-.639.425 1.02 1.02 0 01-.758-.15l-.682-.428c-.369.31-.8.54-1.267.676v.783a.957.957 0 01-.291.686A1.01 1.01 0 0115.5 19a1.01 1.01 0 01-.704-.284.957.957 0 01-.291-.686v-.783a3.503 3.503 0 01-1.267-.676l-.682.429a1.02 1.02 0 01-.75.132.999.999 0 01-.627-.421.949.949 0 01-.135-.73.97.97 0 01.434-.61l.68-.43a3.296 3.296 0 010-1.882zm3.341-.507c-.82 0-1.487.65-1.487 1.449s.667 1.448 1.487 1.448c.82 0 1.487-.65 1.487-1.448 0-.8-.667-1.45-1.487-1.45z" /></svg>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M1 3.5A1.5 1.5 0 012.5 2h15A1.5 1.5 0 0119 3.5v2A1.5 1.5 0 0117.5 7h-15A1.5 1.5 0 011 5.5v-2zm3.5 1a1 1 0 11-2 0 1 1 0 012 0zM1 9.5A1.5 1.5 0 012.5 8h6.073a1.5 1.5 0 011.342 2.17l-1 2a1.5 1.5 0 01-1.342.83H2.5A1.5 1.5 0 011 11.5v-2zm3.5 1a1 1 0 11-2 0 1 1 0 012 0zM1 15.5A1.5 1.5 0 012.5 14h5.27a1.5 1.5 0 011.471 1.206l.4 2A1.5 1.5 0 018.171 19H2.5A1.5 1.5 0 011 17.5v-2zm3.5 1a1 1 0 11-2 0 1 1 0 012 0zM12.159 13.059l-.682-.429a.987.987 0 01-.452-.611.946.946 0 01.134-.742.983.983 0 01.639-.425 1.023 1.023 0 01.758.15l.682.427c.369-.31.8-.54 1.267-.676V9.97c0-.258.104-.504.291-.686.187-.182.44-.284.704-.284.264 0 .517.102.704.284a.957.957 0 01.291.686v.783c.472.138.903.37 1.267.676l.682-.429a1.02 1.02 0 01.735-.107c.25.058.467.208.606.419.14.21.19.465.141.71a.97.97 0 01-.403.608l-.682.429a3.296 3.296 0 010 1.882l.682.43a.987.987 0 01.452.611.946.946 0 01-.134.742.982.982 0 01-.639.425 1.02 1.02 0 01-.758-.15l-.682-.428c-.369.31-.8.54-1.267.676v.783a.957.957 0 01-.291.686A1.01 1.01 0 0115.5 19a1.01 1.01 0 01-.704-.284.957.957 0 01-.291-.686v-.783a3.503 3.503 0 01-1.267-.676l-.682.429a1.02 1.02 0 01-.75.132.999.999 0 01-.627-.421.949.949 0 01-.135-.73.97.97 0 01.434-.61l.68-.43a3.296 3.296 0 010-1.882zm3.341-.507c-.82 0-1.487.65-1.487 1.449s.667 1.448 1.487 1.448c.82 0 1.487-.65 1.487-1.448 0-.8-.667-1.45-1.487-1.45z" />
+                            </svg>
                         </span>
                         <span class="mx-4 text-sm font-normal">
                             Configurações
                         </span>
                     </a>
-                    @if(Auth::user()->team)
-
+                    @if (Auth::user()->team)
+                        <a href="{{ route('coachs') }}"
+                            class="flex items-center justify-start w-full px-4 py-2 my-1
+                        font-thin uppercase transition-colors duration-200
+                        {{ Request::is('treinadores*')
+                            ? 'bg-gradient-to-r from-white to-blue-100
+                                                dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                            : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}">
+                            <span class="text-left">
+                                <svg class="w-6 h-6" fill="currentColor" version="1.1" id="Layer_1"
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 512 512" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M469.492,350.304c-27.2-38.193-64.762-66.834-108.626-82.828c-0.001,0-0.003-0.001-0.004-0.002
+                               c-25.204-9.189-51.699-13.849-78.75-13.849c-27.051,0-53.547,4.659-78.75,13.849c-0.002,0-0.003,0.001-0.005,0.002
+                               c-11.876,4.331-23.381,9.674-34.397,15.914v-78.67c0-5.656-4.584-10.24-10.24-10.24H10.24C4.584,194.48,0,199.065,0,204.72v209.92
+                               c0,5.656,4.584,10.24,10.24,10.24h49.537c-5.013,19.055-7.553,38.721-7.553,58.633c0,5.656,4.584,10.24,10.24,10.24H501.76
+                               c5.656,0,10.24-4.584,10.24-10.24C512,435.416,497.302,389.354,469.492,350.304z M70.819,214.96h27.322v10.24H70.819V214.96z
+                                M20.48,404.4V214.96h29.859v20.48c0,5.656,4.584,10.24,10.24,10.24h47.803c5.656,0,10.24-4.584,10.24-10.24v-20.48h29.858V404.4
+                               H20.48z M271.873,473.273H72.95c0.793-16.461,3.505-32.674,8.08-48.393h77.69c5.656,0,10.24-4.584,10.24-10.24V307.281
+                               c10.369-6.67,21.305-12.412,32.655-17.144c6.798,12.837,16.565,23.86,28.646,32.243c12.453,8.641,26.674,13.957,41.611,15.627
+                               V473.273z M221.131,283.123c19.688-5.988,40.151-9.017,60.981-9.017c20.83,0,41.293,3.029,60.981,9.017
+                               c-12.52,21.547-35.447,34.976-60.981,34.976S233.651,304.669,221.131,283.123z M292.352,473.272V338.007
+                               c14.937-1.669,29.157-6.986,41.611-15.627c12.081-8.384,21.848-19.407,28.646-32.244c74.348,30.983,124.701,102.7,128.659,183.136
+                               H292.352z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M388.05,128.635c0-0.002,0-0.003,0-0.005c-0.306-60.867-50.072-110.383-110.943-110.383
+                               c-57.441,0-104.985,44.094-110.419,100.209H90.717c-5.656,0-10.24,4.584-10.24,10.24c0,5.656,4.584,10.241,10.24,10.241h75.871
+                               c4.949,56.633,52.621,101.211,110.517,101.211c61.178,0,110.95-49.772,110.95-110.95L388.05,128.635z M277.106,38.727
+                               c46.162,0,84.489,34.918,89.829,79.729H187.277C192.616,73.645,230.945,38.727,277.106,38.727z M277.106,219.667
+                               c-16.585,0-32.13-4.505-45.51-12.331h13.274c5.656,0,10.24-4.584,10.24-10.24c0-5.656-4.584-10.24-10.24-10.24h-37.394
+                               c-4.52-5.451-8.405-11.441-11.563-17.858h6.035c5.656,0,10.24-4.584,10.24-10.24c0-5.656-4.584-10.24-10.24-10.24h-13.202
+                               c-0.687-3.14-1.231-6.331-1.582-9.583h179.89C362.185,184.261,323.703,219.667,277.106,219.667z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M316.416,357.376c-5.656,0-10.24,4.584-10.24,10.24v13.312c0,5.656,4.584,10.24,10.24,10.24s10.24-4.584,10.24-10.24
+                               v-13.312C326.656,361.96,322.072,357.376,316.416,357.376z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M316.416,420.864c-5.656,0-10.24,4.584-10.24,10.24v13.312c0,5.656,4.584,10.24,10.24,10.24s10.24-4.584,10.24-10.24
+                               v-13.312C326.656,425.448,322.072,420.864,316.416,420.864z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M40.96,302.08c-5.656,0-10.24,4.584-10.24,10.24V384c0,5.656,4.584,10.24,10.24,10.24c5.656,0,10.24-4.584,10.24-10.24
+                               v-71.68C51.2,306.664,46.616,302.08,40.96,302.08z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M40.96,265.216c-5.656,0-10.24,4.584-10.24,10.24v6.144c0,5.656,4.584,10.24,10.24,10.24c5.656,0,10.24-4.584,10.24-10.24
+                               v-6.144C51.2,269.8,46.616,265.216,40.96,265.216z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="mx-4 text-sm font-normal">
+                                Treinadores
+                            </span>
+                        </a>
                         <a href="{{ route('teamsList') }}"
                             class="flex items-center justify-start w-full px-4 py-2 my-1
                             font-thin uppercase transition-colors duration-200
-                            {{ Request::is('atletas*') ? 'bg-gradient-to-r from-white to-blue-100
-                            dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                            'dark:text-gray-200 hover:text-blue-500 text-gray-500'}}"
-                            >
+                            {{ Request::is('atletas*')
+                                ? 'bg-gradient-to-r from-white to-blue-100
+                                                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                                : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}">
                             <span class="text-left">
                                 <svg class="w-6 h-6" fill="currentColor" version="1.1" id="Capa_1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -77,31 +158,39 @@
                         <a href="{{ route('team') }}"
                             class="flex items-center justify-start w-full px-4 py-2 my-1
                             font-thin uppercase transition-colors duration-200
-                            {{ Request::is('times*') ? 'bg-gradient-to-r from-white to-blue-100
-                            dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                            'dark:text-gray-200 hover:text-blue-500 text-gray-500'}}"
-                            >
+                            {{ Request::is('times*')
+                                ? 'bg-gradient-to-r from-white to-blue-100
+                                                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                                : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}">
                             <span class="text-left">
                                 <svg class="w-6 h-6 " fill="currentColor" version="1.1" id="_x32_"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                viewBox="0 0 512 512" xml:space="preserve">
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 512 512" xml:space="preserve">
 
-                                <g>
-                                    <path fill="currentColor"
-                                        d="M378.405,0H133.594C86.229,0,47.703,38.526,47.703,85.891v340.217c0,47.358,38.526,85.892,85.892,85.892
+                                    <g>
+                                        <path fill="currentColor"
+                                            d="M378.405,0H133.594C86.229,0,47.703,38.526,47.703,85.891v340.217c0,47.358,38.526,85.892,85.892,85.892
                                         h170.12h13.164l9.319-9.311L454.986,373.9l9.311-9.318v-13.18V85.891C464.297,38.526,425.771,0,378.405,0z M432.495,351.402h-83.71
                                         c-24.898,0-45.072,20.189-45.072,45.078v83.718h-170.12c-29.868,0-54.09-24.215-54.09-54.09V85.891
                                         c0-29.875,24.223-54.09,54.09-54.09h244.811c29.883,0,54.09,24.215,54.09,54.09V351.402z" />
-                                    <rect x="133.677" y="126.915" class="st0" width="30.684" height="29.282" />
-                                    <rect x="133.677" y="198.195" class="st0" width="30.684" height="29.276" />
-                                    <rect x="133.677" y="269.476" class="st0" width="30.684" height="29.276" />
-                                    <rect x="133.677" y="340.756" class="st0" width="30.684" height="29.275" />
-                                    <rect x="197.461" y="126.915" class="st0" width="180.87" height="29.282" />
-                                    <rect x="197.461" y="198.195" class="st0" width="180.87" height="29.276" />
-                                    <rect x="197.461" y="269.476" class="st0" width="180.87" height="29.276" />
-                                    <rect x="197.461" y="340.756" class="st0" width="74.339" height="29.275" />
-                                </g>
-                            </svg>
+                                        <rect x="133.677" y="126.915" class="st0" width="30.684"
+                                            height="29.282" />
+                                        <rect x="133.677" y="198.195" class="st0" width="30.684"
+                                            height="29.276" />
+                                        <rect x="133.677" y="269.476" class="st0" width="30.684"
+                                            height="29.276" />
+                                        <rect x="133.677" y="340.756" class="st0" width="30.684"
+                                            height="29.275" />
+                                        <rect x="197.461" y="126.915" class="st0" width="180.87"
+                                            height="29.282" />
+                                        <rect x="197.461" y="198.195" class="st0" width="180.87"
+                                            height="29.276" />
+                                        <rect x="197.461" y="269.476" class="st0" width="180.87"
+                                            height="29.276" />
+                                        <rect x="197.461" y="340.756" class="st0" width="74.339"
+                                            height="29.275" />
+                                    </g>
+                                </svg>
                             </span>
                             <span class="mx-4 text-sm font-normal">
                                 Equipes
@@ -110,31 +199,39 @@
                         <a href="{{ route('relay') }}"
                             class="flex items-center justify-start w-full px-4 py-2 my-1
                             font-thin uppercase transition-colors duration-200
-                            {{ Request::is('revezamentos*') ? 'bg-gradient-to-r from-white to-blue-100
-                            dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                            'dark:text-gray-200 hover:text-blue-500 text-gray-500'}}"
-                            >
+                            {{ Request::is('revezamentos*')
+                                ? 'bg-gradient-to-r from-white to-blue-100
+                                                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                                : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}">
                             <span class="text-left">
                                 <svg class="w-6 h-6 " fill="currentColor" version="1.1" id="_x32_"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                viewBox="0 0 512 512" xml:space="preserve">
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 512 512" xml:space="preserve">
 
-                                <g>
-                                    <path fill="currentColor"
-                                        d="M378.405,0H133.594C86.229,0,47.703,38.526,47.703,85.891v340.217c0,47.358,38.526,85.892,85.892,85.892
+                                    <g>
+                                        <path fill="currentColor"
+                                            d="M378.405,0H133.594C86.229,0,47.703,38.526,47.703,85.891v340.217c0,47.358,38.526,85.892,85.892,85.892
                                         h170.12h13.164l9.319-9.311L454.986,373.9l9.311-9.318v-13.18V85.891C464.297,38.526,425.771,0,378.405,0z M432.495,351.402h-83.71
                                         c-24.898,0-45.072,20.189-45.072,45.078v83.718h-170.12c-29.868,0-54.09-24.215-54.09-54.09V85.891
                                         c0-29.875,24.223-54.09,54.09-54.09h244.811c29.883,0,54.09,24.215,54.09,54.09V351.402z" />
-                                    <rect x="133.677" y="126.915" class="st0" width="30.684" height="29.282" />
-                                    <rect x="133.677" y="198.195" class="st0" width="30.684" height="29.276" />
-                                    <rect x="133.677" y="269.476" class="st0" width="30.684" height="29.276" />
-                                    <rect x="133.677" y="340.756" class="st0" width="30.684" height="29.275" />
-                                    <rect x="197.461" y="126.915" class="st0" width="180.87" height="29.282" />
-                                    <rect x="197.461" y="198.195" class="st0" width="180.87" height="29.276" />
-                                    <rect x="197.461" y="269.476" class="st0" width="180.87" height="29.276" />
-                                    <rect x="197.461" y="340.756" class="st0" width="74.339" height="29.275" />
-                                </g>
-                            </svg>
+                                        <rect x="133.677" y="126.915" class="st0" width="30.684"
+                                            height="29.282" />
+                                        <rect x="133.677" y="198.195" class="st0" width="30.684"
+                                            height="29.276" />
+                                        <rect x="133.677" y="269.476" class="st0" width="30.684"
+                                            height="29.276" />
+                                        <rect x="133.677" y="340.756" class="st0" width="30.684"
+                                            height="29.275" />
+                                        <rect x="197.461" y="126.915" class="st0" width="180.87"
+                                            height="29.282" />
+                                        <rect x="197.461" y="198.195" class="st0" width="180.87"
+                                            height="29.276" />
+                                        <rect x="197.461" y="269.476" class="st0" width="180.87"
+                                            height="29.276" />
+                                        <rect x="197.461" y="340.756" class="st0" width="74.339"
+                                            height="29.275" />
+                                    </g>
+                                </svg>
                             </span>
                             <span class="mx-4 text-sm font-normal">
                                 Revezamentos
@@ -144,12 +241,13 @@
                         <a href="{{ route('times') }}"
                             class="flex items-center justify-start w-full px-4 py-2 my-1
                             font-thin uppercase transition-colors duration-200
-                            {{ Request::is('tempos*') ? 'bg-gradient-to-r from-white to-blue-100
-                            dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                            'dark:text-gray-200 hover:text-blue-500 text-gray-500'}}"
-                            >
+                            {{ Request::is('tempos*')
+                                ? 'bg-gradient-to-r from-white to-blue-100
+                                                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                                : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}">
                             <span class="text-left">
-                                <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <g id="Calendar / Timer">
                                         <path id="Vector" stroke="currentColor"
                                             d="M12 13V9M21 6L19 4M10 2H14M12 21C7.58172 21 4 17.4183 4 13C4 8.58172 7.58172 5 12 5C16.4183 5 20 8.58172 20 13C20 17.4183 16.4183 21 12 21Z"
@@ -164,24 +262,24 @@
                         <a href="{{ route('generateTeam') }}"
                             class="flex items-center justify-start w-full px-4 py-2 my-1
                             font-thin uppercase transition-colors duration-200
-                            {{ Request::is('equipe*') ? 'bg-gradient-to-r from-white to-blue-100
-                            dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                            'dark:text-gray-200 hover:text-blue-500 text-gray-500'}}"
-                            >
+                            {{ Request::is('equipe*')
+                                ? 'bg-gradient-to-r from-white to-blue-100
+                                                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                                : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}">
                             <span class="text-left">
                                 <svg class="w-6 h-6 " fill="currentColor" version="1.1" id="Capa_1"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                viewBox="0 0 155.739 155.739" xml:space="preserve">
-                                <g>
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 155.739 155.739" xml:space="preserve">
                                     <g>
-                                        <path
-                                            d="M93.192,25.738c8.326,0,15.073,6.752,15.073,15.081c0,8.325-6.747,15.078-15.073,15.078
+                                        <g>
+                                            <path
+                                                d="M93.192,25.738c8.326,0,15.073,6.752,15.073,15.081c0,8.325-6.747,15.078-15.073,15.078
                                             c-8.33,0-15.079-6.753-15.079-15.078C78.113,32.49,84.862,25.738,93.192,25.738z" />
-                                        <path
-                                            d="M101.102,73.074c5.354,0,9.692,4.339,9.692,9.691c0,5.356-4.338,9.697-9.692,9.697c-5.356,0-9.693-4.341-9.693-9.697
+                                            <path
+                                                d="M101.102,73.074c5.354,0,9.692,4.339,9.692,9.691c0,5.356-4.338,9.697-9.692,9.697c-5.356,0-9.693-4.341-9.693-9.697
                                             C91.409,77.413,95.746,73.074,101.102,73.074z" />
-                                        <path
-                                            d="M52.781,155.739h86.949c0,0-25.232-20.279-24.701-42.513c0.317-12.388,24.701-28.158,24.58-62.58
+                                            <path
+                                                d="M52.781,155.739h86.949c0,0-25.232-20.279-24.701-42.513c0.317-12.388,24.701-28.158,24.58-62.58
                                             c-0.076-17.311-16.865-46.088-45.371-49.675C65.724-2.62,44.386,3.656,35.062,21.235c-9.335,17.57-10.042,32.999-9.325,35.861
                                             c0.726,2.876,3.769,8.255,3.769,8.255S15.16,87.405,16.049,90.988c0.908,3.596,10.748,5.527,10.748,5.527s0.892,2.497-0.906,7.335
                                             c-1.795,4.846,3.338,10.468,4.88,12.43c1.519,1.954-2.158,8.062-0.908,11.476c1.253,3.398,7.176,7.523,13.986,6.632
@@ -197,9 +295,9 @@
                                             c-1.182,2.679-2.917,5.146-5.149,7.212l2.842,4.54l-7.124,4.448l-2.831-4.539c-2.846,1.1-5.817,1.587-8.748,1.475l-1.206,5.204
                                             l-8.178-1.888l1.195-5.204c-2.676-1.186-5.135-2.925-7.194-5.155l-4.55,2.841l-4.45-7.122l4.55-2.834
                                             c-1.1-2.843-1.581-5.806-1.48-8.736l-5.211-1.204L67.762,30.636z" />
+                                        </g>
                                     </g>
-                                </g>
-                            </svg>
+                                </svg>
                             </span>
                             <span class="mx-4 text-sm font-normal">
                                 Gerar equipes
@@ -208,25 +306,25 @@
                         <a href="{{ route('profile.show') }}"
                             class="flex items-center justify-start w-full px-4 py-2 my-1
                             font-thin uppercase transition-colors duration-200
-                            {{ Request::is('profile*') ? 'bg-gradient-to-r from-white to-blue-100
-                            dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                            'dark:text-gray-200 hover:text-blue-500 text-gray-500'}}
-                            sm:hidden"
-                            >
+                            {{ Request::is('profile*')
+                                ? 'bg-gradient-to-r from-white to-blue-100
+                                                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                                : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}
+                            sm:hidden">
                             <span class="text-left">
                                 <svg class="w-6 h-6 " fill="currentColor" version="1.1" id="Capa_1"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                viewBox="0 0 155.739 155.739" xml:space="preserve">
-                                <g>
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 155.739 155.739" xml:space="preserve">
                                     <g>
-                                        <path
-                                            d="M93.192,25.738c8.326,0,15.073,6.752,15.073,15.081c0,8.325-6.747,15.078-15.073,15.078
+                                        <g>
+                                            <path
+                                                d="M93.192,25.738c8.326,0,15.073,6.752,15.073,15.081c0,8.325-6.747,15.078-15.073,15.078
                                             c-8.33,0-15.079-6.753-15.079-15.078C78.113,32.49,84.862,25.738,93.192,25.738z" />
-                                        <path
-                                            d="M101.102,73.074c5.354,0,9.692,4.339,9.692,9.691c0,5.356-4.338,9.697-9.692,9.697c-5.356,0-9.693-4.341-9.693-9.697
+                                            <path
+                                                d="M101.102,73.074c5.354,0,9.692,4.339,9.692,9.691c0,5.356-4.338,9.697-9.692,9.697c-5.356,0-9.693-4.341-9.693-9.697
                                             C91.409,77.413,95.746,73.074,101.102,73.074z" />
-                                        <path
-                                            d="M52.781,155.739h86.949c0,0-25.232-20.279-24.701-42.513c0.317-12.388,24.701-28.158,24.58-62.58
+                                            <path
+                                                d="M52.781,155.739h86.949c0,0-25.232-20.279-24.701-42.513c0.317-12.388,24.701-28.158,24.58-62.58
                                             c-0.076-17.311-16.865-46.088-45.371-49.675C65.724-2.62,44.386,3.656,35.062,21.235c-9.335,17.57-10.042,32.999-9.325,35.861
                                             c0.726,2.876,3.769,8.255,3.769,8.255S15.16,87.405,16.049,90.988c0.908,3.596,10.748,5.527,10.748,5.527s0.892,2.497-0.906,7.335
                                             c-1.795,4.846,3.338,10.468,4.88,12.43c1.519,1.954-2.158,8.062-0.908,11.476c1.253,3.398,7.176,7.523,13.986,6.632
@@ -242,9 +340,9 @@
                                             c-1.182,2.679-2.917,5.146-5.149,7.212l2.842,4.54l-7.124,4.448l-2.831-4.539c-2.846,1.1-5.817,1.587-8.748,1.475l-1.206,5.204
                                             l-8.178-1.888l1.195-5.204c-2.676-1.186-5.135-2.925-7.194-5.155l-4.55,2.841l-4.45-7.122l4.55-2.834
                                             c-1.1-2.843-1.581-5.806-1.48-8.736l-5.211-1.204L67.762,30.636z" />
+                                        </g>
                                     </g>
-                                </g>
-                            </svg>
+                                </svg>
                             </span>
                             <span class="mx-4 text-sm font-normal">
                                 {{ __('Profile') }}
@@ -254,24 +352,29 @@
                     <form method="POST" action="{{ route('logout') }}" x-data>
                         @csrf
                         <a href="{{ route('logout') }}"
-                        class="flex items-center justify-start w-full px-4 py-2 my-1
+                            class="flex items-center justify-start w-full px-4 py-2 my-1
                         font-thin uppercase transition-colors duration-200
-                        {{ Request::is('profile*') ? 'bg-gradient-to-r from-white to-blue-100
-                        dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500' :
-                        'dark:text-gray-200 hover:text-blue-500 text-gray-500'}}
-                        sm:hidden"
-                        >
-                        <span class="text-left">
-                            <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14 7.63636L14 4.5C14 4.22386 13.7761 4 13.5 4L4.5 4C4.22386 4 4 4.22386 4 4.5L4 19.5C4 19.7761 4.22386 20 4.5 20L13.5 20C13.7761 20 14 19.7761 14 19.5L14 16.3636" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M10 12L21 12M21 12L18.0004 8.5M21 12L18 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                        <span class="mx-4 text-sm font-normal">
-                            {{ __('Log Out') }}
-                        </span>
-                    </a>
-                </form>
+                        {{ Request::is('profile*')
+                            ? 'bg-gradient-to-r from-white to-blue-100
+                                                dark:from-gray-700 dark:to-gray-800 text-blue-500 border-r-4 border-blue-500'
+                            : 'dark:text-gray-200 hover:text-blue-500 text-gray-500' }}
+                        sm:hidden">
+                            <span class="text-left">
+                                <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M14 7.63636L14 4.5C14 4.22386 13.7761 4 13.5 4L4.5 4C4.22386 4 4 4.22386 4 4.5L4 19.5C4 19.7761 4.22386 20 4.5 20L13.5 20C13.7761 20 14 19.7761 14 19.5L14 16.3636"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M10 12L21 12M21 12L18.0004 8.5M21 12L18 15.5" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                            <span class="mx-4 text-sm font-normal">
+                                {{ __('Log Out') }}
+                            </span>
+                        </a>
+                    </form>
                 </div>
             </nav>
         </div>
