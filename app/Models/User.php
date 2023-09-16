@@ -66,10 +66,12 @@ class User extends Authenticatable
     }
     public function getTeamAttribute()
     {
-        if ($this->group->type <= 2) {
-            return TeamsConfig::where('user_id',$this->id)->first();
-        }elseif($this->group->type == 3 && $this->group->head_ok == 1){
-            return $this->group->coachTeam();
+        if ($this->group) {
+            if ($this->group->type <= 2) {
+                return TeamsConfig::where('user_id',$this->id)->first();
+            }elseif($this->group->type == 3 && $this->group->head_ok == 1){
+                return $this->group->coachTeam();
+            }
         }
     }
 }
