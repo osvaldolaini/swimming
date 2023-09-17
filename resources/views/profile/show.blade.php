@@ -20,6 +20,12 @@
 
                 <x-section-border />
             @endif
+            @if (Auth::user()->team)
+                <div class="mt-10 sm:mt-0">
+                    @livewire('coach-team')
+                </div>
+            @endif
+            <x-section-border />
 
             {{-- @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
                 <div class="mt-10 sm:mt-0">

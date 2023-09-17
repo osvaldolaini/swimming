@@ -7,6 +7,7 @@ use App\Models\Model\Times;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TeamsConfig extends Model
 {
@@ -20,9 +21,9 @@ class TeamsConfig extends Model
     {
         return $this->hasMany(Athletes::class,'teams_configs_id','id');
     }
-    public function head():HasMany
+    public function head():HasOne
     {
-        return $this->hasMany(UserGroup::class,'teams_configs_id','id');
+        return $this->hasOne(User::class,'id','user_id');
     }
     public function coachs():HasMany
     {
