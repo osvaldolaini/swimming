@@ -28,7 +28,7 @@ class Dashboard extends Component
 
             $this->athletes = $this->teamConfig->athletes->count();
             $this->times = $this->teamConfig->times->count();
-            $this->head = $this->teamConfig->head->where('type',2)->count();
+            // $this->head = $this->teamConfig->head->where('type',2)->count();
             $this->coachs = $this->teamConfig->coachs->where('type',3)
             ->where('coach_ok',1)
             ->where('head_ok',1)->count();
