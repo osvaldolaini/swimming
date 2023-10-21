@@ -123,7 +123,7 @@ class Base extends Component
             if ($this->select_team == 'best') {
                 $atletas =  $this->qtdMedley($atletas);
             }
-            // dd($atletas);
+            dd($atletas);
             $this->equipes = $this->medleyTeams($atletas);
         } else {
             if ($this->select_team == 'best') {
@@ -430,7 +430,7 @@ class Base extends Component
                 ->whereBetween('birth', [$birth_date[0] . '-01-01',$birth_date[1] . '-12-31'])
                 ->pluck('id');
 
-            $this->qtd_athletes = 4;
+            $this->qtd_athletes = 3;
 
             $bestsLF = $this->qtdTeam($atletasF, 1);
             $bestsBF = $this->qtdTeam($atletasF, 2);
