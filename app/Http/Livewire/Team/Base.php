@@ -123,7 +123,7 @@ class Base extends Component
             if ($this->select_team == 'best') {
                 $atletas =  $this->qtdMedley($atletas);
             }
-            dd($atletas);
+            // dd($atletas);
             $this->equipes = $this->medleyTeams($atletas);
         } else {
             if ($this->select_team == 'best') {
