@@ -143,6 +143,9 @@ class Base extends Component
             // dd($atletas);
             //Função que pega a equipe por modalidade
             $this->equipes = $this->modalityTeams($atletas);
+
+            dd(round(memory_get_usage() / 1024 / 1024, 2) . " MB");
+
         }
 
         // dd($this->equipes);
