@@ -144,8 +144,6 @@ class Base extends Component
             //Função que pega a equipe por modalidade
             $this->equipes = $this->modalityTeams($atletas);
 
-            dd(round(memory_get_usage() / 1024 / 1024, 2) . " MB");
-
         }
 
         // dd($this->equipes);
@@ -157,6 +155,7 @@ class Base extends Component
             $this->equipes = $this->bestTeams($this->equipes);
         }
         // dd($this->equipes);
+        $this->combinations = round(memory_get_usage() / 1024 / 1024, 2) . " MB";
     }
     //Pega os atletas e filtra os excluidos
     public function getAthletes()
