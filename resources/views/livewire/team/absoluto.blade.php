@@ -25,7 +25,7 @@
         <div
             class="container flex flex-col mx-auto space-y-4 sm:space-y-8
         ng-untouched ng-pristine ng-valid relative">
-            <x-action-loading></x-action-loading>
+        <x-action-loading-generate></x-action-loading-generate>
             <fieldset
                 class="grid grid-cols-4 sm:gap-4 sm:gap-6 px-6 pt-2 pb-10 sm:py-2 px-6 rounded-md shadow-sm dark:bg-gray-900">
                 <div class="space-y-2 col-span-full lg:col-span-1">

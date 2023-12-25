@@ -149,6 +149,7 @@ class SearchBarTimes extends Component
                     $query->orderBy($s[0], $s[1]);
                 }
             }
+             dd($query);
             return $query;
         }
         //RELATIONSHIPS

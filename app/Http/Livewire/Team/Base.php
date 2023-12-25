@@ -42,6 +42,8 @@ class Base extends Component
     public $times;
     public $titles = 'Mirim à Junior';
 
+    public $allTimesAthlete;
+
     public function mount()
     {
         $cat = Teams::where('active', 1)->where('type', 1)
@@ -131,15 +133,15 @@ class Base extends Component
 
         //Função que pega a equipe medley
         if ($this->modality == 'medley') {
-            if ($this->select_team == 'best') {
+            // if ($this->select_team == 'best') {
                 $atletas = $this->qtdMedley();
-            }
+            // }
             // dd($atletas);
             $this->equipes = $this->medleyTeams($atletas);
         } else {
-            if ($this->select_team == 'best') {
+            // if ($this->select_team == 'best') {
                 $atletas = $this->qtdModality();
-            }
+            // }
             // dd($atletas);
             //Função que pega a equipe por modalidade
             $this->equipes = $this->modalityTeams($atletas);
@@ -149,13 +151,23 @@ class Base extends Component
         // dd($this->equipes);
         $this->combinations = count($this->equipes);
 
+        //pega os tempos
+        $this->getTimes();
+        if(empty($this->allTimesAthlete))
+        {
+            $this->equipes = array();
+            $this->message = 'Quantidade de atletas é insuficiente para montar uma equipe ou
+            não existem atletas com parâmetros tempos cadastrados!';
+            return;
+        }
+
         $this->equipes = $this->getTeams($this->equipes);
         // dd($this->equipes);
         if ($this->select_team == 'best') {
             $this->equipes = $this->bestTeams($this->equipes);
         }
         // dd($this->equipes);
-        // $this->combinations = round(memory_get_usage() / 1024 / 1024, 2) . " MB";
+
     }
     //Pega os atletas e filtra os excluidos
     public function getAthletes()
@@ -301,6 +313,7 @@ class Base extends Component
         }
         return $combArrays;
     }
+
     //Pega a equipe por modalidade
     public function modalityTeams($atletas)
     {
@@ -342,6 +355,7 @@ class Base extends Component
         $arrayTeam = [];
         $title = 0;
         $time_total = 0;
+
         foreach ($teams as $team) {
             $title += 1;
             $athletes       = [];
@@ -349,7 +363,9 @@ class Base extends Component
             $ids            = [];
             $mod = 0;
             $sex = 0;
+
             foreach ($team as $key => $athlete) {
+
                 // $mod +=1;
                 if ($this->modality == 'medley') {
                     $mod += 1;
@@ -358,43 +374,28 @@ class Base extends Component
                 } else {
                     $mod = $this->modality;
                 }
-                if ($this->order == 'record') {
-                    $o = 'asc';
-                } else {
-                    $o = 'desc';
-                }
-                if ($this->type_time != 'ambos') {
-                    $time = Times::select('record', 'athlete_id', 'modality_id')
-                        ->with(['athletes', 'modality'])
-                        ->where('pool', $this->pool)
-                        ->where('distance', $this->distance)
-                        ->where('type_time', $this->type_time)
-                        ->where('modality_id', $mod)
-                        ->where('athlete_id', $athlete)
-                        ->orderBy($this->order, $o)
-                        ->first();
-                } else {
-                    $time = Times::select('record', 'athlete_id', 'modality_id')
-                        ->with(['athletes', 'modality'])
-                        ->where('pool', $this->pool)
-                        ->where('distance', $this->distance)
-                        ->where('modality_id', $mod)
-                        ->where('athlete_id', $athlete)
-                        ->orderBy($this->order, $o)
-                        ->first();
-                }
+
+                $time = $this->allTimesAthlete[$athlete][$mod];
+
                 if ($time) {
-                    if ($time->athletes->sex == 'masculino') {
+                    if ($this->allTimesAthlete[$athlete]['sex'] == 'masculino') {
                         $sex += 1;
                     }
 
-                    $time_total    += $time->record;
-                    $athletes[]     = ($time->athlete_id ? $time->athletes->nick : 'Excluido');
+                    $time_total    += $time['record'];
+                    $athletes[]     = ($this->allTimesAthlete[$athlete] ? $this->allTimesAthlete[$athlete]['nick'] : 'Excluido');
                     $ids[]          = $athlete;
-                    $time_athlete[] = $time;
+                    $t = $this->allTimesAthlete[$athlete][$mod];
+                    $time_athlete[] = [
+                        'record'        => $t['record'],
+                        'modality_id'   => $t['modality_id'],
+                        'title'         => $t['title'],
+                        'nick'         => $this->allTimesAthlete[$athlete]['nick'],
+                    ];
                     // $time_athlete[] = date('i', strtotime($time->record)).':'.number_format(date('s.u', strtotime($time->record)), 2, '.', '');
                 }
             }
+
             if (count($athletes) == 4) {
                 if ($this->type_team == 'mista') {
                     //Remove se existir mais de 2 meninos na equipe
@@ -506,9 +507,7 @@ class Base extends Component
     {
         //Ambos os sexos
         if ($this->type_team == 'mista') {
-
             $this->qtd_athletes = 4;
-
             $bestsLF = $this->qtdTeam($this->athleteF, 1);
             $bestsBF = $this->qtdTeam($this->athleteF, 2);
             $bestsCF = $this->qtdTeam($this->athleteF, 3);
@@ -562,5 +561,94 @@ class Base extends Component
         }
         // dd( $this->qtd_athletes);
         return $bests;
+    }
+
+    public function getTimes()
+    {
+        $allTimesAthlete=array();
+        // Mesclar todas as arrays internas em uma única array
+        $mergedArray = call_user_func_array('array_merge', $this->equipes);
+        // Remover duplicatas mantendo as chaves
+        $uniqueIds = array_unique($mergedArray);
+        // Reindexar as chaves da array resultante
+        $uniqueIds = array_values($uniqueIds);
+        foreach ($uniqueIds as $key => $value) {
+            if ($this->modality == 'medley') {
+                for ($mod=1; $mod < 5; $mod++) {
+                    $time = $this->getTime($mod,$value);
+                    if($time){
+                        $allTimesAthlete[$value][$mod] = [
+                            'record' => $time->record,
+                            'modality_id' => $time->modality_id,
+                            'title' => $time->modality->title,
+                        ];
+                        $allTimesAthlete[$value]['record']=$time->record;
+                        $allTimesAthlete[$value]['sex']=$time->athletes->sex;
+                        $allTimesAthlete[$value]['nick']=$time->athletes->nick;
+                    }else{
+                        $allTimesAthlete[$value][$mod] = null;
+                    }
+                }
+            } else {
+                $mod = $this->modality;
+                $time = $this->getTime($mod,$value);
+                if($time){
+                    $allTimesAthlete[$value][$mod] = [
+                        'record'        => $time->record,
+                        'modality_id'   => $time->modality_id,
+                        'title'         => $time->modality->title,
+                    ];
+                    $allTimesAthlete[$value]['sex']=$time->athletes->sex;
+                    $allTimesAthlete[$value]['nick']=$time->athletes->nick;
+                }
+            }
+        }
+        $this->allTimesAthlete = $allTimesAthlete;
+
+        // dd($this->allTimesAthlete);
+    }
+    public function getTime($mod,$value)
+    {
+        if ($this->order == 'record') {
+            $o = 'asc';
+            $order = 'record';
+            $operador = '<=';
+            $day = date('Y').'-12-31';
+        }
+        if ($this->order == 'day') {
+            $o = 'desc';
+            $order = 'day';
+            $operador = '<=';
+            $day = date('Y').'-12-31';
+        }
+        if ($this->order == 'year') {
+            $o = 'desc';
+            $order = 'day';
+            $operador = 'LIKE';
+            $day = '%'.date('Y').'%';
+        }
+        if ($this->type_time != 'ambos') {
+            $time = Times::select('record', 'athlete_id', 'modality_id')
+                ->with(['athletes', 'modality'])
+                ->where('pool', $this->pool)
+                ->where('distance', $this->distance)
+                ->where('type_time', $this->type_time)
+                ->where('modality_id', $mod)
+                ->where('athlete_id', $value)
+                ->where('day',$operador, $day)
+                ->orderBy($order, $o)
+                ->first();
+        } else {
+            $time = Times::select('record', 'athlete_id', 'modality_id')
+                ->with(['athletes', 'modality'])
+                ->where('pool', $this->pool)
+                ->where('distance', $this->distance)
+                ->where('modality_id', $mod)
+                ->where('athlete_id', $value)
+                ->where('day',$operador, $day)
+                ->orderBy($order, $o)
+                ->first();
+        }
+        return $time;
     }
 }

@@ -1,7 +1,6 @@
 <div>
     <x-header>{{ mb_strtoupper($titles) }}</x-header>
     <section class="px-1.5 pb-1 dark:bg-gray-800 dark:text-gray-50">
-
         @isset($message)
             <div class="w-full text-white bg-blue-500 rounded-md">
                 <div class="container flex items-center justify-between px-6 py-2 mx-auto">
@@ -14,19 +13,13 @@
 
                         <p class="mx-3"> {{ $message }}</p>
                     </div>
-                    {{--
-                <button class="p-1 transition-colors duration-300 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button> --}}
                 </div>
             </div>
         @endisset
         <div
             class="container flex flex-col mx-auto space-y-4 sm:space-y-8
         ng-untouched ng-pristine ng-valid relative">
-            <x-action-loading></x-action-loading>
+            <x-action-loading-generate></x-action-loading-generate>
             <fieldset
                 class="grid grid-cols-4 sm:gap-4 sm:gap-6 px-6 pt-2 pb-10 sm:py-2 px-6 rounded-md shadow-sm dark:bg-gray-900">
                 <div class="space-y-2 col-span-full lg:col-span-1">
@@ -142,6 +135,7 @@
                         <Select wire:model="order" wire:change='cleanSearch()'
                             class="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900">
                             <option value="day">Mais recente</option>
+                            <option value="year">Mais Baixo (Ano atual)</option>
                             <option value="record">Mais Baixo</option>
                         </Select>
                     </div>
@@ -203,7 +197,7 @@
             </fieldset>
         </div>
     </section>
-    <section wire:model="equipes">
+    {{-- <section wire:model="equipes">
         <div class="grid grid-cols-1 sm:grid-cols-3 card card-side gap-4 rounded-md">
             @isset($equipes)
                 @php
@@ -243,6 +237,58 @@
                                         <div class="badge {{ $color }} mb-2 w-full text-xs">
                                             <strong>{{ $athlete->modality->title }} </strong>
                                             &nbsp;:{{ $athlete->athletes->nick }} ({{ converTime($athlete->record) }})
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    </div>
+                @endforeach
+            @endisset
+
+        </div>
+    </section> --}}
+    <section wire:model="equipes">
+        <div class="grid grid-cols-1 sm:grid-cols-3 card card-side gap-4 rounded-md">
+            @isset($equipes)
+                @php
+                    $title = 0;
+                @endphp
+                @foreach ($equipes as $equipe)
+                    @php
+                        $title += 1;
+                        $t = converTime($equipe['time_total']);
+                    @endphp
+                    <div class="card card-side bg-neutral rounded-box text-neutral-content px-1 sm:px-0">
+                        <div class="py-2 card-body mx-auto px-3 sm:px-2">
+                            <div class="w-full text-center">
+                                <x-action-counter time="{{ $t }}" title="{{ $title }}">
+                                </x-action-counter>
+                            </div>
+                            <ul>
+                                @foreach ($equipe['team'] as $athlete)
+                                    <li>
+                                        @switch($athlete['modality_id'])
+                                            @case(1)
+                                                @php $color = 'badge-error'; @endphp
+                                            @break
+
+                                            @case(2)
+                                                @php $color = 'badge-info'; @endphp
+                                            @break
+
+                                            @case(3)
+                                                @php $color = 'badge-success'; @endphp
+                                            @break
+
+                                            @case(4)
+                                                @php $color = 'badge-warning'; @endphp
+                                            @break
+                                        @endswitch
+                                        <div class="badge {{ $color }} mb-2 w-full text-xs">
+                                            <strong>{{ $athlete['title'] }} </strong>
+                                            &nbsp;:{{ $athlete['nick'] }} ({{ converTime($athlete['record']) }})
                                         </div>
                                     </li>
                                 @endforeach
