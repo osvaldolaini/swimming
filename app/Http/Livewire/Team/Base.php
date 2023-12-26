@@ -101,6 +101,8 @@ class Base extends Component
     //Função que monta as equipes
     public function generateTeams()
     {
+        ini_set('max_execution_time', '300');
+        ini_set("pcre.backtrack_limit", "5000000");
         //Ambos os sexos
         if ($this->type_team == 'mista') {
             $this->qtd_athletes = 6;
