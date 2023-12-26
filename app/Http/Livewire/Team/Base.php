@@ -117,7 +117,7 @@ class Base extends Component
 
         // dd($this->athleteAll);
         //verifica se esses atletas tem tempo
-        $this->testTime();
+        // $this->testTime();
 
         //verifica se tem atletas suficientes
         if ($this->type_team != 'mista') {
