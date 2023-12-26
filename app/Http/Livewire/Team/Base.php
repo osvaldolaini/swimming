@@ -445,7 +445,7 @@ class Base extends Component
             //     break;
             // }
         }
-        // dd($allTeams);
+        dd($allTeams);
         return $this->array_msort(array_filter($allTeams), array('time_total' => SORT_ASC));
         // return $allTeams;
     }
