@@ -143,9 +143,10 @@ class Base extends Component
 
         // dd($this->equipes);
         $this->combinations = count($this->equipes);
-dd($this->combinations);
+        // dd($this->combinations)
         //pega os tempos
         $this->getTimes();
+
         if(empty($this->allTimesAthlete))
         {
             $this->equipes = array();
@@ -362,14 +363,14 @@ dd($this->combinations);
                 // $mod +=1;
                 if ($this->modality == 'medley') {
                     $mod += 1;
-                } elseif ($this->modality == 'livre') {
-                    $mod = 1;
                 } else {
                     $mod = $this->modality;
                 }
 
                 $time = $this->allTimesAthlete[$athlete][$mod];
-
+                if (!$time) {
+                    continue;
+                }
                 if ($time) {
                     if ($this->allTimesAthlete[$athlete]['sex'] == 'masculino') {
                         $sex += 1;
@@ -389,7 +390,7 @@ dd($this->combinations);
                 }
             }
 
-            if (count($athletes) == 4) {
+            if (count($ids) == 4) {
                 if ($this->type_team == 'mista') {
                     //Remove se existir mais de 2 meninos na equipe
                     if ($sex == 2) {
@@ -408,14 +409,16 @@ dd($this->combinations);
                 }
 
                 // dd($allTeams);
+                if (!empty($arrayTeam)) {
                 $allTeams[] = $arrayTeam;
+                }
             }
             $time_total = 0;
             // if($title == 8){
             //     break;
             // }
         }
-        // dd($allTeams);
+        dd($allTeams);
         return $this->array_msort(array_filter($allTeams), array('time_total' => SORT_ASC));
         // return $allTeams;
     }
@@ -597,7 +600,6 @@ dd($this->combinations);
             }
         }
         $this->allTimesAthlete = $allTimesAthlete;
-
         // dd($this->allTimesAthlete);
     }
     public function getTime($mod,$value)
