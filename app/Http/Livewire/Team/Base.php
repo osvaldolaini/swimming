@@ -391,29 +391,7 @@ class Base extends Component
                     ];
                     // $time_athlete[] = date('i', strtotime($time->record)).':'.number_format(date('s.u', strtotime($time->record)), 2, '.', '');
                 }
-
-                // if ($this->select_team == 'best' && count($allTeams) > 3) {
-                //     // $sortedTeams = $this->array_msort(array_filter($allTeams), array('time_total' => SORT_DESC));
-
-                //     foreach ($this->array_msort(array_filter($allTeams), array('time_total' => SORT_DESC)) as $item) {
-                //         // dd($item);
-                //         if ($time_total > $item['time_total']) {
-
-                //             continue;
-                //         }
-                //     }
-                // }
             }
-
-            if ($this->select_team == 'best' && count($allTeams) > 10) {
-                $allTeams = $this->array_msort(array_filter($allTeams), array('time_total' => SORT_ASC));
-
-                // Se houver mais de 3 equipes, remover a última (a menor) até que reste 3
-                while (count($allTeams) > 10) {
-                    array_pop($allTeams);
-                }
-            }
-
 
             if (count($ids) == 4) {
                 if ($this->type_team == 'mista') {
