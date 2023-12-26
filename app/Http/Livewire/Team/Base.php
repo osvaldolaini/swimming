@@ -457,37 +457,67 @@ class Base extends Component
     }
 
     //Pega os melhores times
+    // function bestTeams($teams)
+    // {
+    //     $result = array();
+    //     $arrays_i = array();
+    //     for ($i = 0; $i < count($teams); $i++) {
+    //         $diff_i = in_array($teams[$i], $arrays_i); // Compara lista de excluidos
+    //         if (!$diff_i) { // se não foi exluido
+    //             $result[] = $teams[$i]; // Inseri os não excluidos ao resultado
+    //             $arrays_i[] = $teams[$i]; // Inseri os não excluidos na lista de não pesquisar
+    //             foreach ($teams[$i]['ids'] as $ids) {
+    //                 for ($j = 0; $j < count($teams); $j++) {
+    //                     $diff_j = in_array($teams[$j], $result); //Verifica se já está nos resultados
+    //                     if (!$diff_j) {
+    //                         $diff_k = in_array($teams[$j], $arrays_i); //Verifica se já está nos não pesquisáveis
+    //                         if (!$diff_k) {
+    //                             $diff = in_array(intval($ids), $teams[$j]['ids']);
+    //                             if ($diff) {
+    //                                 // echo '<p>';
+    //                                 // print_r($teams[$j]['ids']);
+    //                                 $arrays_i[] = $teams[$j];
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     // dd($result);
+    //     return $result;
+    // }
     function bestTeams($teams)
-    {
-        $result = array();
-        $arrays_i = array();
-        for ($i = 0; $i < count($teams); $i++) {
-            $diff_i = in_array($teams[$i], $arrays_i); // Compara lista de excluidos
-            if (!$diff_i) { // se não foi exluido
-                $result[] = $teams[$i]; // Inseri os não excluidos ao resultado
-                $arrays_i[] = $teams[$i]; // Inseri os não excluidos na lista de não pesquisar
-                foreach ($teams[$i]['ids'] as $ids) {
-                    for ($j = 0; $j < count($teams); $j++) {
-                        $diff_j = in_array($teams[$j], $result); //Verifica se já está nos resultados
-                        if (!$diff_j) {
+{
+    $result = array();
+    $arrays_i = array();
 
-                            $diff_k = in_array($teams[$j], $arrays_i); //Verifica se já está nos não pesquisáveis
-                            if (!$diff_k) {
-                                $diff = in_array(intval($ids), $teams[$j]['ids']);
-                                if ($diff) {
-                                    // echo '<p>';
-                                    // print_r($teams[$j]['ids']);
-                                    $arrays_i[] = $teams[$j];
-                                }
-                            }
-                        }
+    // Itera sobre cada equipe
+    foreach ($teams as $team_i) {
+        $diff_i = in_array($team_i, $arrays_i);
+
+        if (!$diff_i) {
+            $result[] = $team_i;
+            $arrays_i[] = $team_i;
+
+            // Itera sobre os IDs da equipe atual
+            foreach ($team_i['ids'] as $ids) {
+                // Itera sobre todas as equipes novamente
+                foreach ($teams as $team_j) {
+                    $diff_j = in_array($team_j, $result);
+                    $diff_k = in_array($team_j, $arrays_i);
+
+                    if (!$diff_j && !$diff_k && in_array(intval($ids), $team_j['ids'])) {
+                        $arrays_i[] = $team_j;
                     }
                 }
             }
         }
-        // dd($result);
-        return $result;
     }
+
+    return $result;
+}
+
     //Pega quantidade para montar as 3 melhores equipes
     public function qtdModality()
     {
