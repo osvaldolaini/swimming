@@ -375,7 +375,9 @@ class Base extends Component
                     if ($this->allTimesAthlete[$athlete]['sex'] == 'masculino') {
                         $sex += 1;
                     }
-
+                    if ($sex > 2) {
+                        continue;
+                    }
                     $time_total    += $time['record'];
                     $athletes[]     = ($this->allTimesAthlete[$athlete] ? $this->allTimesAthlete[$athlete]['nick'] : 'Excluido');
                     $ids[]          = $athlete;
@@ -410,7 +412,7 @@ class Base extends Component
 
                 // dd($allTeams);
                 if (!empty($arrayTeam)) {
-                $allTeams[] = $arrayTeam;
+                    $allTeams[] = $arrayTeam;
                 }
             }
             $time_total = 0;
@@ -418,7 +420,7 @@ class Base extends Component
             //     break;
             // }
         }
-        // dd($allTeams);
+        dd($allTeams);
         return $this->array_msort(array_filter($allTeams), array('time_total' => SORT_ASC));
         // return $allTeams;
     }
