@@ -149,8 +149,7 @@ class Base extends Component
         //pega os tempos
         $this->getTimes();
 
-        if(empty($this->allTimesAthlete))
-        {
+        if (empty($this->allTimesAthlete)) {
             $this->equipes = array();
             $this->message = 'Quantidade de atletas é insuficiente para montar uma equipe ou
             não existem atletas com parâmetros tempos cadastrados!';
@@ -392,7 +391,29 @@ class Base extends Component
                     ];
                     // $time_athlete[] = date('i', strtotime($time->record)).':'.number_format(date('s.u', strtotime($time->record)), 2, '.', '');
                 }
+
+                // if ($this->select_team == 'best' && count($allTeams) > 3) {
+                //     // $sortedTeams = $this->array_msort(array_filter($allTeams), array('time_total' => SORT_DESC));
+
+                //     foreach ($this->array_msort(array_filter($allTeams), array('time_total' => SORT_DESC)) as $item) {
+                //         // dd($item);
+                //         if ($time_total > $item['time_total']) {
+
+                //             continue;
+                //         }
+                //     }
+                // }
             }
+
+            if ($this->select_team == 'best' && count($allTeams) > 10) {
+                $allTeams = $this->array_msort(array_filter($allTeams), array('time_total' => SORT_DESC));
+
+                // Se houver mais de 3 equipes, remover a última (a menor) até que reste 3
+                while (count($allTeams) > 10) {
+                    array_pop($allTeams);
+                }
+            }
+
 
             if (count($ids) == 4) {
                 if ($this->type_team == 'mista') {
@@ -416,6 +437,8 @@ class Base extends Component
                 if (!empty($arrayTeam)) {
                     $allTeams[] = $arrayTeam;
                 }
+            }
+            if ($this->select_team == 'best') {
             }
             $time_total = 0;
             // if($title == 8){
@@ -565,7 +588,7 @@ class Base extends Component
 
     public function getTimes()
     {
-        $allTimesAthlete=array();
+        $allTimesAthlete = array();
         // Mesclar todas as arrays internas em uma única array
         $mergedArray = call_user_func_array('array_merge', $this->equipes);
         // Remover duplicatas mantendo as chaves
@@ -574,57 +597,57 @@ class Base extends Component
         $uniqueIds = array_values($uniqueIds);
         foreach ($uniqueIds as $key => $value) {
             if ($this->modality == 'medley') {
-                for ($mod=1; $mod < 5; $mod++) {
-                    $time = $this->getTime($mod,$value);
-                    if($time){
+                for ($mod = 1; $mod < 5; $mod++) {
+                    $time = $this->getTime($mod, $value);
+                    if ($time) {
                         $allTimesAthlete[$value][$mod] = [
                             'record' => $time->record,
                             'modality_id' => $time->modality_id,
                             'title' => $time->modality->title,
                         ];
-                        $allTimesAthlete[$value]['record']=$time->record;
-                        $allTimesAthlete[$value]['sex']=$time->athletes->sex;
-                        $allTimesAthlete[$value]['nick']=$time->athletes->nick;
-                    }else{
+                        $allTimesAthlete[$value]['record'] = $time->record;
+                        $allTimesAthlete[$value]['sex'] = $time->athletes->sex;
+                        $allTimesAthlete[$value]['nick'] = $time->athletes->nick;
+                    } else {
                         $allTimesAthlete[$value][$mod] = null;
                     }
                 }
             } else {
                 $mod = $this->modality;
-                $time = $this->getTime($mod,$value);
-                if($time){
+                $time = $this->getTime($mod, $value);
+                if ($time) {
                     $allTimesAthlete[$value][$mod] = [
                         'record'        => $time->record,
                         'modality_id'   => $time->modality_id,
                         'title'         => $time->modality->title,
                     ];
-                    $allTimesAthlete[$value]['sex']=$time->athletes->sex;
-                    $allTimesAthlete[$value]['nick']=$time->athletes->nick;
+                    $allTimesAthlete[$value]['sex'] = $time->athletes->sex;
+                    $allTimesAthlete[$value]['nick'] = $time->athletes->nick;
                 }
             }
         }
         $this->allTimesAthlete = $allTimesAthlete;
         // dd($this->allTimesAthlete);
     }
-    public function getTime($mod,$value)
+    public function getTime($mod, $value)
     {
         if ($this->order == 'record') {
             $o = 'asc';
             $order = 'record';
             $operador = '<=';
-            $day = date('Y').'-12-31';
+            $day = date('Y') . '-12-31';
         }
         if ($this->order == 'day') {
             $o = 'desc';
             $order = 'day';
             $operador = '<=';
-            $day = date('Y').'-12-31';
+            $day = date('Y') . '-12-31';
         }
         if ($this->order == 'year') {
             $o = 'desc';
             $order = 'day';
             $operador = 'LIKE';
-            $day = '%'.date('Y').'%';
+            $day = '%' . date('Y') . '%';
         }
         if ($this->type_time != 'ambos') {
             $time = Times::select('record', 'athlete_id', 'modality_id')
@@ -634,7 +657,7 @@ class Base extends Component
                 ->where('type_time', $this->type_time)
                 ->where('modality_id', $mod)
                 ->where('athlete_id', $value)
-                ->where('day',$operador, $day)
+                ->where('day', $operador, $day)
                 ->orderBy($order, $o)
                 ->first();
         } else {
@@ -644,7 +667,7 @@ class Base extends Component
                 ->where('distance', $this->distance)
                 ->where('modality_id', $mod)
                 ->where('athlete_id', $value)
-                ->where('day',$operador, $day)
+                ->where('day', $operador, $day)
                 ->orderBy($order, $o)
                 ->first();
         }
