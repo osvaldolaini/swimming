@@ -375,9 +375,9 @@ class Base extends Component
                     if ($this->allTimesAthlete[$athlete]['sex'] == 'masculino') {
                         $sex += 1;
                     }
-                    if ($sex > 2) {
-                        continue;
-                    }
+                    // if ($sex > 2) {
+                    //     continue;
+                    // }
                     $time_total    += $time['record'];
                     $athletes[]     = ($this->allTimesAthlete[$athlete] ? $this->allTimesAthlete[$athlete]['nick'] : 'Excluido');
                     $ids[]          = $athlete;
