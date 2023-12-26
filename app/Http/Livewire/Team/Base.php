@@ -406,7 +406,7 @@ class Base extends Component
             }
 
             if ($this->select_team == 'best' && count($allTeams) > 10) {
-                $allTeams = $this->array_msort(array_filter($allTeams), array('time_total' => SORT_DESC));
+                $allTeams = $this->array_msort(array_filter($allTeams), array('time_total' => SORT_ASC));
 
                 // Se houver mais de 3 equipes, remover a última (a menor) até que reste 3
                 while (count($allTeams) > 10) {
