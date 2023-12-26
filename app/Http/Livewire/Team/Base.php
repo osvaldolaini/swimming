@@ -133,24 +133,17 @@ class Base extends Component
 
         //Função que pega a equipe medley
         if ($this->modality == 'medley') {
-            if ($this->select_team == 'best') {
-                $atletas = $this->qtdMedley();
-            }
-            dd($atletas);
+            $atletas = $this->qtdMedley();
             $this->equipes = $this->medleyTeams($atletas);
         } else {
-            if ($this->select_team == 'best') {
-                $atletas = $this->qtdModality();
-            }
-            dd($atletas);
+            $atletas = $this->qtdModality();
             //Função que pega a equipe por modalidade
             $this->equipes = $this->modalityTeams($atletas);
-
         }
 
         // dd($this->equipes);
         $this->combinations = count($this->equipes);
-
+dd($this->combinations);
         //pega os tempos
         $this->getTimes();
         if(empty($this->allTimesAthlete))
